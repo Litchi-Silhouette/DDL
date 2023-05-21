@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/page">
+        <file>level_image/icon_w.png</file>
+        <file>level_image/stop_nor.png</file>
+        <file>level_image/stop_on.png</file>
+        <file>level_image/stop_nor_gray.png</file>
+        <file>level_image/stop_on_gray.png</file>
+        <file>level_image/warning.png</file>
+    </qresource>
+</RCC>
