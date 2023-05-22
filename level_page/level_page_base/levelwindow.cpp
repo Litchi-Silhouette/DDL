@@ -15,20 +15,22 @@ LevelWindow::LevelWindow(QWidget *parent, const int cur_level)
     QIcon window(QString(":/page/level_image/icon_w.png"));
     setWindowIcon(window);
     setWindowTitle(QString("Escape form Dead Line!"));
+    setStyleSheet("QMainWindow{background: rgba(245,245,245,1);}");
     setGeometry(200,150,800,450);
 
     pause_b = new pause_block(level,this);
+    pause_b->setMaximumWidth(150);
     connect(pause_b->btn, &QPushButton::clicked, this, &LevelWindow::pause);
     pause_b->start_time();
 
-    bar = new live_bar(this);
+    bar = new KeepRatioLiveBar(this);
     bar->set_live(live);
 
-    warning = new warning_icon(this);
+    warning = new KeepRatioWarning(this);
     warning->set_mode(2);
 
     list = new DDL_List(this);
-    QIcon test(":/page/level_image/icon_w.png");
+    QPixmap test(":/page/level_image/icon_w.png");
     list->add_task(test,"sdf","asd");
     list->add_buff(test,"agfqf","sdga");
 

@@ -26,8 +26,8 @@ private slots:
 private:
     Ui::LevelWindow *ui;
     pause_block* pause_b;
-    live_bar* bar;
-    warning_icon* warning;
+    KeepRatioLiveBar* bar;
+    KeepRatioWarning* warning;
     DDL_List* list;
     QFrame* map_border;
     QTimer* timer_update;

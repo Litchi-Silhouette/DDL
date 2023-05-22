@@ -63,6 +63,12 @@ public:
         : QFrame{parent}, width_ratio(0), height_ratio(0)
     {
         center = new live_bar(this);
+        setWindowFlags(Qt::FramelessWindowHint);
+        setAttribute(Qt::WA_TranslucentBackground,true);
+        setMinimumSize(25,20);
+        setMaximumSize(80,64);
+        set_ratio(5,4);
+        resize(minimumSize());
     }
     ~KeepRatioLiveBar(){
         delete center;
@@ -78,14 +84,14 @@ protected:
     void resizeEvent(QResizeEvent* event){
         QSize old_size = event->oldSize();
         QSize new_size = event->size();
-
-        if(new_size.width()<width_ratio*new_size.height()/height_ratio){
-            new_size.setHeight(height_ratio*new_size.width()/width_ratio);
-            center->move(0,(old_size.height()-new_size.height())/2);
-        }else if(new_size.width()>width_ratio*new_size.height()/height_ratio){
-            new_size.setWidth(width_ratio*new_size.height()/height_ratio);
-            center->move((old_size.width()-new_size.width())/2,0);
-        }
+        if(width_ratio && height_ratio)
+            if(new_size.width()<width_ratio*new_size.height()/height_ratio){
+                new_size.setHeight(height_ratio*new_size.width()/width_ratio);
+                center->move(0,(old_size.height()-new_size.height())/2);
+            }else if(new_size.width()>width_ratio*new_size.height()/height_ratio){
+                new_size.setWidth(width_ratio*new_size.height()/height_ratio);
+                center->move((old_size.width()-new_size.width())/2,0);
+            }
         center->resize(new_size);
     }
 signals:

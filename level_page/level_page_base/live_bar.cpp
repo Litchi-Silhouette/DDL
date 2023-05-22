@@ -8,11 +8,11 @@ live_bar::live_bar(QWidget *parent)
 {
     setWindowFlags(Qt::FramelessWindowHint);
     setAttribute(Qt::WA_TranslucentBackground,true);
-    setMinimumSize(80,50);
+
     live_show = new QLabel("生命值",this);
     live_show->setAlignment(Qt::AlignHCenter|Qt::AlignBottom);
     live_show->setStyleSheet("QLabel{font:bold;}");
-    live_show->setMinimumSize(50,20);
+
     live_show->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
 
     bar = new bar_with_stick(this);
@@ -42,7 +42,7 @@ void live_bar::set_live(const int x){
 void live_bar::resizeEvent(QResizeEvent* event){
     QWidget::resizeEvent(event);
     auto temp = live_show->font();
-    temp.setPixelSize(live_show->height()/2);
+    temp.setPixelSize(live_show->height()*2/3);
     live_show->setFont(temp);
 }
 
@@ -51,12 +51,18 @@ bar_with_stick::bar_with_stick(QWidget *parent)
 {
     setWindowFlags(Qt::FramelessWindowHint);
     setAttribute(Qt::WA_TranslucentBackground,true);
-
     bar = new QProgressBar(this);
     bar->setRange(0,100);
     bar->setOrientation(Qt::Horizontal);
-    bar->setMinimumSize(50,20);
     bar->setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::MinimumExpanding);
+    bar->setStyleSheet("QProgressBar{border-radius:6px;"
+            "border:2px solid black;"
+            "background: transparent;"
+            "text-align: center;"
+            "font:bold;}"
+            "QProgressBar::chunk{border-radius:4px; border:1px solid black;"
+            "background-color: #FFB90F;"
+            "width:10px;margin:0.5px;}");
 
     bar_stick = new stick(this);
     bar_stick->setMinimumSize(5,10);
@@ -80,41 +86,29 @@ void bar_with_stick::resizeEvent(QResizeEvent* event)
     temp.setPixelSize(bar->height()/2);
     bar->setFont(temp);
     bar_stick->set_stick_size(bar_stick->width(),bar->height()/2);
-    //update();
+    int now_w = bar->width()*9/50-3;
+    auto cur = bar->styleSheet();
+    int p = cur.indexOf("width") + 6;
+    int i = p;
+    while(cur[i]>='0'&&cur[i]<='9')
+        ++i;
+    bar->setStyleSheet(cur.mid(0,p)+QString::number(now_w)+cur.mid(i));
 }
 
 void bar_with_stick::setValue(int live){
+    auto cur = bar->styleSheet();
+    int s = cur.indexOf("#");
+    int p = cur.indexOf(";width");
+    QString tempcolor;
     if(live>60)
-    {
-        bar->setStyleSheet("QProgressBar{border-radius:6px;"
-                "border:2px solid black;"
-                "background: transparent;"
-                "text-align: center;"
-                "font:bold;}"
-                "QProgressBar::chunk{border-radius:4px; border:1px solid black;"
-                "background-color: #00EE76;"
-                "width:10px;margin:0.5px;}");
-    }else if(live>30){
-        bar->setStyleSheet("QProgressBar{border-radius:6px;"
-                "border:2px solid black;"
-                "background: transparent;"
-                "text-align: center;"
-                "font:bold;}"
-                "QProgressBar::chunk{border-radius:4px; border:1px solid black;"
-                "background-color: #FFB90F;"
-                "width:10px;margin:0.5px;}");
-    }else{
-        bar->setStyleSheet("QProgressBar{border-radius:6px;"
-                "border:2px solid black;"
-                "background: transparent;"
-                "text-align: center;"
-                "font:bold;}"
-                "QProgressBar::chunk{border-radius:4px; border:1px solid black;"
-                "background-color: #FF0000;"
-                "width:10px;margin:0.5px;}");
-    }
+        tempcolor = "#FFD700";
+    else if(live>30)
+        tempcolor = "#FFB90F";
+    else
+        tempcolor = "#FF0000";
+
+    bar->setStyleSheet(cur.mid(0,s) + tempcolor + cur.mid(p));
     bar->setValue(live);
-    update();
 }
 
 bar_with_stick::~bar_with_stick(){

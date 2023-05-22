@@ -15,9 +15,9 @@ DDL_List::DDL_List(QWidget *parent)
     finish->setAlignment(Qt::AlignRight|Qt::AlignVCenter);
     set_ini_task(0,0);
 
-    QString temp = "QListWidget{background: rgba(200,200,200,0.6); border:0px;border-radius:5px}"
-            "QListWidget::item{background:rgba(200,200,200,0.6);height:40px;border:1px solid gray;border-radius:5px}"
-            "QListWidget::item:hover{background:rgba(200,200,200,1);}"
+    QString temp = "QListWidget{background: rgba(220,220,220,0.6); border:0px;border-radius:5px}"
+            "QListWidget::item{background:rgba(220,220,220,0.6);height:40px;border:1px solid gray;border-radius:5px}"
+            "QListWidget::item:hover{background:rgba(210,210,210,1);}"
             "QListWidget::item:selected{border-width:3;color:black}";
     QFont cur("Microsoft Yi Baiti",18,QFont::Bold);
     tasklist = new QListWidget(this);
@@ -27,6 +27,8 @@ DDL_List::DDL_List(QWidget *parent)
     tasklist->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     tasklist->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     connect(tasklist, &QListWidget::itemClicked, this,&DDL_List::task_click);
+    taskitems.clear();
+
     bufflist = new QListWidget(this);
     bufflist->setStyleSheet(temp);
     bufflist->setSpacing(3);
@@ -34,7 +36,6 @@ DDL_List::DDL_List(QWidget *parent)
     connect(bufflist, &QListWidget::itemClicked, this,&DDL_List::buff_click);
     bufflist->setViewMode(QListView::IconMode);
     bufflist->setMinimumSize(50,30);
-    taskitems.clear();
     buffitems.clear();
 
     name = new MyLabel(this,"：Easecaping!");
@@ -48,6 +49,7 @@ DDL_List::DDL_List(QWidget *parent)
 
     auto left = new QGridLayout;
     auto up = new QHBoxLayout;
+    auto bottom = new QHBoxLayout;
     auto right = new QVBoxLayout;
     auto right_up = new QHBoxLayout;
     auto main_lay = new QHBoxLayout;
@@ -61,13 +63,21 @@ DDL_List::DDL_List(QWidget *parent)
 
     left->setSpacing(5);
     left->setContentsMargins(0,0,0,0);
-    left->addLayout(up,0,0,1,3);
-    left->addWidget(tasklist,1,1,1,2);
+    left->addLayout(up,0,0,1,2);
+    left->addWidget(tasklist,1,1,1,1);
     left->setColumnStretch(0,1);
-    left->setColumnStretch(1,1);
-    left->setColumnStretch(2,4);
+    left->setColumnStretch(1,10);
     left->setRowStretch(0,1);
     left->setRowStretch(1,3);
+
+    QWidget* _1 = new QWidget(this);
+    QWidget* _2 = new QWidget(this);
+    bottom->addWidget(_1);
+    bottom->addWidget(bufflist);
+    bottom->addWidget(_2);
+    bottom->setStretchFactor(_1,1);
+    bottom->setStretchFactor(bufflist,5);
+    bottom->setStretchFactor(_2,3);
 
     right_up->setContentsMargins(0,0,0,0);
     right_up->setSpacing(0);
@@ -79,12 +89,12 @@ DDL_List::DDL_List(QWidget *parent)
     right->setSpacing(5);
     right->addLayout(right_up);
     right->addWidget(info);
-    right->addWidget(bufflist);
+    right->addLayout(bottom);
     right->setStretchFactor(right_up,1);
     right->setStretchFactor(info,3);
-    right->setStretchFactor(bufflist,1);
+    right->setStretchFactor(bottom,1);
 
-    main_lay->setSpacing(5);
+    main_lay->setSpacing(10);
     main_lay->setContentsMargins(0,0,0,0);
     main_lay->addLayout(left);
     main_lay->addLayout(right);
@@ -116,20 +126,21 @@ DDL_List::~DDL_List()
 }
 
 
-void DDL_List::add_task(const QIcon icon, const QString name, const QString info)
+void DDL_List::add_task(const QPixmap& icon, const QString& name, const QString& info)
 {
     QListWidgetItem* temp = new QListWidgetItem(icon,name,tasklist);
+    temp->setSizeHint(QSize(30,30));
     tasklist->addItem(temp);
-    taskitems[temp] = info;
+    taskitems[temp] = task_info(icon, name, info);
 }
 
-void DDL_List::add_buff(const QIcon icon, const QString name, const QString info)
+void DDL_List::add_buff(const QPixmap& icon, const QString& name, const QString& info)
 {
     QListWidgetItem* temp = new QListWidgetItem(bufflist);
     temp->setSizeHint(QSize(24,24));
-    temp->setIcon(icon.pixmap(QSize(11,11)));
+    temp->setIcon(icon.scaled(QSize(16,16)));
     bufflist->addItem(temp);
-    buffitems[temp] = std::make_pair(name, info);
+    buffitems[temp] = task_info(icon, name, info);
 }
 
 void DDL_List::remove_task(QListWidgetItem* cur)
@@ -148,28 +159,35 @@ void DDL_List::set_info(QListWidgetItem* cur, bool is_buff)
 {
     if(is_buff)
     {
-        icon->setPixmap(cur->icon().pixmap(icon->size()));
-        name->setText(QString("：%1").arg(buffitems[cur].first));
-        info->setText(buffitems[cur].second);
-    }else{
-        icon->setPixmap(cur->icon().pixmap(icon->size()));
-        name->setText(QString("：%1").arg(cur->text()));
-        info->setText(taskitems[cur]);
+        auto& temp = buffitems[cur];
+        icon->setPixmap(temp.geticon().scaled(name->size(),Qt::KeepAspectRatio));
+        name->setText(QString("：%1").arg(temp.getname()));
+        info->setFont(title->font());
+        info->setText(temp.getinfo());
+    }
+    else
+    {
+        auto& temp = taskitems[cur];
+        icon->setPixmap(temp.geticon().scaled(name->size(),Qt::KeepAspectRatio));
+        name->setText(QString("：%1").arg(temp.getname()));
+        info->setFont(title->font());
+        info->setText(temp.getinfo());
     }
 }
 
 void DDL_List::buff_click(QListWidgetItem *item)
 {
     set_info(item,true);
+    auto temp = tasklist->selectedItems();
+    for(auto& i:temp)
+        i->setSelected(false);
 }
 
 void DDL_List::task_click(QListWidgetItem *item)
 {
     set_info(item,false);
+    auto temp = bufflist->selectedItems();
+    for(auto& i:temp)
+        i->setSelected(false);
 }
 
-void DDL_List::resizeEvent(QResizeEvent* event){
-    QWidget::resizeEvent(event);
-    icon_height = title->height()-20;
-    info->setFont(name->font());
-}
