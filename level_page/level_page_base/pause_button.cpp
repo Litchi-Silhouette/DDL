@@ -7,20 +7,13 @@ pause_button::pause_button(const QString &text, QWidget *parent) :
 {
     setWindowFlags(Qt::FramelessWindowHint);
     setAttribute(Qt::WA_TranslucentBackground,true);
-    setStyleSheet("QPushButton{border:0px;}");
-    setStyleSheet("QPushButton{border-image:url(:/page/level_image/stop_nor_gray.png);}"
+    setStyleSheet("QPushButton{border-width:0px;"
+                  "border-image:url(:/page/level_image/stop_nor_gray.png);}"
                   "QPushButton:hover{border-image:url(:/page/level_image/stop_on_gray.png);}"
                   "QPushButton:pressed{border-image:url(:/page/level_image/stop_on.png);}"
                   );
     setText("");
-    setMinimumSize(QSize(20,20));
-    setMaximumSize(QSize(60,60));
-    //setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
-    setFixedSize(40,40);
-}
-
-int pause_button::heightForWidth(int w)const{
-    return w;
+    setFixedSize(50,50);
 }
 
 pause_block::pause_block(const int cur_level, QWidget* parent)

@@ -19,13 +19,14 @@ DDL_List::DDL_List(QWidget *parent)
             "QListWidget::item{background:rgba(220,220,220,0.6);height:40px;border:1px solid gray;border-radius:5px}"
             "QListWidget::item:hover{background:rgba(210,210,210,1);}"
             "QListWidget::item:selected{border-width:3;color:black}";
+
     QFont cur("Microsoft Yi Baiti",18,QFont::Bold);
     tasklist = new QListWidget(this);
     tasklist->setStyleSheet(temp);
     tasklist->setFont(cur);
     tasklist->setSpacing(5);
     tasklist->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    tasklist->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    tasklist->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     connect(tasklist, &QListWidget::itemClicked, this,&DDL_List::task_click);
     taskitems.clear();
 
@@ -126,33 +127,38 @@ DDL_List::~DDL_List()
 }
 
 
-void DDL_List::add_task(const QPixmap& icon, const QString& name, const QString& info)
+void DDL_List::add_task(const QPixmap& icon, const QString& name, const QString& info, const int index)
 {
-    QListWidgetItem* temp = new QListWidgetItem(icon,name,tasklist);
+    QListWidgetItem* temp = new QListWidgetItem(icon,name);
     temp->setSizeHint(QSize(30,30));
-    tasklist->addItem(temp);
+    tasklist->insertItem(0,temp);
     taskitems[temp] = task_info(icon, name, info);
+    all_items[index] = temp;
 }
 
-void DDL_List::add_buff(const QPixmap& icon, const QString& name, const QString& info)
+void DDL_List::add_buff(const QPixmap& icon, const QString& name, const QString& info, const int index)
 {
-    QListWidgetItem* temp = new QListWidgetItem(bufflist);
+    QListWidgetItem* temp = new QListWidgetItem;
     temp->setSizeHint(QSize(24,24));
     temp->setIcon(icon.scaled(QSize(16,16)));
-    bufflist->addItem(temp);
+    bufflist->insertItem(0,temp);
     buffitems[temp] = task_info(icon, name, info);
+    all_items[index] = temp;
 }
 
-void DDL_List::remove_task(QListWidgetItem* cur)
+void DDL_List::remove_task(const int index)
 {
+    auto& cur = all_items[index];
     taskitems.remove(cur);
     tasklist->removeItemWidget(cur);
+    all_items.remove(index);
 }
 
-void DDL_List::remove_buff(QListWidgetItem* cur)
+void DDL_List::remove_buff(const int index)
 {
+    auto& cur = all_items[index];
     buffitems.remove(cur);
-    bufflist->removeItemWidget(cur);
+    all_items.remove(index);
 }
 
 void DDL_List::set_info(QListWidgetItem* cur, bool is_buff)
@@ -178,16 +184,37 @@ void DDL_List::set_info(QListWidgetItem* cur, bool is_buff)
 void DDL_List::buff_click(QListWidgetItem *item)
 {
     set_info(item,true);
-    auto temp = tasklist->selectedItems();
-    for(auto& i:temp)
-        i->setSelected(false);
+    clearTaskSelected();
 }
 
 void DDL_List::task_click(QListWidgetItem *item)
 {
     set_info(item,false);
-    auto temp = bufflist->selectedItems();
+    clearBuffSelected();
+}
+
+void DDL_List::showBuff(const int index){
+    auto& cur = all_items[index];
+    set_info(cur,true);
+    clearBuffSelected();
+    clearTaskSelected();
+}
+
+void DDL_List::showTask(const int index){
+    auto& cur = all_items[index];
+    set_info(cur,false);
+    clearBuffSelected();
+    clearTaskSelected();
+}
+
+void DDL_List::clearTaskSelected(){
+    auto temp = tasklist->selectedItems();
     for(auto& i:temp)
         i->setSelected(false);
 }
 
+void DDL_List::clearBuffSelected(){
+    auto temp = bufflist->selectedItems();
+    for(auto& i:temp)
+        i->setSelected(false);
+}

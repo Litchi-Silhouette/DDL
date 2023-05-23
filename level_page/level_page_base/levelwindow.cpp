@@ -3,6 +3,7 @@
 #include <QSizePolicy>
 #include <QLayout>
 #include <QDialog>
+#include <QGraphicsEffect>
 #include <QMessageBox>
 
 LevelWindow::LevelWindow(QWidget *parent, const int cur_level)
@@ -11,7 +12,7 @@ LevelWindow::LevelWindow(QWidget *parent, const int cur_level)
     , level(cur_level), live(100)
 {
     ui->setupUi(this);
-    setWindowFlags(Qt::FramelessWindowHint);
+    //setWindowFlags(Qt::FramelessWindowHint);
     QIcon window(QString(":/page/level_image/icon_w.png"));
     setWindowIcon(window);
     setWindowTitle(QString("Escape form Dead Line!"));
@@ -31,8 +32,11 @@ LevelWindow::LevelWindow(QWidget *parent, const int cur_level)
 
     list = new DDL_List(this);
     QPixmap test(":/page/level_image/icon_w.png");
-    list->add_task(test,"sdf","asd");
-    list->add_buff(test,"agfqf","sdga");
+    list->add_task(test,"sdf","asd",1);
+    list->add_task(test,"sdf","asd",3);
+    list->add_task(test,"sdf","asd",4);
+    list->add_task(test,"ssf","asd",5);
+    list->add_buff(test,"agfqf","sdga",2);
 
     map_border = new QFrame(this);
     map_border->setFrameShadow(QFrame::Sunken);
@@ -40,8 +44,11 @@ LevelWindow::LevelWindow(QWidget *parent, const int cur_level)
     map_border->setLineWidth(5);
     map_border->setMidLineWidth(5);
 
+    pauseDlg  = new PauseDialog(this);
+
     auto up = new QHBoxLayout;
     auto main_lay = new QVBoxLayout;
+
     up->setContentsMargins(5,5,5,0);
     up->setSpacing(5);
     up->addWidget(list);
@@ -73,24 +80,36 @@ LevelWindow::~LevelWindow()
     delete warning;
     delete pause_b;
     delete map_border;
+    delete pauseDlg;
 }
 
 void LevelWindow::pause(){
     //实现pause
     timer_update->stop();
     pause_b->pause_time();
-    QMessageBox temp(this);
-    temp.setIcon(QMessageBox::Information);
-    temp.setText(QString("Sure to exit?"));
+    QGraphicsBlurEffect *blureffect = new QGraphicsBlurEffect;
+    blureffect->setBlurRadius(30);
+    setGraphicsEffect(blureffect);
 
-    QPushButton *yesBtn = temp.addButton(QString("exit(&Y)"),
-                                        QMessageBox::YesRole );
-    QPushButton *canBtn = temp.addButton(QString("cancel"),
-                                         QMessageBox::RejectRole);
-
-    temp.exec();
-    if(temp.clickedButton() == yesBtn)
-        close();
-    else if(temp.clickedButton() == canBtn)
+    pauseDlg->exec();
+    switch (pauseDlg->getChoice()) {
+    case 1:
+        hide();
+        menu->show();
+        break;
+    case 2:
+        //restart
+        break;
+    case 3:
         pause_b->start_time();
+        break;
+    default:
+        break;
+    }
+    blureffect->setBlurRadius(0);
+    setGraphicsEffect(blureffect);
+}
+
+void LevelWindow::setMenu(QMainWindow* _menu){
+    menu = _menu;
 }

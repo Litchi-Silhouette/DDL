@@ -32,17 +32,22 @@ public:
     ~DDL_List();
     void set_ini_task(int fin = 0, int all = 0);
     void update_finish();
-    void add_task(const QPixmap&, const QString&, const QString&);
-    void add_buff(const QPixmap&, const QString&, const QString&);
-    void remove_task(QListWidgetItem*);
-    void remove_buff(QListWidgetItem*);
-    void set_info(QListWidgetItem*, bool is_buff = false);
+    void add_task(const QPixmap&, const QString&, const QString&, const int);
+    void add_buff(const QPixmap&, const QString&, const QString&, const int);
+    void remove_task(const int index);
+    void remove_buff(const int index);
+    void showTask(const int index);
+    void showBuff(const int index);
 signals:
 private slots:
     void task_click(QListWidgetItem *item);
     void buff_click(QListWidgetItem *item);
 
 private:
+    void set_info(QListWidgetItem*, bool is_buff = false);
+    void clearTaskSelected();
+    void clearBuffSelected();
+
     QListWidget* tasklist;
     QListWidget* bufflist;
     MyLabel* title;
@@ -53,8 +58,10 @@ private:
 
     int finished = 0;
     int all_task = 0;
+
     static QHash<QListWidgetItem*, task_info> taskitems;
     static QHash<QListWidgetItem*, task_info> buffitems;
+    static QHash<int , QListWidgetItem*> all_items;
 };
 
 #endif // DDL_LIST_H

@@ -15,6 +15,7 @@ SOURCES += \
     levelwindow.cpp \
     mylabel.cpp \
     pause_button.cpp \
+    set_pausedialog.cpp \
     warning_icon.cpp
 
 HEADERS += \
@@ -23,6 +24,7 @@ HEADERS += \
     live_bar.h \
     mylabel.h \
     pause_button.h \
+    set_pausedialog.h \
     warning_icon.h
 
 FORMS += \

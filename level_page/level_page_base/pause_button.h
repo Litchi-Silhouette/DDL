@@ -8,7 +8,6 @@ class pause_button : public QPushButton
     Q_OBJECT
 public:
     explicit pause_button(const QString& text, QWidget *parent = nullptr);
-    int heightForWidth(int w) const;
 };
 
 #endif // PAUSE_BUTTON_H
