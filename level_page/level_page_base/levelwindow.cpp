@@ -2,41 +2,35 @@
 #include "ui_levelwindow.h"
 #include <QSizePolicy>
 #include <QLayout>
-#include <QDialog>
-#include <QGraphicsEffect>
-#include <QMessageBox>
 
 LevelWindow::LevelWindow(QWidget *parent, const int cur_level)
     : QMainWindow(parent)
     , ui(new Ui::LevelWindow)
-    , level(cur_level), live(100)
+    , level(cur_level)
 {
     ui->setupUi(this);
-    //setWindowFlags(Qt::FramelessWindowHint);
+    setWindowFlags(Qt::FramelessWindowHint);
     QIcon window(QString(":/page/level_image/icon_w.png"));
     setWindowIcon(window);
     setWindowTitle(QString("Escape form Dead Line!"));
     setStyleSheet("QMainWindow{background: rgba(245,245,245,1);}");
-    setGeometry(200,150,800,450);
+    setGeometry(0,0,1200,675);
 
     pause_b = new pause_block(level,this);
     pause_b->setMaximumWidth(150);
     connect(pause_b->btn, &QPushButton::clicked, this, &LevelWindow::pause);
-    pause_b->start_time();
 
     bar = new KeepRatioLiveBar(this);
-    bar->set_live(live);
 
     warning = new KeepRatioWarning(this);
-    warning->set_mode(2);
 
-    list = new DDL_List(this);
-    QPixmap test(":/page/level_image/icon_w.png");
-    list->add_task(test,"sdf","asd",1);
-    list->add_task(test,"sdf","asd",3);
-    list->add_task(test,"sdf","asd",4);
-    list->add_task(test,"ssf","asd",5);
-    list->add_buff(test,"agfqf","sdga",2);
+    auto it = gamePages.all_buffs.find(level);
+    if(it == gamePages.all_buffs.end())
+        gamePages.all_buffs[level] = new ItemHash;
+    it = gamePages.all_tasks.find(level);
+    if(it == gamePages.all_tasks.end())
+        gamePages.all_tasks[level] = new ItemHash;
+    list = new DDL_List(this, &gamePages.all_items , gamePages.all_tasks[level], gamePages.all_buffs[level]);
 
     map_border = new QFrame(this);
     map_border->setFrameShadow(QFrame::Sunken);
@@ -45,6 +39,7 @@ LevelWindow::LevelWindow(QWidget *parent, const int cur_level)
     map_border->setMidLineWidth(5);
 
     pauseDlg  = new PauseDialog(this);
+    startDlg = new StartDialog(this);
 
     auto up = new QHBoxLayout;
     auto main_lay = new QVBoxLayout;
@@ -67,9 +62,7 @@ LevelWindow::LevelWindow(QWidget *parent, const int cur_level)
     main_lay->setStretchFactor(up,6);
     main_lay->setStretchFactor(map_border,21);
 
-    this->centralWidget()->setLayout(main_lay);
-    timer_update = new QTimer(this);
-    timer_update->start(interval);
+    centralWidget()->setLayout(main_lay);
 }
 
 LevelWindow::~LevelWindow()
@@ -81,35 +74,105 @@ LevelWindow::~LevelWindow()
     delete pause_b;
     delete map_border;
     delete pauseDlg;
+    delete blureffect;
 }
 
 void LevelWindow::pause(){
-    //实现pause
-    timer_update->stop();
-    pause_b->pause_time();
-    QGraphicsBlurEffect *blureffect = new QGraphicsBlurEffect;
-    blureffect->setBlurRadius(30);
-    setGraphicsEffect(blureffect);
+    setBlur(30);
+    pauseGameProcess(true);
 
     pauseDlg->exec();
     switch (pauseDlg->getChoice()) {
     case 1:
         hide();
-        menu->show();
         break;
     case 2:
-        //restart
+        restart();
         break;
     case 3:
-        pause_b->start_time();
+        pauseGameProcess(false);
         break;
     default:
         break;
     }
-    blureffect->setBlurRadius(0);
+    setBlur(0);
+}
+
+void LevelWindow::setBlur(int extent){
+    blureffect->setBlurRadius(extent);
     setGraphicsEffect(blureffect);
 }
 
-void LevelWindow::setMenu(QMainWindow* _menu){
-    menu = _menu;
+void LevelWindow::startText1(){
+    setBlur(10);
+    startDlg->open();
+    startDlg->setStartText("好",90);
+    QTimer::singleShot(1500,this, &LevelWindow::startText2);
 }
+
+void LevelWindow::startText2(){
+    startDlg->setStartText("准备",60);
+    QTimer::singleShot(1500,this, &LevelWindow::startText3);
+}
+
+void LevelWindow::startText3(){
+    startDlg->setStartText("开始",80);
+    QTimer::singleShot(1500,this, &LevelWindow::startCount);
+}
+
+void LevelWindow::startCount(){
+    startDlg->close();
+    setBlur(0);
+    pause_b->start_time();
+    state = 1;
+}
+
+void LevelWindow::endGame(){
+    setBlur(10);
+    startDlg->open();
+    startDlg->setStartText("游戏结束",50);
+    QTimer::singleShot(1500, this, &LevelWindow::turnNext);
+}
+
+void LevelWindow::turnNext(){
+    startDlg->close();
+    hide();
+}
+
+void LevelWindow::showEvent(QShowEvent* event){
+    QMainWindow::showEvent(event);
+    if(state == 0)
+    {
+        update_live();
+        update_finish();
+        set_mode(0);
+        QTimer::singleShot(1000,this, &LevelWindow::startText1);
+    }
+    else if(state ==1 || state == 2)
+        QTimer::singleShot(100,this, &LevelWindow::pause);
+}
+
+void LevelWindow::pauseGameProcess(bool pause){
+    if(pause)
+    {
+        state = 2;
+        pause_b->pause_time();
+    }
+    else
+    {
+        pause_b->start_time();
+        state = 1;
+    }
+}
+
+void LevelWindow::hideEvent(QHideEvent* event){
+    QMainWindow::hideEvent(event);
+    gamePages.nextlevel((level+1)%2+1)->show();
+}
+
+void LevelWindow::restart(){
+    clearList();
+    state = 1;
+    pause_b->start_time();
+}
+

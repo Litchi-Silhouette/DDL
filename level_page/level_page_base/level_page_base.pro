@@ -10,15 +10,16 @@ CONFIG += c++17
 
 SOURCES += \
     ddl_list.cpp \
+    levelwindow.cpp \
     live_bar.cpp \
     main.cpp \
-    levelwindow.cpp \
     mylabel.cpp \
     pause_button.cpp \
     set_pausedialog.cpp \
     warning_icon.cpp
 
 HEADERS += \
+    Game.h \
     ddl_list.h \
     levelwindow.h \
     live_bar.h \

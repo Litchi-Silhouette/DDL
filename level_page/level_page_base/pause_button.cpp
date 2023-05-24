@@ -16,8 +16,8 @@ pause_button::pause_button(const QString &text, QWidget *parent) :
     setFixedSize(50,50);
 }
 
-pause_block::pause_block(const int cur_level, QWidget* parent)
-    :QWidget(parent),level(cur_level),time(0)
+pause_block::pause_block(const int cur_level, QWidget* parent, int startTime)
+    :QWidget(parent),level(cur_level),time(startTime)
 {
     setWindowFlags(Qt::FramelessWindowHint);
     setAttribute(Qt::WA_TranslucentBackground,true);

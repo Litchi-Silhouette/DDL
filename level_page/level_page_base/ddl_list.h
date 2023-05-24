@@ -4,40 +4,24 @@
 #include <QWidget>
 #include <QListWidget>
 #include "mylabel.h"
-#include <QHash>
-
-class task_info{
-    QPixmap icon;
-    QString info;
-    QString name;
-public:
-    explicit task_info(const QPixmap& _icon = QPixmap(), const QString& _name = "", const QString& _info = "")
-        :icon(_icon), info(_info), name(_name){}
-    QPixmap& geticon(){
-        return icon;
-    }
-    QString& getname(){
-        return name;
-    }
-    QString& getinfo(){
-        return info;
-    }
-};
+#include "Game.h"
 
 class DDL_List : public QWidget
 {
     Q_OBJECT
 public:
-    explicit DDL_List(QWidget *parent = nullptr);
+    explicit DDL_List(QWidget *parent = nullptr, QHash<int , QListWidgetItem*>* _all = nullptr,
+                      QHash<QListWidgetItem*, task_info>* _task = nullptr, QHash<QListWidgetItem*, task_info>* _buff = nullptr);
     ~DDL_List();
     void set_ini_task(int fin = 0, int all = 0);
-    void update_finish();
+    void update_finish(const int);
     void add_task(const QPixmap&, const QString&, const QString&, const int);
     void add_buff(const QPixmap&, const QString&, const QString&, const int);
     void remove_task(const int index);
     void remove_buff(const int index);
     void showTask(const int index);
     void showBuff(const int index);
+    void clear();
 signals:
 private slots:
     void task_click(QListWidgetItem *item);
@@ -59,9 +43,9 @@ private:
     int finished = 0;
     int all_task = 0;
 
-    static QHash<QListWidgetItem*, task_info> taskitems;
-    static QHash<QListWidgetItem*, task_info> buffitems;
-    static QHash<int , QListWidgetItem*> all_items;
+    QHash<QListWidgetItem*, task_info>* taskitems;
+    QHash<QListWidgetItem*, task_info>* buffitems;
+    QHash<int , QListWidgetItem*>* allitems;
 };
 
 #endif // DDL_LIST_H

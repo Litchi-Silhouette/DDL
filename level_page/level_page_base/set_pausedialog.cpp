@@ -6,10 +6,10 @@ MyDialog::MyDialog(QWidget *parent)
     setMouseTracking(true);
     Qt::WindowFlags flags = Qt::Dialog;
     flags |= Qt::FramelessWindowHint;
-    flags |= Qt::Tool; //程序不在任务栏显示
+    flags |= Qt::Tool;                 //程序不在任务栏显示
     flags |= Qt::WindowStaysOnTopHint; //置顶显示
     setWindowFlags(flags);
-    setAttribute(Qt::WA_TranslucentBackground);
+    setAttribute(Qt::WA_TranslucentBackground, true);
 }
 
 PauseDialog::PauseDialog(QWidget* parent)
@@ -22,7 +22,6 @@ PauseDialog::PauseDialog(QWidget* parent)
                   "QPushButton:pressed{border-image:url(:/page/level_image/back.png);}"
                   );
     backBtn->setFixedSize(80,80);
-    backBtn->setMask(mask.mask());
     connect(backBtn, &QPushButton::clicked, this, &PauseDialog::back);
     restartBtn = new QPushButton(this);
     restartBtn->setStyleSheet("QPushButton{border-width:0px;"
@@ -30,7 +29,6 @@ PauseDialog::PauseDialog(QWidget* parent)
                   "QPushButton:hover{border-image:url(:/page/level_image/restart.png);}"
                   );
     restartBtn->setFixedSize(80,80);
-    backBtn->setMask(mask.mask());
     connect(restartBtn,&QPushButton::clicked, this, &PauseDialog::restart);
     continueBtn = new QPushButton(this);
     continueBtn->setStyleSheet("QPushButton{border:0px;"
@@ -39,7 +37,6 @@ PauseDialog::PauseDialog(QWidget* parent)
                   "QPushButton:pressed{border-image:url(:/page/level_image/continue.png);}"
                   );
     continueBtn->setFixedSize(80,80);
-    backBtn->setMask(mask.mask());
     connect(continueBtn, &QPushButton::clicked, this, &PauseDialog::conti);
 
     main_lay = new QHBoxLayout(this);
@@ -75,4 +72,24 @@ void PauseDialog::back(){
 void PauseDialog::conti(){
     choice = 3;
     close();
+}
+
+StartDialog::StartDialog(QWidget* parent)
+    :MyDialog(parent)
+{
+    literature = new QLabel(this);
+    literature->setFont(QFont("STHupo", 20, QFont::Bold));
+    literature->setAlignment(Qt::AlignCenter);
+    literature->setMinimumSize(400,200);
+}
+
+StartDialog::~StartDialog(){
+    delete literature;
+}
+
+void StartDialog::setStartText(const QString& _text, int fontSize){
+    auto temp = literature->font();
+    temp.setPointSize(fontSize);
+    literature->setFont(temp);
+    literature->setText(_text);
 }

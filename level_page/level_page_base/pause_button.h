@@ -22,7 +22,7 @@ class pause_block: public QWidget
 {
     Q_OBJECT
 public:
-    explicit pause_block(const int cur_level,QWidget* parent = nullptr);
+    explicit pause_block(const int cur_level,QWidget* parent = nullptr, int startTime = 0);
     ~pause_block();
     void start_time();
     void pause_time();
@@ -84,13 +84,16 @@ protected:
         QSize old_size = event->oldSize();
         QSize new_size = event->size();
         if(width_ratio && height_ratio)
+        {
             if(new_size.width()<width_ratio*new_size.height()/height_ratio){
                 new_size.setHeight(height_ratio*new_size.width()/width_ratio);
                 center->move(0,(old_size.height()-new_size.height())/2);
-            }else if(new_size.width()>width_ratio*new_size.height()/height_ratio){
+            }
+            if(new_size.width()>width_ratio*new_size.height()/height_ratio){
                 new_size.setWidth(width_ratio*new_size.height()/height_ratio);
                 center->move((old_size.width()-new_size.width())/2,0);
             }
+        }
         center->resize(new_size);
     }
 signals:

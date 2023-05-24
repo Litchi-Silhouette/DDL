@@ -18,7 +18,6 @@ signals:
 #ifndef PAUSEDIALOG_H
 #define PAUSEDIALOG_H
 
-#include <QDialog>
 #include <QLayout>
 #include <QPushButton>
 
@@ -39,8 +38,26 @@ private:
     QPushButton* backBtn;
     QPushButton* restartBtn;
     QPushButton* continueBtn;
-    QPixmap mask = QPixmap(":/page/level_image/back_on_gray.png").scaled(80,80);
     int choice = 0;
 };
 
 #endif // MYDIALOG_H
+
+#ifndef STARTDIALOG_H
+#define STARTDIALOG_H
+#include<QLabel>
+#include <QLayout>
+
+class StartDialog : public MyDialog
+{
+    Q_OBJECT
+public:
+    explicit StartDialog(QWidget *parent = nullptr);
+    ~StartDialog();
+    void setStartText(const QString& _text, int fontsize);
+signals:
+private:
+    QLabel* literature;
+};
+
+#endif // STARTDIALOG_H

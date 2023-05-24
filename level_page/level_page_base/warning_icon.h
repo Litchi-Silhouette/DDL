@@ -11,7 +11,7 @@ public:
     explicit warning_icon(QWidget *parent = nullptr);
     void set_mode(int);
     void set_size(double dis = 0);
-    void set_change(double _Icon_max, double _Icon_min, double _dis_max, double _dis_min);
+    void set_change(double _dis_max, double _dis_min, double _Icon_max, double _Icon_min);
 protected:
     void paintEvent(QPaintEvent* event);
     void resizeEvent(QResizeEvent* event);
@@ -20,7 +20,7 @@ protected:
 private slots:
     void shake();
 private:
-    int mode;  //0:不显示 1：显示 2：颤动
+    int mode;   //0:不显示 1：显示 2：颤动
     QTimer* timer;
     QSize icon;
     QPixmap map;
@@ -69,8 +69,8 @@ public:
     void set_size(double dis = 0){
         center->set_size(dis);
     }
-    void set_change(double _Icon_max, double _Icon_min, double _dis_max, double _dis_min){
-        center->set_change(_Icon_max,_Icon_min,_dis_max,_dis_min);
+    void set_change(double _dis_max, double _dis_min, double _Icon_max, double _Icon_min){
+        center->set_change(_dis_max,_dis_min, _Icon_max,_Icon_min);
     }
 
 protected:
@@ -78,13 +78,16 @@ protected:
         QSize old_size = event->oldSize();
         QSize new_size = event->size();
         if(width_ratio && height_ratio)
+        {
             if(new_size.width()<width_ratio*new_size.height()/height_ratio){
                 new_size.setHeight(height_ratio*new_size.width()/width_ratio);
                 center->move(0,(old_size.height()-new_size.height())/2);
-            }else if(new_size.width()>width_ratio*new_size.height()/height_ratio){
+            }
+            if(new_size.width()>width_ratio*new_size.height()/height_ratio){
                 new_size.setWidth(width_ratio*new_size.height()/height_ratio);
                 center->move((old_size.width()-new_size.width())/2,0);
             }
+        }
         center->resize(new_size);
     }
 signals:

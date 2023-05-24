@@ -74,7 +74,6 @@ void warning_icon::resizeEvent(QResizeEvent* event)
 {
     QWidget::resizeEvent(event);
     set_size();
-    update();
 }
 
 void warning_icon::shake()
@@ -86,13 +85,14 @@ void warning_icon::shake()
 }
 
 void warning_icon::set_size(double dis){
-    if(!dis)
-        icon = size()*2/3;
+    if(!dis || mode != 1 )
+        icon = size()*Icon_max;
     else
         icon = size()*(Icon_min+(Icon_max-Icon_min)*dis/(dis_max-dis_min));
+    update();
 }
 
-void warning_icon::set_change(double _Icon_max, double _Icon_min, double _dis_max, double _dis_min){
+void warning_icon::set_change(double _dis_max, double _dis_min, double _Icon_max, double _Icon_min){
     Icon_max = _Icon_max;
     Icon_min = _Icon_min;
     dis_max = _dis_max;
