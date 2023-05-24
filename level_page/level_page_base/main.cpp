@@ -8,6 +8,6 @@ int main(int argc, char *argv[])
     LevelWindow w(nullptr,1), p(nullptr, 2);
     w.gamePages.levels[1] = &p;
     p.gamePages.levels[2] = &w;
-    w.show();
+    w.showFullScreen();
     return a.exec();
 }

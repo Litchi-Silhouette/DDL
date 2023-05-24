@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>LevelWindow</class>
- <widget class="QMainWindow" name="LevelWindow">
+ <class>StartWindow</class>
+ <widget class="QMainWindow" name="StartWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,10 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
-  </property>
-  <property name="styleSheet">
-   <string notr="true">QMainWindow{background: rgba(245,245,245,1);}</string>
+   <string>StartWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget"/>
  </widget>

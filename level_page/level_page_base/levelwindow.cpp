@@ -13,7 +13,6 @@ LevelWindow::LevelWindow(QWidget *parent, const int cur_level)
     QIcon window(QString(":/page/level_image/icon_w.png"));
     setWindowIcon(window);
     setWindowTitle(QString("Escape form Dead Line!"));
-    setStyleSheet("QMainWindow{background: rgba(245,245,245,1);}");
     setGeometry(0,0,1200,675);
 
     pause_b = new pause_block(level,this);
@@ -62,7 +61,7 @@ LevelWindow::LevelWindow(QWidget *parent, const int cur_level)
     main_lay->setStretchFactor(up,6);
     main_lay->setStretchFactor(map_border,21);
 
-    centralWidget()->setLayout(main_lay);
+    ui->centralwidget->setLayout(main_lay);
 }
 
 LevelWindow::~LevelWindow()
@@ -167,7 +166,7 @@ void LevelWindow::pauseGameProcess(bool pause){
 
 void LevelWindow::hideEvent(QHideEvent* event){
     QMainWindow::hideEvent(event);
-    gamePages.nextlevel((level+1)%2+1)->show();
+    gamePages.nextlevel((level+1)%2+1)->showFullScreen();
 }
 
 void LevelWindow::restart(){
