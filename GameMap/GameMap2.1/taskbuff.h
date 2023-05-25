@@ -1,0 +1,47 @@
+#ifndef TASKBUFF_H
+#define TASKBUFF_H
+
+#include <QWidget>
+#include <QTime>
+#include <config.h>
+#include <QString>
+#include <QLabel>
+#include "config.h"
+
+
+
+class GameMap;
+
+class TaskBuff : public QLabel{
+    Q_OBJECT
+public:
+    static int total_task,total_buff;
+    static int finished_task;
+    static int missed_task;
+    int id; //start from 0; (when a taskbuff is created)id = total_task + total_buff
+    int x_id,y_id;//在第几格，仅限第一关；后续代码一样，x_id表示格子数，x表示坐标
+    bool activated;//是否被触发（是否显示，玩家是否吃到）
+    QString type;//"Task" or "Buff"
+    QString name;
+    QString explanation;
+    QString img_path;
+    int appear_time,disappear_time;
+    GameMap * parent_gamemap;
+
+    explicit TaskBuff(GameMap *parent = nullptr, int _x_id = -1, int _y_id = -1, int _appear_time = -1, int _disappear_time = -1);
+    ~TaskBuff();
+
+    void embed_image(QString path);
+    void set_explanation(QString _explanation);
+    void set_name(QString _name);
+
+    virtual void effect(){return;};//触发效果
+    virtual void end_effect(){return;};//延时结束效果
+    void add_processor(int delay_time, int _type = 0);
+
+
+};
+
+
+
+#endif // TASKBUFF_H
