@@ -26,11 +26,6 @@ public:
 
     void endGame();
 protected:
-    void showEvent(QShowEvent* event);
-    void hideEvent(QHideEvent* event);
-    virtual void restart();
-    virtual void pauseGameProcess(bool pause);
-public:
     //DDL_List 部分操作
     void resettask(int fin = 0, int all = 0){
         finished = fin;
@@ -105,12 +100,16 @@ public:
 protected slots:
     void pause();
     void turnNext();
+    void showEvent(QShowEvent* event);
+    void hideEvent(QHideEvent* event);
+    virtual void startCount();
+    virtual void restart();
+    virtual void pauseGameProcess(bool pause);
 
 private slots:
     void startText1();
     void startText2();
     void startText3();
-    void startCount();
 private:
     void setBlur(int extent);
 
@@ -139,4 +138,5 @@ private:
  * Game类是串联的类，现阶段不应改，main函数只要改掉相应的构造就行
  * 运行结束只能用任务管理器（嘿嘿嘿）嫌麻烦可以注释掉hideevent
  * 包含代码时注意删除或重写main,要声明gamePage成员变量
+ * startCount函数是游戏正式开始的函数，如有需要可继承后重写
 */
