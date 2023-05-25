@@ -11,16 +11,19 @@ CONFIG += c++17
 SOURCES += \
     loadwindow.cpp \
     main.cpp \
+    menuwindow.cpp \
     set_pausedialog.cpp \
     startwindow.cpp
 
 HEADERS += \
     loadwindow.h \
+    menuwindow.h \
     set_pausedialog.h \
     startwindow.h
 
 FORMS += \
     loadwindow.ui \
+    menuwindow.ui \
     startwindow.ui
 
 # Default rules for deployment.

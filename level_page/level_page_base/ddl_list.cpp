@@ -9,7 +9,7 @@ DDL_List::DDL_List(QWidget *parent, QHash<int , QListWidgetItem*>* _all,
     setWindowFlags(Qt::FramelessWindowHint);
     setAttribute(Qt::WA_TranslucentBackground,true);
 
-    title = new MyLabel(this, "任务：");
+    title = new MyLabel(this, "任务");
     title->setMinimumSize(30,30);
     title->setAlignment(Qt::AlignLeft|Qt::AlignVCenter);
     finish = new MyLabel(this);
@@ -19,7 +19,8 @@ DDL_List::DDL_List(QWidget *parent, QHash<int , QListWidgetItem*>* _all,
     QString temp = "QListWidget{background: rgba(220,220,220,0.6); border:0px;border-radius:5px}"
             "QListWidget::item{background:rgba(220,220,220,0.6);height:40px;border:1px solid gray;border-radius:5px}"
             "QListWidget::item:hover{background:rgba(210,210,210,1);}"
-            "QListWidget::item:selected{border-width:3;color:black}";
+            "QListWidget::item:selected{border-width:3;color:black}"
+            "QListWidget::item:selected:active{border-width:3;color:black}";
 
     QFont cur("Microsoft Yi Baiti",18,QFont::Bold);
     tasklist = new QListWidget(this);
@@ -28,6 +29,7 @@ DDL_List::DDL_List(QWidget *parent, QHash<int , QListWidgetItem*>* _all,
     tasklist->setSpacing(5);
     tasklist->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     tasklist->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    tasklist->setFocusPolicy(Qt::NoFocus);
     connect(tasklist, &QListWidget::itemClicked, this,&DDL_List::task_click);
 
     bufflist = new QListWidget(this);
@@ -36,14 +38,15 @@ DDL_List::DDL_List(QWidget *parent, QHash<int , QListWidgetItem*>* _all,
     bufflist->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     connect(bufflist, &QListWidget::itemClicked, this,&DDL_List::buff_click);
     bufflist->setViewMode(QListView::IconMode);
+    bufflist->setFocusPolicy(Qt::NoFocus);
     bufflist->setMinimumSize(50,30);
 
-    name = new MyLabel(this,"：Easecaping!");
+    name = new QLabel(" Escaping!", this);
     name->setAlignment(Qt::AlignLeft|Qt::AlignBottom);
     icon = new QLabel(this);
     icon->setAlignment(Qt::AlignBottom|Qt::AlignRight);
     info = new QLabel(this);
-    info->setAlignment(Qt::AlignTop|Qt::AlignHCenter);
+    info->setAlignment(Qt::AlignTop|Qt::AlignLeft);
 
     clear();
 
@@ -127,22 +130,24 @@ DDL_List::~DDL_List()
 }
 
 
-void DDL_List::add_task(const QPixmap& icon, const QString& name, const QString& info, const int index)
+void DDL_List::add_task(const QPixmap& icon, const QString& name,
+                        const QString& info, const int index, const bool isRed)
 {
     QListWidgetItem* temp = new QListWidgetItem(icon,name);
     temp->setSizeHint(QSize(30,30));
     tasklist->insertItem(0,temp);
-    taskitems->insert(temp, task_info(icon, name, info));
+    taskitems->insert(temp, task_info(icon, name, info, isRed));
     allitems->insert(index, temp);
 }
 
-void DDL_List::add_buff(const QPixmap& icon, const QString& name, const QString& info, const int index)
+void DDL_List::add_buff(const QPixmap& icon, const QString& name,
+                        const QString& info, const int index, const bool isRed)
 {
     QListWidgetItem* temp = new QListWidgetItem;
     temp->setSizeHint(QSize(24,24));
     temp->setIcon(icon.scaled(QSize(16,16)));
     bufflist->insertItem(0,temp);
-    buffitems->insert(temp, task_info(icon, name, info));
+    buffitems->insert(temp, task_info(icon, name, info, isRed));
     allitems->insert(index, temp);
     temp->setSelected(true);
     buff_click(temp);
@@ -153,7 +158,9 @@ void DDL_List::remove_task(const int index)
     auto& cur = allitems->find(index).value();
     taskitems->remove(cur);
     tasklist->removeItemWidget(cur);
+    delete cur;
     allitems->remove(index);
+    showIni();
 }
 
 void DDL_List::remove_buff(const int index)
@@ -161,53 +168,87 @@ void DDL_List::remove_buff(const int index)
     auto& cur = allitems->find(index).value();
     buffitems->remove(cur);
     bufflist->removeItemWidget(cur);
+    delete cur;
     allitems->remove(index);
+    showIni();
 }
 
-void DDL_List::set_info(QListWidgetItem* cur, bool is_buff)
+void DDL_List::set_info(QListWidgetItem* cur, bool is_buff, bool is_nor)
 {
+    auto curTFont = title->font();
+    auto curFFont = curTFont;
+    if(is_nor)
+    {
+        QPalette pe = title->palette();
+        name->setPalette(pe);
+        info->setPalette(pe);
+    }
+    else
+    {
+        QPalette pe = title->palette();
+        pe.setColor(QPalette::WindowText,Qt::red);
+        name->setPalette(pe);
+        info->setPalette(pe);
+    }
+    curFFont.setBold(false);
     if(is_buff)
     {
         auto& temp = buffitems->find(cur).value();
         icon->setPixmap(temp.geticon().scaled(name->size(),Qt::KeepAspectRatio));
-        name->setText(QString("：%1").arg(temp.getname()));
-        info->setFont(title->font());
+        name->setFont(curTFont);
+        name->setText(QString(" %1").arg(temp.getname()));
+        info->setFont(curFFont);
         info->setText(temp.getinfo());
     }
     else
     {
         auto& temp = taskitems->find(cur).value();
         icon->setPixmap(temp.geticon().scaled(name->size(),Qt::KeepAspectRatio));
-        name->setText(QString("：%1").arg(temp.getname()));
-        info->setFont(title->font());
+        name->setFont(curTFont);
+        name->setText(QString(" %1").arg(temp.getname()));
+        info->setFont(curFFont);
         info->setText(temp.getinfo());
     }
 }
 
 void DDL_List::buff_click(QListWidgetItem *item)
 {
-    set_info(item,true);
+    bool red = buffitems->find(item).value().getRed();
+    set_info(item,true,!red);
     clearTaskSelected();
 }
 
 void DDL_List::task_click(QListWidgetItem *item)
 {
-    set_info(item,false);
+    bool red = taskitems->find(item).value().getRed();
+    set_info(item,false,!red);
     clearBuffSelected();
 }
 
 void DDL_List::showBuff(const int index){
     auto& cur = allitems->find(index).value();
-    set_info(cur,true);
+    bool red = buffitems->find(cur).value().getRed();
+    set_info(cur,true,!red);
     clearBuffSelected();
     clearTaskSelected();
 }
 
 void DDL_List::showTask(const int index){
     auto& cur = allitems->find(index).value();
-    set_info(cur,false);
+    bool red = taskitems->find(cur).value().getRed();
+    set_info(cur,false,!red);
     clearBuffSelected();
     clearTaskSelected();
+}
+
+void DDL_List::changeTaskColour(const int index, bool red){
+    auto& cur = allitems->find(index).value();
+    taskitems->find(cur).value().getRed() = red;
+}
+
+void DDL_List::changeBuffColour(const int index, bool red){
+    auto& cur = allitems->find(index).value();
+    buffitems->find(cur).value().getRed() = red;
 }
 
 void DDL_List::clearTaskSelected(){
@@ -227,9 +268,15 @@ void DDL_List::clear(){
     bufflist->clear();
     taskitems->clear();
     buffitems->clear();
+    showIni();
+    finished = 0;
+}
 
-    name->setText("：Easecaping!");
+void DDL_List::showIni(){
+    name->setText(" Easecaping!");
     QPixmap ini(":/page/level_image/icon_w.png");
     icon->setPixmap(ini.scaled(name->size(),Qt::KeepAspectRatio));
-    finished = 0;
+    info->setText("");
+    clearBuffSelected();
+    clearTaskSelected();
 }

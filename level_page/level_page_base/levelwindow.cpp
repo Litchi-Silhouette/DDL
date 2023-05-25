@@ -77,7 +77,7 @@ LevelWindow::~LevelWindow()
 
 void LevelWindow::pause(){
     setBlur(30);
-    pauseGameProcess(true);
+    changeGameProcess(true);
 
     pauseDlg->exec();
     switch (pauseDlg->getChoice()) {
@@ -88,7 +88,7 @@ void LevelWindow::pause(){
         restart();
         break;
     case 3:
-        pauseGameProcess(false);
+        changeGameProcess(false);
         break;
     default:
         break;
@@ -142,7 +142,7 @@ void LevelWindow::showEvent(QShowEvent* event){
     if(state == 0)
     {
         update_live();
-        update_finish();
+        update_List();
         set_mode(0);
         QTimer::singleShot(1000,this, &LevelWindow::startText1);
     }
@@ -150,7 +150,7 @@ void LevelWindow::showEvent(QShowEvent* event){
         QTimer::singleShot(100,this, &LevelWindow::pause);
 }
 
-void LevelWindow::pauseGameProcess(bool pause){
+void LevelWindow::changeGameProcess(bool pause){
     if(pause)
     {
         state = 2;

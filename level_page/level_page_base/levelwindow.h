@@ -32,21 +32,27 @@ protected:
         finished = fin;
         list->set_ini_task(finished, all);
     }   //设置初始
-    void update_finish(){
-        list->update_finish(finished);
+    void update_List(){
+        list->update_finish(finished + missed);
     }   //完成+1
     // 同一关卡中task,buff统一编号，总数请不超过1000
-    void add_task(const QPixmap& icon, const QString& name, const QString& info, const int index){
-        list->add_task(icon,name,info,index + (level - 1)*1000);
+    void add_task(const QPixmap& icon, const QString& name, const QString& info, const int index, const bool isred = false){
+        list->add_task(icon,name,info,index + (level - 1)*1000, isred);
     }
-    void add_buff(const QPixmap& icon, const QString& name, const QString& info, const int index){
-        list->add_buff(icon,name,info,index + (level - 1)*1000);
+    void add_buff(const QPixmap& icon, const QString& name, const QString& info, const int index, const bool isred = false){
+        list->add_buff(icon,name,info,index + (level - 1)*1000, isred);
     }
     void remove_task(const int index){
         list->remove_task(index + (level - 1)*100);
     }
     void remove_buff(const int index){
         list->remove_buff(index + (level - 1)*1000);
+    }
+    void changeTaskColour(const int index, bool red){
+        list->changeTaskColour(index, red);
+    }
+    void changeBuffColour(const int index, bool red){
+        list->changeBuffColour(index, red);
     }
     void showTask(const int index){
         list->showTask(index + (level - 1)*1000);
@@ -83,7 +89,8 @@ protected:
 
     //map_border部分操作
     void setMapVisible(bool can){
-        map_border->setVisible(can);
+        if(!can)
+            map_border->setFrameStyle(QFrame::NoFrame);
     }
     void deleteMap(){
         map_border->setLineWidth(0);
@@ -95,6 +102,7 @@ protected:
 
     int live = 5;
     int finished = 0;
+    int missed = 0;
     int state = 0;         //0: haven't start  1：ongonging 2:pause  3:lose  4:win
     int interval = 30;
     QTimer* timer_update;
@@ -106,7 +114,7 @@ protected slots:
     void hideEvent(QHideEvent* event);
     virtual void startCount();
     virtual void restart();
-    virtual void pauseGameProcess(bool pause);
+    virtual void changeGameProcess(bool topause);
 
 private slots:
     void startText1();
@@ -132,10 +140,10 @@ private:
 /*
  * 使用注意
  * 1、task出现addtask, task完成removetask, buff吃到addbuff buff消失emovebuff  如果在buff吃到之外强制显示提示调用showbuff/task
- * 2、完成任务finished++， 掉血live--, 之后调用相应update， 开始时先设置总血量，再设置初始血量
+ * 2、完成任务finished++，miss任务miss++ 掉血live--, 之后调用相应update， 开始时先设置总血量，再设置初始血量
  * 3、warning部分请间隔interval后就调用一次setsize， mode!=1时省略参数
  * 4、添加地图请使用getWidegt作为parent  相应的边框操作其实可以自己修改
- * 5、由于qt自身编译的影响，我无法做到接口和基本实现分离（卑微），hideEvent(QHideEvent* event);restart();pauseGameProcess(bool pause);
+ * 5、由于qt自身编译的影响，我无法做到接口和基本实现分离（卑微），hideEvent(QHideEvent* event);restart();changeGameProcess(bool pause);
  * 现阶段可以不用填写实现，要实现先调用基类  注意实时更新游戏状态
  * Game类是串联的类，现阶段不应改，main函数只要改掉相应的构造就行
  * 运行结束只能用任务管理器（嘿嘿嘿）嫌麻烦可以注释掉hideevent

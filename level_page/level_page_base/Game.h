@@ -10,9 +10,10 @@ class task_info{
     QPixmap icon;
     QString info;
     QString name;
+    bool isRed;
 public:
-    explicit task_info(const QPixmap& _icon = QPixmap(), const QString& _name = "", const QString& _info = "")
-        :icon(_icon), info(_info), name(_name){}
+    explicit task_info(const QPixmap& _icon = QPixmap(), const QString& _name = "", const QString& _info = "", const bool& _isRed = false)
+        :icon(_icon), info(_info), name(_name), isRed(_isRed){}
     QPixmap& geticon(){
         return icon;
     }
@@ -21,6 +22,9 @@ public:
     }
     QString& getinfo(){
         return info;
+    }
+    bool& getRed(){
+        return isRed;
     }
 };
 
