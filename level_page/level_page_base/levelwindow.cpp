@@ -1,7 +1,6 @@
 #include "levelwindow.h"
 #include "ui_levelwindow.h"
 #include <QSizePolicy>
-#include <QLayout>
 
 LevelWindow::LevelWindow(QWidget *parent, const int cur_level)
     : QMainWindow(parent)
@@ -41,7 +40,7 @@ LevelWindow::LevelWindow(QWidget *parent, const int cur_level)
     startDlg = new StartDialog(this);
 
     auto up = new QHBoxLayout;
-    auto main_lay = new QVBoxLayout;
+    main_lay = new QVBoxLayout;
 
     up->setContentsMargins(5,5,5,0);
     up->setSpacing(5);

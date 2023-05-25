@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QTimer>
 #include <QGraphicsEffect>
+#include <QLayout>
 #include "pause_button.h"
 #include "live_bar.h"
 #include "warning_icon.h"
@@ -97,6 +98,7 @@ protected:
     int state = 0;         //0: haven't start  1：ongonging 2:pause  3:lose  4:win
     int interval = 30;
     QTimer* timer_update;
+    QVBoxLayout* main_lay;
 protected slots:
     void pause();
     void turnNext();
