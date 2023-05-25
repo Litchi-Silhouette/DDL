@@ -35,6 +35,9 @@ protected:
     void update_List(){
         list->update_finish(finished + missed);
     }   //完成+1
+    void banBuffList(bool toBan){
+        list->banBuff(toBan);
+    }
     // 同一关卡中task,buff统一编号，总数请不超过1000
     void add_task(const QPixmap& icon, const QString& name, const QString& info, const int index, const bool isred = false){
         list->add_task(icon,name,info,index + (level - 1)*1000, isred);

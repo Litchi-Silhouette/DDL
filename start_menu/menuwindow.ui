@@ -41,19 +41,7 @@ text-align: left;
        <number>8</number>
       </property>
       <item>
-       <widget class="QLabel" name="titleIcon">
-        <property name="minimumSize">
-         <size>
-          <width>60</width>
-          <height>60</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>80</width>
-          <height>80</height>
-         </size>
-        </property>
+       <widget class="QFrame" name="iconFrame">
         <property name="frameShape">
          <enum>QFrame::Box</enum>
         </property>
@@ -66,15 +54,70 @@ text-align: left;
         <property name="midLineWidth">
          <number>2</number>
         </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="pixmap">
-         <pixmap resource="page.qrc">:/pic/image/icon_w.png</pixmap>
-        </property>
-        <property name="scaledContents">
-         <bool>true</bool>
-        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="titleIcon">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>60</width>
+             <height>60</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>60</width>
+             <height>60</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">border-radius: 0px;
+border-width: 0px; border-style: solid;border-color: rgb(200, 200, 200);</string>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::NoFrame</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <property name="lineWidth">
+            <number>2</number>
+           </property>
+           <property name="midLineWidth">
+            <number>2</number>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="pixmap">
+            <pixmap resource="page.qrc">:/pic/image/icon_w.png</pixmap>
+           </property>
+           <property name="scaledContents">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
       <item>
@@ -93,7 +136,7 @@ text-align: left;
       <item>
        <widget class="QPushButton" name="helpBtn">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -106,8 +149,8 @@ text-align: left;
         </property>
         <property name="maximumSize">
          <size>
-          <width>80</width>
-          <height>80</height>
+          <width>60</width>
+          <height>60</height>
          </size>
         </property>
         <property name="styleSheet">
@@ -123,7 +166,7 @@ QPushButton:pressed{border-image:url(:/pic/image/help.png);}</string>
       <item>
        <widget class="QPushButton" name="setBtn">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -136,8 +179,8 @@ QPushButton:pressed{border-image:url(:/pic/image/help.png);}</string>
         </property>
         <property name="maximumSize">
          <size>
-          <width>80</width>
-          <height>80</height>
+          <width>60</width>
+          <height>60</height>
          </size>
         </property>
         <property name="styleSheet">
@@ -153,7 +196,7 @@ QPushButton:pressed{border-image:url(:/pic/image/set.png);}</string>
       <item>
        <widget class="QPushButton" name="exitBtn">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -166,12 +209,12 @@ QPushButton:pressed{border-image:url(:/pic/image/set.png);}</string>
         </property>
         <property name="maximumSize">
          <size>
-          <width>80</width>
-          <height>80</height>
+          <width>60</width>
+          <height>60</height>
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">QPushButton{background: transparent; border-width:0px; border-image:url(:/pic/image/exit_gray.png);}
+         <string notr="true">QPushButton{background: transparent; border-width:0px; border-radius: 0px;border-image:url(:/pic/image/exit_gray.png);}
 QPushButton:hover{border-image:url(:/pic/image/exit.png);}
 QPushButton:pressed{border-image:url(:/pic/image/exit.png);}</string>
         </property>
@@ -222,26 +265,13 @@ QPushButton:pressed{border-image:url(:/pic/image/exit.png);}</string>
        </widget>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,0,10">
+       <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,0">
         <property name="spacing">
          <number>0</number>
         </property>
-        <item>
-         <spacer name="horizontalSpacer_2">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeType">
-           <enum>QSizePolicy::MinimumExpanding</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
+        <property name="leftMargin">
+         <number>60</number>
+        </property>
         <item>
          <widget class="QLabel" name="proLabel">
           <property name="sizePolicy">
@@ -257,7 +287,7 @@ QPushButton:pressed{border-image:url(:/pic/image/exit.png);}</string>
            </size>
           </property>
           <property name="text">
-           <string>    悠闲的假期迎来终结，初入p大的攻城狮陷入了前所未有的危机……         </string>
+           <string>  看似悠闲的假期，初入p大的攻城狮却陷入了前所未有的危机……     </string>
           </property>
           <property name="textFormat">
            <enum>Qt::PlainText</enum>
@@ -285,7 +315,7 @@ QPushButton:pressed{border-image:url(:/pic/image/exit.png);}</string>
      </layout>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="levelLayout1" stretch="0,0,0">
+     <layout class="QHBoxLayout" name="levelLayout1" stretch="0,0,0,0">
       <property name="spacing">
        <number>0</number>
       </property>
@@ -329,6 +359,29 @@ QPushButton:pressed{border-image:url(:/pic/image/exit.png);}</string>
          </size>
         </property>
        </spacer>
+      </item>
+      <item>
+       <widget class="QLabel" name="end1Label">
+        <property name="styleSheet">
+         <string notr="true">border-radius: 20px;
+border:2px solid gray;</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Box</enum>
+        </property>
+        <property name="lineWidth">
+         <number>2</number>
+        </property>
+        <property name="midLineWidth">
+         <number>2</number>
+        </property>
+        <property name="text">
+         <string>   中道崩殂…   </string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::PlainText</enum>
+        </property>
+       </widget>
       </item>
       <item>
        <widget class="QPushButton" name="end1Btn">
@@ -384,23 +437,22 @@ border-bottom-left-radius: 30px;</string>
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_3">
-        <item>
-         <spacer name="horizontalSpacer_4">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
+        <property name="leftMargin">
+         <number>60</number>
+        </property>
         <item>
          <widget class="QLabel" name="label_2">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>50</height>
+           </size>
+          </property>
           <property name="text">
-           <string>TextLabel</string>
+           <string>  空阔的教室，惨白的灯光，离奇的儿歌，出路又在何方……    </string>
+          </property>
+          <property name="textFormat">
+           <enum>Qt::PlainText</enum>
           </property>
          </widget>
         </item>
@@ -465,6 +517,17 @@ border-bottom-left-radius: 30px;</string>
        </spacer>
       </item>
       <item>
+       <widget class="QLabel" name="end2Label">
+        <property name="styleSheet">
+         <string notr="true">border-radius: 20px;
+border:2px solid gray;</string>
+        </property>
+        <property name="text">
+         <string>   习得性无助(っ◞‸◟c)   </string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="end2Btn">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -518,23 +581,22 @@ border-bottom-left-radius: 30px;</string>
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_6">
-        <item>
-         <spacer name="horizontalSpacer_8">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
+        <property name="leftMargin">
+         <number>60</number>
+        </property>
         <item>
          <widget class="QLabel" name="label_3">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>50</height>
+           </size>
+          </property>
           <property name="text">
-           <string>TextLabel</string>
+           <string>  四处皆是墙壁，身后即是鬼影，无处可逃……无处！    </string>
+          </property>
+          <property name="textFormat">
+           <enum>Qt::PlainText</enum>
           </property>
          </widget>
         </item>
@@ -599,6 +661,17 @@ border-bottom-left-radius: 30px;</string>
        </spacer>
       </item>
       <item>
+       <widget class="QLabel" name="end3Label">
+        <property name="styleSheet">
+         <string notr="true">border-radius: 20px;
+border:2px solid gray;</string>
+        </property>
+        <property name="text">
+         <string>   就凭你 也配直视我   </string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="end3Btn">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -631,6 +704,9 @@ border-bottom-left-radius: 30px;</string>
       <property name="leftMargin">
        <number>60</number>
       </property>
+      <property name="rightMargin">
+       <number>80</number>
+      </property>
       <item>
        <widget class="QPushButton" name="end4Btn">
         <property name="sizePolicy">
@@ -651,6 +727,23 @@ border-bottom-left-radius: 30px;</string>
        </widget>
       </item>
       <item>
+       <widget class="QLabel" name="end4Label">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>55</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-radius: 20px;
+border:2px solid gray;</string>
+        </property>
+        <property name="text">
+         <string>   真的猛士！   </string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <spacer name="horizontalSpacer_11">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -662,6 +755,30 @@ border-bottom-left-radius: 30px;</string>
          </size>
         </property>
        </spacer>
+      </item>
+      <item>
+       <widget class="QLabel" name="extraLabel">
+        <property name="styleSheet">
+         <string notr="true">border-top-right-radius:0px;
+border-top-left-radius: 20px;</string>
+        </property>
+        <property name="text">
+         <string>    狮狮都有光明的未来  </string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="extraChapter">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>55</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>  Extra Chapter    </string>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>

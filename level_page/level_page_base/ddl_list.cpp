@@ -19,8 +19,8 @@ DDL_List::DDL_List(QWidget *parent, QHash<int , QListWidgetItem*>* _all,
     QString temp = "QListWidget{background: rgba(220,220,220,0.6); border:0px;border-radius:5px}"
             "QListWidget::item{background:rgba(220,220,220,0.6);height:40px;border:1px solid gray;border-radius:5px}"
             "QListWidget::item:hover{background:rgba(210,210,210,1);}"
-            "QListWidget::item:selected{border-width:3;color:black}"
-            "QListWidget::item:selected:active{border-width:3;color:black}";
+            "QListWidget::item:selected{border-width:3;color:black;background:rgba(220,220,220,0.6);}"
+            "QListWidget::item:selected:active{border-width:3;color:black;background:rgba(220,220,220,0.6);}";
 
     QFont cur("Microsoft Yi Baiti",18,QFont::Bold);
     tasklist = new QListWidget(this);
@@ -30,6 +30,7 @@ DDL_List::DDL_List(QWidget *parent, QHash<int , QListWidgetItem*>* _all,
     tasklist->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     tasklist->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     tasklist->setFocusPolicy(Qt::NoFocus);
+    tasklist->setIconSize(QSize(20,20));
     connect(tasklist, &QListWidget::itemClicked, this,&DDL_List::task_click);
 
     bufflist = new QListWidget(this);
@@ -40,6 +41,7 @@ DDL_List::DDL_List(QWidget *parent, QHash<int , QListWidgetItem*>* _all,
     bufflist->setViewMode(QListView::IconMode);
     bufflist->setFocusPolicy(Qt::NoFocus);
     bufflist->setMinimumSize(50,30);
+    bufflist->setIconSize(QSize(18,18));
 
     name = new QLabel(" Escaping!", this);
     name->setAlignment(Qt::AlignLeft|Qt::AlignBottom);
@@ -133,7 +135,9 @@ DDL_List::~DDL_List()
 void DDL_List::add_task(const QPixmap& icon, const QString& name,
                         const QString& info, const int index, const bool isRed)
 {
-    QListWidgetItem* temp = new QListWidgetItem(icon,name);
+    QIcon cur(icon);
+    cur.addPixmap(icon, QIcon::Selected);
+    QListWidgetItem* temp = new QListWidgetItem(cur,name);
     temp->setSizeHint(QSize(30,30));
     tasklist->insertItem(0,temp);
     taskitems->insert(temp, task_info(icon, name, info, isRed));
@@ -143,14 +147,13 @@ void DDL_List::add_task(const QPixmap& icon, const QString& name,
 void DDL_List::add_buff(const QPixmap& icon, const QString& name,
                         const QString& info, const int index, const bool isRed)
 {
-    QListWidgetItem* temp = new QListWidgetItem;
+    QIcon cur(icon);
+    cur.addPixmap(icon, QIcon::Selected);
+    QListWidgetItem* temp = new QListWidgetItem(cur,"");
     temp->setSizeHint(QSize(24,24));
-    temp->setIcon(icon.scaled(QSize(16,16)));
     bufflist->insertItem(0,temp);
     buffitems->insert(temp, task_info(icon, name, info, isRed));
     allitems->insert(index, temp);
-    temp->setSelected(true);
-    buff_click(temp);
 }
 
 void DDL_List::remove_task(const int index)
