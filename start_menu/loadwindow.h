@@ -19,13 +19,17 @@ public:
 protected:
     void timerEvent(QTimerEvent*) override;
     void showEvent(QShowEvent*) override;
+    void paintEvent(QPaintEvent* event) override;
+
+private slots:
+    void closeGradully();
 private:
     Ui::LoadWindow *ui;
     int updateTimer;
     StartDialog* center;
 
-    int interval = 50;
-    int mon = 5;
+    int interval = 40;
+    int mon = 10;
     int colour = 0;
 };
 

@@ -9,7 +9,7 @@ LevelWindow::LevelWindow(QWidget *parent, const int cur_level)
     , level(cur_level)
 {
     ui->setupUi(this);
-    setWindowFlags(Qt::FramelessWindowHint);
+    //setWindowFlags(Qt::FramelessWindowHint);
     QIcon window(QString(":/page/level_image/icon_w.png"));
     setWindowIcon(window);
     setWindowTitle(QString("Escape form Dead Line!"));
@@ -166,7 +166,7 @@ void LevelWindow::pauseGameProcess(bool pause){
 
 void LevelWindow::hideEvent(QHideEvent* event){
     QMainWindow::hideEvent(event);
-    gamePages.nextlevel((level+1)%2+1)->showFullScreen();
+    gamePages.nextlevel((level+1)%2+1)->show();
 }
 
 void LevelWindow::restart(){

@@ -46,6 +46,7 @@ PauseDialog::PauseDialog(QWidget* parent)
     main_lay->addWidget(continueBtn,1);
 
     setLayout(main_lay);
+    clearMask();
 }
 
 PauseDialog::~PauseDialog(){

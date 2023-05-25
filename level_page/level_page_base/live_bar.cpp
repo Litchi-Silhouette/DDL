@@ -62,7 +62,7 @@ bar_with_stick::bar_with_stick(QWidget *parent)
             "font:bold;}"
             "QProgressBar::chunk{border-radius:4px; border:1px solid black;"
             "background-color: #FFB90F;"
-            "width:10px;margin:0.5px;}");
+            "width:10px;margin:1px;}");
 
     bar_stick = new stick(this);
     bar_stick->setMinimumSize(5,10);
@@ -86,7 +86,7 @@ void bar_with_stick::resizeEvent(QResizeEvent* event)
     temp.setPixelSize(bar->height()/2);
     bar->setFont(temp);
     bar_stick->set_stick_size(bar_stick->width(),bar->height()/2);
-    int now_w = bar->width()*9/50-3;
+    double now_w = (double)(bar->width()*0.97-7.6)/totalLive-3;
     auto cur = bar->styleSheet();
     int p = cur.indexOf("width") + 6;
     int i = p;
@@ -100,15 +100,16 @@ void bar_with_stick::setValue(int live){
     int s = cur.indexOf("#");
     int p = cur.indexOf(";width");
     QString tempcolor;
-    if(live>60)
+    auto actualLive = live*100/totalLive;
+    if(actualLive>60)
         tempcolor = "#FFD700";
-    else if(live>30)
+    else if(actualLive>30)
         tempcolor = "#FFB90F";
     else
         tempcolor = "#FF0000";
 
     bar->setStyleSheet(cur.mid(0,s) + tempcolor + cur.mid(p));
-    bar->setValue(live);
+    bar->setValue(actualLive);
 }
 
 bar_with_stick::~bar_with_stick(){

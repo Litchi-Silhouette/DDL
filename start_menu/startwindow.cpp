@@ -19,3 +19,6 @@ StartWindow::~StartWindow()
     delete ui;
 }
 
+void StartWindow::paintEvent(QPaintEvent*){
+    QPixmap*
+}

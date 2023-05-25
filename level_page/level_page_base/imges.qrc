@@ -14,6 +14,5 @@
         <file>level_image/continue_nor_gray.png</file>
         <file>level_image/continue_on_gray.png</file>
         <file>level_image/continue.png</file>
-        <file>level_image/mask.png</file>
     </qresource>
 </RCC>

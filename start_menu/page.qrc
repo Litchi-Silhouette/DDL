@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/pic">
+        <file>image/icon_w.png</file>
+        <file>image/exit.png</file>
+        <file>image/exit_gray.png</file>
+        <file>image/help.png</file>
+        <file>image/help_gray.png</file>
+        <file>image/set.png</file>
+        <file>image/set_gray.png</file>
+        <file>image/page_r.png</file>
+        <file>image/page_w.png</file>
+    </qresource>
+</RCC>

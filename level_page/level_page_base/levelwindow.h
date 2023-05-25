@@ -30,7 +30,7 @@ protected:
     void hideEvent(QHideEvent* event);
     virtual void restart();
     virtual void pauseGameProcess(bool pause);
-
+public:
     //DDL_List 部分操作
     void resettask(int fin = 0, int all = 0){
         finished = fin;
@@ -64,8 +64,15 @@ protected:
 
     //Live_bar部分操作
     void update_live(){
-        bar->set_live(live*20);
+        bar->set_live(live);
     }   //设置当前血量
+    void setTotalLive(int allLive){
+        bar->setTotalLive(allLive);
+    }   //开始时设置总血量
+    void setIniLive(int inilive){
+        live = inilive;
+        update_live();
+    }   //设置初始血量
 
     //warning 部分操作
     void set_mode(int mode){
@@ -94,6 +101,7 @@ protected:
     int finished = 0;
     int state = 0;         //0: haven't start  1：ongonging 2:pause  3:lose  4:win
     int interval = 30;
+    QTimer* timer_update;
 protected slots:
     void pause();
     void turnNext();
@@ -114,8 +122,6 @@ private:
     PauseDialog* pauseDlg;
     StartDialog* startDlg;
 
-    QTimer* timer_update;
-    QWidget* content;
     QGraphicsBlurEffect* blureffect = new QGraphicsBlurEffect;
     Ui::LevelWindow *ui;
     int level;
@@ -125,11 +131,12 @@ private:
 /*
  * 使用注意
  * 1、task出现addtask, task完成removetask, buff吃到addbuff buff消失emovebuff  如果在buff吃到之外强制显示提示调用showbuff/task
- * 2、完成任务finished++， 掉血live--, 之后调用相应update
+ * 2、完成任务finished++， 掉血live--, 之后调用相应update， 开始时先设置总血量，再设置初始血量
  * 3、warning部分请间隔interval后就调用一次setsize， mode!=1时省略参数
  * 4、添加地图请使用getWidegt作为parent  相应的边框操作其实可以自己修改
  * 5、由于qt自身编译的影响，我无法做到接口和基本实现分离（卑微），hideEvent(QHideEvent* event);restart();pauseGameProcess(bool pause);
  * 现阶段可以不用填写实现，要实现先调用基类  注意实时更新游戏状态
  * Game类是串联的类，现阶段不应改，main函数只要改掉相应的构造就行
- * 运行结束只能用任务管理器（嘿嘿嘿）
+ * 运行结束只能用任务管理器（嘿嘿嘿）嫌麻烦可以注释掉hideevent
+ * 包含代码时注意删除或重写main,要声明gamePage成员变量
 */

@@ -14,8 +14,11 @@ class StartWindow : public QMainWindow
 public:
     StartWindow(QWidget *parent = nullptr);
     ~StartWindow();
-
+protected:
+    void paintEvent(QPaintEvent*);
 private:
     Ui::StartWindow *ui;
+    QString nor = "";
+    QString on = "";
 };
 #endif // STARTWINDOW_H

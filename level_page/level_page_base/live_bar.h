@@ -27,11 +27,15 @@ public:
     explicit bar_with_stick(QWidget *parent = nullptr);
     ~bar_with_stick();
     void setValue(int);
+    void setTotalLive(int x){
+        totalLive = x;
+    }
 protected:
     void resizeEvent(QResizeEvent*);
 private:
     QProgressBar* bar;
     stick* bar_stick;
+    int totalLive = 5;
 };
 
 class live_bar : public QWidget
@@ -40,6 +44,9 @@ class live_bar : public QWidget
 public:
     explicit live_bar(QWidget *parent = nullptr);
     void set_live(const int);
+    void setTotalLive(int x){
+        bar->setTotalLive(x);
+    }
     void resizeEvent(QResizeEvent*);
     ~live_bar();
 signals:
@@ -79,6 +86,9 @@ public:
     }
     void set_live(const int x){
         center->set_live(x);
+    }
+    void setTotalLive(int x){
+        center->setTotalLive(x);
     }
 protected:
     void resizeEvent(QResizeEvent* event){
