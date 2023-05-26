@@ -9,9 +9,13 @@ DDL_List::DDL_List(QWidget *parent, QHash<int , QListWidgetItem*>* _all,
     setWindowFlags(Qt::FramelessWindowHint);
     setAttribute(Qt::WA_TranslucentBackground,true);
 
-    title = new MyLabel(this, "任务");
-    title->setMinimumSize(30,30);
-    title->setAlignment(Qt::AlignLeft|Qt::AlignVCenter);
+    titletask = new MyLabel(this, "任务");
+    titletask->setMinimumSize(30,30);
+    titletask->setAlignment(Qt::AlignLeft|Qt::AlignVCenter);
+    titlebuff = new MyLabel(this, "Buff");
+    titlebuff->setFont(QFont("DejaVu Sans Mono",20, QFont::Bold));
+    titlebuff->setMinimumSize(30,30);
+    titlebuff->setAlignment(Qt::AlignLeft|Qt::AlignVCenter);
     finish = new MyLabel(this);
     finish->setAlignment(Qt::AlignRight|Qt::AlignVCenter);
     set_ini_task(0,0);
@@ -43,16 +47,20 @@ DDL_List::DDL_List(QWidget *parent, QHash<int , QListWidgetItem*>* _all,
     bufflist->setMinimumSize(50,30);
     bufflist->setIconSize(QSize(18,18));
 
-    name = new QLabel(" Escaping!", this);
+    name = new QLabel(this);
     name->setAlignment(Qt::AlignLeft|Qt::AlignBottom);
+    name->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
     icon = new QLabel(this);
     icon->setAlignment(Qt::AlignBottom|Qt::AlignRight);
     info = new QLabel(this);
     info->setAlignment(Qt::AlignTop|Qt::AlignLeft);
-
+    info->setFrameShape(QFrame::Box);
+    info->setFrameShadow(QFrame::Sunken);
+    info->setLineWidth(2);
+    info->setMidLineWidth(2);
     clear();
 
-    auto left = new QGridLayout;
+    auto left = new QVBoxLayout;
     auto up = new QHBoxLayout;
     auto bottom = new QHBoxLayout;
     auto right = new QVBoxLayout;
@@ -61,50 +69,34 @@ DDL_List::DDL_List(QWidget *parent, QHash<int , QListWidgetItem*>* _all,
 
     up->setSpacing(0);
     up->setContentsMargins(0,0,0,0);
-    up->addWidget(title);
-    up->addWidget(finish);
-    up->setStretchFactor(title,1);
-    up->setStretchFactor(finish,2);
+    up->addWidget(titletask,1);
+    up->addWidget(finish,2);
 
     left->setSpacing(5);
     left->setContentsMargins(0,0,0,0);
-    left->addLayout(up,0,0,1,2);
-    left->addWidget(tasklist,1,1,1,1);
-    left->setColumnStretch(0,1);
-    left->setColumnStretch(1,10);
-    left->setRowStretch(0,1);
-    left->setRowStretch(1,3);
+    left->addLayout(up,1);
+    left->addWidget(tasklist,3);
 
-    QWidget* _1 = new QWidget(this);
-    QWidget* _2 = new QWidget(this);
-    bottom->addWidget(_1);
+    bottom->setSpacing(5);
+    bottom->addWidget(titlebuff);
     bottom->addWidget(bufflist);
-    bottom->addWidget(_2);
-    bottom->setStretchFactor(_1,1);
-    bottom->setStretchFactor(bufflist,5);
-    bottom->setStretchFactor(_2,3);
 
     right_up->setContentsMargins(0,0,0,0);
-    right_up->setSpacing(0);
-    right_up->addWidget(icon,Qt::AlignRight|Qt::AlignBottom);
-    right_up->addWidget(name);
-    right_up->setStretchFactor(icon,1);
-    right_up->setStretchFactor(name,3);
+    right_up->setSpacing(5);
+    right_up->addWidget(icon,0,Qt::AlignBottom);
+    right_up->addWidget(name,0,Qt::AlignBottom);
+
     right->setContentsMargins(0,0,0,0);
     right->setSpacing(5);
-    right->addLayout(right_up);
-    right->addWidget(info);
-    right->addLayout(bottom);
-    right->setStretchFactor(right_up,1);
-    right->setStretchFactor(info,3);
-    right->setStretchFactor(bottom,1);
+    right->addLayout(right_up,1);
+    right->addWidget(info,3);
+    right->addLayout(bottom,1);
 
-    main_lay->setSpacing(10);
+    main_lay->setSpacing(0);
     main_lay->setContentsMargins(0,0,0,0);
-    main_lay->addLayout(left);
-    main_lay->addLayout(right);
-    main_lay->setStretchFactor(left,1);
-    main_lay->setStretchFactor(right,1);
+    main_lay->addLayout(left,2);
+    main_lay->addStretch(1);
+    main_lay->addLayout(right,2);
     setLayout(main_lay);
 }
 
@@ -124,7 +116,8 @@ DDL_List::~DDL_List()
 {
     delete tasklist;
     delete bufflist;
-    delete title;
+    delete titletask;
+    delete titlebuff;
     delete finish;
     delete name;
     delete icon;
@@ -178,17 +171,17 @@ void DDL_List::remove_buff(const int index)
 
 void DDL_List::set_info(QListWidgetItem* cur, bool is_buff, bool is_nor)
 {
-    auto curTFont = title->font();
+    auto curTFont = titletask->font();
     auto curFFont = curTFont;
     if(is_nor)
     {
-        QPalette pe = title->palette();
+        QPalette pe = titletask->palette();
         name->setPalette(pe);
         info->setPalette(pe);
     }
     else
     {
-        QPalette pe = title->palette();
+        QPalette pe = titletask->palette();
         pe.setColor(QPalette::WindowText,Qt::red);
         name->setPalette(pe);
         info->setPalette(pe);
@@ -276,6 +269,7 @@ void DDL_List::clear(){
 }
 
 void DDL_List::showIni(){
+    name->setFont(QFont("Caveat",20, QFont::Bold));
     name->setText(" Easecaping!");
     QPixmap ini(":/page/level_image/icon_w.png");
     icon->setPixmap(ini.scaled(name->size(),Qt::KeepAspectRatio));

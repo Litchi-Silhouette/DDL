@@ -51,6 +51,7 @@ LevelWindow::LevelWindow(QWidget *parent, const int cur_level)
     up->setContentsMargins(5,5,5,0);
     up->setSpacing(5);
     up->addWidget(list,5);
+    up->addStretch(1);
     up->addLayout(live_warn, 1);
     up->addWidget(pause_b, 1);
 
@@ -145,7 +146,7 @@ void LevelWindow::showEvent(QShowEvent* event){
     {
         update_live();
         update_List();
-        set_mode(2);
+        set_mode(0);
         QTimer::singleShot(1000,this, &LevelWindow::startText1);
     }
     else if(state ==1 || state == 2)

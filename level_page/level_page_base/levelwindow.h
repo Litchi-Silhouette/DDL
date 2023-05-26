@@ -78,7 +78,7 @@ protected:
         live = inilive;
         update_live();
     }   //设置初始血量
-public:
+
     //warning 部分操作
     void set_mode(int mode){
         warning->set_mode(mode);
