@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>images/player_lion.jpg</file>
+        <file>images/obstacle4.jpg</file>
+        <file>images/task1.jpg</file>
+        <file>images/buff1.jpg</file>
+        <file>images/background1.png</file>
+    </qresource>
+</RCC>
