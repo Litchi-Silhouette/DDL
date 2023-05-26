@@ -197,7 +197,7 @@ void DDL_List::set_info(QListWidgetItem* cur, bool is_buff, bool is_nor)
     if(is_buff)
     {
         auto& temp = buffitems->find(cur).value();
-        icon->setPixmap(temp.geticon().scaled(name->size(),Qt::KeepAspectRatio));
+        icon->setPixmap(QIcon(temp.geticon()).pixmap(name->size(),Qt::KeepAspectRatio));
         name->setFont(curTFont);
         name->setText(QString(" %1").arg(temp.getname()));
         info->setFont(curFFont);
@@ -206,7 +206,7 @@ void DDL_List::set_info(QListWidgetItem* cur, bool is_buff, bool is_nor)
     else
     {
         auto& temp = taskitems->find(cur).value();
-        icon->setPixmap(temp.geticon().scaled(name->size(),Qt::KeepAspectRatio));
+        icon->setPixmap(QIcon(temp.geticon()).pixmap(name->size(),Qt::KeepAspectRatio));
         name->setFont(curTFont);
         name->setText(QString(" %1").arg(temp.getname()));
         info->setFont(curFFont);
