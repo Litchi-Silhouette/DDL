@@ -75,7 +75,6 @@ public:
         setMinimumSize(25,20);
         setMaximumSize(80,64);
         set_ratio(5,4);
-        resize(minimumSize());
     }
     ~KeepRatioLiveBar(){
         delete center;
@@ -98,11 +97,13 @@ protected:
         {
             if(new_size.width()<width_ratio*new_size.height()/height_ratio){
                 new_size.setHeight(height_ratio*new_size.width()/width_ratio);
-                center->move(0,(old_size.height()-new_size.height())/2);
+                if(old_size.height()-new_size.height()>0)
+                    center->move(0,(old_size.height()-new_size.height())/2);
             }
             if(new_size.width()>width_ratio*new_size.height()/height_ratio){
                 new_size.setWidth(width_ratio*new_size.height()/height_ratio);
-                center->move((old_size.width()-new_size.width())/2,0);
+                if(old_size.width()-new_size.width() > 0)
+                    center->move((old_size.width()-new_size.width())/2,0);
             }
         }
         center->resize(new_size);
