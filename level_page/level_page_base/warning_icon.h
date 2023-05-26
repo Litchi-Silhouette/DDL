@@ -26,7 +26,7 @@ private:
     QPixmap map;
     int index;
     int dir;
-    double Icon_max = 0;//相对widget大小
+    double Icon_max = 1;//相对widget大小
     double Icon_min = 0;
     double dis_max;
     double dis_min;
