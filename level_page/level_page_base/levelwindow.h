@@ -39,10 +39,10 @@ protected:
         list->banBuff(toBan);
     }
     // 同一关卡中task,buff统一编号，总数请不超过1000
-    void add_task(const QPixmap& icon, const QString& name, const QString& info, const int index, const bool isred = false){
+    void add_task(const QString& icon, const QString& name, const QString& info, const int index, const bool isred = false){
         list->add_task(icon,name,info,index + (level - 1)*1000, isred);
     }
-    void add_buff(const QPixmap& icon, const QString& name, const QString& info, const int index, const bool isred = false){
+    void add_buff(const QString& icon, const QString& name, const QString& info, const int index, const bool isred = false){
         list->add_buff(icon,name,info,index + (level - 1)*1000, isred);
     }
     void remove_task(const int index){
