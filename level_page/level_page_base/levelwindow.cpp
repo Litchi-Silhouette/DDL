@@ -18,9 +18,20 @@ LevelWindow::LevelWindow(QWidget *parent, const int cur_level)
     pause_b->setMaximumWidth(150);
     connect(pause_b->btn, &QPushButton::clicked, this, &LevelWindow::pause);
 
-    bar = new KeepRatioLiveBar(this);
+    auto live_warn = new QVBoxLayout;
+    QFrame* t = new QFrame(this);
+    t->setFrameStyle(QFrame::Box);
+    t->setLineWidth(3);
 
+    live_warn->setContentsMargins(0,0,0,0);
+    live_warn->setSpacing(20);
+    bar = new KeepRatioLiveBar(this);
+    bar->setStyleSheet("border:2px solid black;");
     warning = new KeepRatioWarning(this);
+    live_warn->addWidget(warning, 1);
+    live_warn->addWidget(bar, 1);
+    warning->set_mode(2);
+    t->setLayout(live_warn);
 
     auto it = gamePages.all_buffs.find(level);
     if(it == gamePages.all_buffs.end())
@@ -43,15 +54,11 @@ LevelWindow::LevelWindow(QWidget *parent, const int cur_level)
     main_lay = new QVBoxLayout;
 
     up->setContentsMargins(5,5,5,0);
-    up->setSpacing(5);
-    up->addWidget(list);
-    up->addWidget(warning);
-    up->addWidget(bar);
-    up->addWidget(pause_b);
-    up->setStretchFactor(list,4);
-    up->setStretchFactor(warning,1);
-    up->setStretchFactor(bar,1);
-    up->setStretchFactor(pause_b,1);
+    up->setSpacing(0);
+    up->addWidget(list,5);
+    up->addWidget(t, 1);
+    up->addWidget(pause_b, 1);
+
 
     main_lay->setContentsMargins(0,0,0,0);
     main_lay->setSpacing(5);

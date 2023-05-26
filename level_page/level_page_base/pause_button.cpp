@@ -54,7 +54,7 @@ pause_block::pause_block(const int cur_level, QWidget* parent, int startTime)
     down->setContentsMargins(0,0,0,0);
     main_lay->addLayout(up);
     main_lay->addLayout(down);
-    main_lay->setSpacing(0);
+    main_lay->setSpacing(20);
     main_lay->setStretchFactor(up,1);
     main_lay->setStretchFactor(down,1);
     main_lay->setContentsMargins(0,0,0,0);
