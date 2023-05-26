@@ -1,4 +1,4 @@
-#include "levelwindow.h".h"
+#include "levelwindow.h"
 #include <QApplication>
 
 Game LevelWindow::gamePages;
@@ -8,6 +8,8 @@ int main(int argc, char *argv[])
     LevelWindow w(nullptr,1), p(nullptr, 2);
     w.gamePages.levels[1] = &p;
     p.gamePages.levels[2] = &w;
+    w.set_size();
+    w.set_mode(2);
     w.show();
     return a.exec();
 }
