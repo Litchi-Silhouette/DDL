@@ -151,6 +151,7 @@ void DDL_List::add_buff(const QPixmap& icon, const QString& name,
 
 void DDL_List::remove_task(const int index)
 {
+    allitems->find(index);
     auto& cur = allitems->find(index).value();
     taskitems->remove(cur);
     tasklist->removeItemWidget(cur);

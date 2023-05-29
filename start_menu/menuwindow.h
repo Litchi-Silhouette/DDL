@@ -2,6 +2,8 @@
 #define MENUWINDOW_H
 
 #include <QMainWindow>
+#include <QGraphicsEffect>
+#include "set_pausedialog.h"
 
 namespace Ui {
 class MenuWindow;
@@ -15,8 +17,20 @@ public:
     explicit MenuWindow(QWidget *parent = nullptr);
     ~MenuWindow();
 
+private slots:
+    void on_helpBtn_clicked();
+
+    void on_setBtn_clicked();
+
+    void on_exitBtn_clicked();
+
 private:
+    void setBlur(int extent);
+
     Ui::MenuWindow *ui;
+    SetDialog* setDlg;
+    HelpDialog* helpDlg;
+    QGraphicsBlurEffect* blureffect = new QGraphicsBlurEffect;
 };
 
 #endif // MENUWINDOW_H
