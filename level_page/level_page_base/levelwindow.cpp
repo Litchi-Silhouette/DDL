@@ -28,13 +28,15 @@ LevelWindow::LevelWindow(QWidget *parent, const int cur_level)
     live_warn->addWidget(warning, 1);
     live_warn->addWidget(bar, 1);
 
+    double_bar = new DoubleLive(this);
+
     auto it = gamePages.all_buffs.find(level);
     if(it == gamePages.all_buffs.end())
         gamePages.all_buffs[level] = new ItemHash;
     it = gamePages.all_tasks.find(level);
     if(it == gamePages.all_tasks.end())
         gamePages.all_tasks[level] = new ItemHash;
-    list = new DDL_List(this, &gamePages.all_items , gamePages.all_tasks[level], gamePages.all_buffs[level]);
+    list = new DDL_List((level == 3) ,this, &gamePages.all_items , gamePages.all_tasks[level], gamePages.all_buffs[level]);
 
     map_border = new QFrame(this);
     map_border->setFrameShadow(QFrame::Sunken);
@@ -50,11 +52,24 @@ LevelWindow::LevelWindow(QWidget *parent, const int cur_level)
 
     up->setContentsMargins(5,5,5,0);
     up->setSpacing(5);
-    up->addWidget(list,5);
-    up->addStretch(1);
-    up->addLayout(live_warn, 1);
+    if(level!=3)
+    {
+        double_bar->setVisible(false);
+        up->addWidget(list,5);
+        up->addStretch(1);
+        up->addLayout(live_warn, 1);
+    }
+    else
+    {
+        live = 100;
+        warning->setVisible(false);
+        bar->setVisible(false);
+        up->addWidget(double_bar, 2);
+        up->addStretch(1);
+        up->addWidget(list, 2);
+        up->addStretch(1);
+    }
     up->addWidget(pause_b, 1);
-
 
     main_lay->setContentsMargins(0,0,0,0);
     main_lay->setSpacing(5);
@@ -76,6 +91,7 @@ LevelWindow::~LevelWindow()
     delete map_border;
     delete pauseDlg;
     delete blureffect;
+    delete double_bar;
 }
 
 void LevelWindow::pause(){
@@ -144,7 +160,7 @@ void LevelWindow::showEvent(QShowEvent* event){
     QMainWindow::showEvent(event);
     if(state == 0)
     {
-        update_live();
+        setIniLive(live, liveBoss);
         update_List();
         set_mode(0);
         QTimer::singleShot(1000,this, &LevelWindow::startText1);

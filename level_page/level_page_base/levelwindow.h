@@ -68,15 +68,25 @@ protected:
     }   //清空表单并重置完成为0
 
     //Live_bar部分操作
-    void update_live(){
-        bar->set_live(live);
+    void update_live(bool isLion = true){
+        if(level!=3)
+            bar->set_live(live);
+        else if(isLion)
+            double_bar->set_live(live, true);
+        else
+            double_bar->set_live(liveBoss, false);
     }   //设置当前血量
     void setTotalLive(int allLive){
-        bar->setTotalLive(allLive);
-    }   //开始时设置总血量
-    void setIniLive(int inilive){
-        live = inilive;
-        update_live();
+        if(level!=3)
+            bar->setTotalLive(allLive);
+    }   //开始时设置总血量(level = 3 无效)
+    void setIniLive(int lionini, int bossini = 100){
+        if(level!=3)
+        {
+            live = lionini;
+            update_live();
+        }else
+            double_bar->setiniLive(lionini, bossini);
     }   //设置初始血量
 
     //warning 部分操作
@@ -104,6 +114,7 @@ protected:
     }
 
     int live = 5;
+    int liveBoss = 100;
     int finished = 0;
     int missed = 0;
     int state = 0;         //0: haven't start  1：ongonging 2:pause  3:lose  4:win
@@ -128,6 +139,7 @@ private:
 
     pause_block* pause_b;
     KeepRatioLiveBar* bar;
+    DoubleLive* double_bar;
     KeepRatioWarning* warning;
     DDL_List* list;
     QFrame* map_border;
@@ -152,4 +164,6 @@ private:
  * 运行结束只能用任务管理器（嘿嘿嘿）嫌麻烦可以注释掉hideevent
  * 包含代码时注意删除或重写main,要声明gamePage成员变量
  * startCount函数是游戏正式开始的函数，如有需要可继承后重写
+ *
+ * 对于level3设置live时总数固定100，设置live时注意最小步长为5
 */

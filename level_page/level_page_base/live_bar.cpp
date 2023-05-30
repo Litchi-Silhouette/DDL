@@ -145,3 +145,116 @@ void stick::paintEvent(QPaintEvent* event)
 
     painter.drawRoundedRect(-stick_round,0,stick_width+stick_round,stick_height,stick_round,stick_round);
 }
+
+DoubleLive::DoubleLive(QWidget* parent):
+    QWidget{parent}, t(new QTimer(this))
+{
+    setWindowFlags(Qt::FramelessWindowHint);
+    setAttribute(Qt::WA_TranslucentBackground,true);
+
+    connect(t, &QTimer::timeout, this, &DoubleLive::changeLive);
+
+    bossBar = new QProgressBar(this);
+    bossBar->setRange(0,100);
+    bossBar->setOrientation(Qt::Horizontal);
+    bossBar->setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::MinimumExpanding);
+    bossBar->setStyleSheet("QProgressBar{border-radius:6px; border:2px solid black;"
+                                        "background: transparent; text-align: center;font:bold;}"
+                            "QProgressBar::chunk{border-radius:4px; border:1px solid gray;"
+                                        "background-color: #FFB90F;}");
+    bossBar->setMaximumHeight(20);
+    bossBar->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
+
+    lionBar = new QProgressBar(this);
+    lionBar->setRange(0,100);
+    lionBar->setOrientation(Qt::Horizontal);
+    lionBar->setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::MinimumExpanding);
+    lionBar->setStyleSheet("QProgressBar{border-radius:6px; border:2px solid black;"
+                                        "background: transparent; text-align: center;font:bold;}"
+                            "QProgressBar::chunk{border-radius:4px; border:1px solid gray;"
+                                        "background-color: #FFB90F;}");
+    lionBar->setMaximumHeight(20);
+    lionBar->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
+
+    lionTitle = new QLabel("Boss ", this);
+    lionTitle->setFont(QFont("DejaVu Sans Mono",20, QFont::Bold));
+    bossTitle = new QLabel("Lion ", this);
+    bossTitle->setFont(QFont("DejaVu Sans Mono",20, QFont::Bold));
+
+    auto mainLay = new QVBoxLayout;
+    mainLay->setContentsMargins(0,0,0,0);
+    mainLay->setSpacing(0);
+    mainLay->addWidget(bossTitle, 1, Qt::AlignLeft);
+    mainLay->addWidget(bossBar, 1, Qt::AlignVCenter);
+    mainLay->addWidget(lionTitle, 1, Qt::AlignLeft);
+    mainLay->addWidget(lionBar, 1, Qt::AlignVCenter);
+    setLayout(mainLay);
+
+}
+
+DoubleLive::~DoubleLive()
+{
+    delete bossBar;
+    delete lionBar;
+    delete t;
+    delete lionTitle;
+    delete bossTitle;
+}
+
+void DoubleLive::set_live(const int x, bool isLion)
+{
+    if(isLion)
+        lionLiveAim = x;
+    else
+        bossLiveAim = x;
+    if(!t->isActive())
+        t->start(interval);
+}
+
+void DoubleLive::changeLive()
+{
+    if(lionLiveAim >= lionLiveCur && bossLiveAim >= bossLiveCur)
+        t->stop();
+    if(lionLiveAim < lionLiveCur)
+    {
+        lionLiveCur -= singleStep;
+        auto cur = lionBar->styleSheet();
+        int s = cur.indexOf("#");
+        int p = cur.indexOf(";width");
+        QString tempcolor;
+        if(lionLiveCur>60)
+            tempcolor = "#FFD700";
+        else if(lionLiveCur>30)
+            tempcolor = "#FFB90F";
+        else
+            tempcolor = "#FF0000";
+        lionBar->setStyleSheet(cur.mid(0,s) + tempcolor + cur.mid(p));
+        lionBar->setValue(lionLiveCur);
+    }
+    if(bossLiveAim < bossLiveCur)
+    {
+        bossLiveCur -= singleStep;
+        /*
+        auto cur = bossBar->styleSheet();
+        int s = cur.indexOf("#");
+        int p = cur.indexOf(";width");
+        QString tempcolor;
+        if(bossLiveCur>60)
+            tempcolor = "#FFD700";
+        else if(bossLiveCur>30)
+            tempcolor = "#FFB90F";
+        else
+            tempcolor = "#FF0000";
+        bossBar->setStyleSheet(cur.mid(0,s) + tempcolor + cur.mid(p));
+        */
+        bossBar->setValue(bossLiveCur);
+    }
+}
+
+void DoubleLive::setiniLive(const int lion,const int boss)
+{
+    lionLiveAim = lionLiveCur = lion;
+    bossLiveAim = bossLiveCur = boss;
+    bossBar->setValue(bossLiveCur);
+    lionBar->setValue(lionLiveCur);
+}

@@ -2,7 +2,7 @@
 #include <QLayout>
 #include <QTimer>
 
-DDL_List::DDL_List(QWidget *parent, QHash<int , QListWidgetItem*>* _all,
+DDL_List::DDL_List(const bool isThird, QWidget *parent, QHash<int , QListWidgetItem*>* _all,
                    QHash<QListWidgetItem*, task_info>* _task, QHash<QListWidgetItem*, task_info>* _buff)
     : QWidget{parent}, taskitems(_task), buffitems(_buff), allitems(_all)
 {
@@ -44,7 +44,7 @@ DDL_List::DDL_List(QWidget *parent, QHash<int , QListWidgetItem*>* _all,
     connect(bufflist, &QListWidget::itemClicked, this,&DDL_List::buff_click);
     bufflist->setViewMode(QListView::IconMode);
     bufflist->setFocusPolicy(Qt::NoFocus);
-    bufflist->setMinimumSize(50,30);
+    bufflist->setMinimumSize(200,30);
     bufflist->setIconSize(QSize(18,18));
 
     name = new QLabel(this);
@@ -94,9 +94,20 @@ DDL_List::DDL_List(QWidget *parent, QHash<int , QListWidgetItem*>* _all,
 
     main_lay->setSpacing(0);
     main_lay->setContentsMargins(0,0,0,0);
-    main_lay->addLayout(left,2);
-    main_lay->addStretch(1);
-    main_lay->addLayout(right,2);
+    if(isThird)
+    {
+        titletask->setVisible(false);
+        finish->setVisible(false);
+        tasklist->setVisible(false);
+        main_lay->addLayout(right);
+        setMaximumWidth(375);
+    }
+    else
+    {
+        main_lay->addLayout(left,2);
+        main_lay->addStretch(1);
+        main_lay->addLayout(right,2);
+    }
     setLayout(main_lay);
 }
 
@@ -151,23 +162,34 @@ void DDL_List::add_buff(const QPixmap& icon, const QString& name,
 
 void DDL_List::remove_task(const int index)
 {
-    allitems->find(index);
-    auto& cur = allitems->find(index).value();
-    taskitems->remove(cur);
-    tasklist->removeItemWidget(cur);
-    delete cur;
-    allitems->remove(index);
-    showIni();
+    auto tmp = allitems->find(index);
+    if(tmp == allitems->end())
+        qDebug()<<"task items not found!";
+    else
+    {
+        auto& cur = tmp.value();
+        taskitems->remove(cur);
+        tasklist->removeItemWidget(cur);
+        delete cur;
+        allitems->remove(index);
+        showIni();
+    }
 }
 
 void DDL_List::remove_buff(const int index)
 {
-    auto& cur = allitems->find(index).value();
-    buffitems->remove(cur);
-    bufflist->removeItemWidget(cur);
-    delete cur;
-    allitems->remove(index);
-    showIni();
+    auto tmp = allitems->find(index);
+    if(tmp == allitems->end())
+        qDebug()<<"buff items not found!";
+    else
+    {
+        auto& cur = tmp.value();
+        buffitems->remove(cur);
+        bufflist->removeItemWidget(cur);
+        delete cur;
+        allitems->remove(index);
+        showIni();
+    }
 }
 
 void DDL_List::set_info(QListWidgetItem* cur, bool is_buff, bool is_nor)
@@ -223,19 +245,31 @@ void DDL_List::task_click(QListWidgetItem *item)
 }
 
 void DDL_List::showBuff(const int index){
-    auto& cur = allitems->find(index).value();
-    bool red = buffitems->find(cur).value().getRed();
-    set_info(cur,true,!red);
-    clearBuffSelected();
-    clearTaskSelected();
+    auto tmp = allitems->find(index);
+    if(tmp == allitems->end())
+        qDebug()<<"buff items not found!";
+    else
+    {
+        auto& cur = tmp.value();
+        bool red = buffitems->find(cur).value().getRed();
+        set_info(cur,true,!red);
+        clearBuffSelected();
+        clearTaskSelected();
+    }
 }
 
 void DDL_List::showTask(const int index){
-    auto& cur = allitems->find(index).value();
-    bool red = taskitems->find(cur).value().getRed();
-    set_info(cur,false,!red);
-    clearBuffSelected();
-    clearTaskSelected();
+    auto tmp = allitems->find(index);
+    if(tmp == allitems->end())
+        qDebug()<<"buff items not found!";
+    else
+    {
+        auto& cur = tmp.value();
+        bool red = taskitems->find(cur).value().getRed();
+        set_info(cur,false,!red);
+        clearBuffSelected();
+        clearTaskSelected();
+    }
 }
 
 void DDL_List::changeTaskColour(const int index, bool red){
