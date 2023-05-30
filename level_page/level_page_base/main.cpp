@@ -1,4 +1,4 @@
-#include "levelwindow.h".h"
+#include "levelwindow.h"
 #include <QApplication>
 
 Game LevelWindow::gamePages;

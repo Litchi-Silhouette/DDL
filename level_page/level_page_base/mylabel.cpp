@@ -13,6 +13,6 @@ void MyLabel::resizeEvent(QResizeEvent* event)
 {
     QWidget::resizeEvent(event);
     auto temp = font();
-    temp.setPixelSize(height()*2/3);
+    temp.setPixelSize(height()*3/4);
     setFont(temp);
 }

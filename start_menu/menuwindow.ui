@@ -17,21 +17,7 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QPushButton{ 
-font: italic 24pt &quot;Monotype Corsiva&quot;;
-text-align: left;
-border-bottom-right-radius: 30px;
-border-bottom: 3px solid black;
-background: rgba(250,250,250,1);
-}
-QLabel{
-background:rgba(200,200,200,1);
-font: 20pt &quot;华文楷体&quot;;
-border-bottom-right-radius: 20px;
-border-bottom-left-radius: 20px;
-border-top-right-radius:20px;
-text-align: left;
-}</string>
+   <string notr="true"/>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -251,7 +237,13 @@ QPushButton:pressed{border-image:url(:/pic/image/exit.png);}</string>
          <cursorShape>CrossCursor</cursorShape>
         </property>
         <property name="styleSheet">
-         <string notr="true"/>
+         <string notr="true">QPushButton{ 
+font: italic 24pt &quot;Monotype Corsiva&quot;;
+text-align: left;
+border-bottom-right-radius: 30px;
+border-bottom: 3px solid black;
+background: rgba(250,250,250,1);
+}</string>
         </property>
         <property name="text">
          <string>  Prologue</string>
@@ -285,6 +277,16 @@ QPushButton:pressed{border-image:url(:/pic/image/exit.png);}</string>
             <width>0</width>
             <height>50</height>
            </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QLabel{
+background:rgba(200,200,200,1);
+font: 20pt &quot;华文楷体&quot;;
+border-bottom-right-radius: 20px;
+border-bottom-left-radius: 20px;
+border-top-right-radius:20px;
+text-align: left;
+}</string>
           </property>
           <property name="text">
            <string>  看似悠闲的假期，初入p大的攻城狮却陷入了前所未有的危机……     </string>
@@ -340,7 +342,14 @@ QPushButton:pressed{border-image:url(:/pic/image/exit.png);}</string>
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">border-bottom-left-radius: 30px;</string>
+         <string notr="true">QPushButton{ 
+font: italic 24pt &quot;Monotype Corsiva&quot;;
+text-align: left;
+border-bottom-right-radius: 30px;
+border-bottom-left-radius: 30px;
+border-bottom: 3px solid black;
+background: rgba(250,250,250,1);
+}</string>
         </property>
         <property name="text">
          <string>  Level 1</string>
@@ -363,8 +372,12 @@ QPushButton:pressed{border-image:url(:/pic/image/exit.png);}</string>
       <item>
        <widget class="QLabel" name="end1Label">
         <property name="styleSheet">
-         <string notr="true">border-radius: 20px;
-border:2px solid gray;</string>
+         <string notr="true">QLabel{
+background:rgba(200,200,200,1);
+font: 20pt &quot;华文楷体&quot;;
+border-radius: 20px;
+text-align: left;
+}</string>
         </property>
         <property name="frameShape">
          <enum>QFrame::Box</enum>
@@ -398,8 +411,13 @@ border:2px solid gray;</string>
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">border-bottom-right-radius:0px;
-border-bottom-left-radius: 30px;</string>
+         <string notr="true">QPushButton{ 
+font: italic 24pt &quot;Monotype Corsiva&quot;;
+text-align: left;
+border-bottom-left-radius: 30px;
+border-bottom: 3px solid black;
+background: rgba(250,250,250,1);
+}</string>
         </property>
         <property name="text">
          <string>    Ending</string>
@@ -430,6 +448,15 @@ border-bottom-left-radius: 30px;</string>
           <height>55</height>
          </size>
         </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{ 
+font: italic 24pt &quot;Monotype Corsiva&quot;;
+text-align: left;
+border-bottom-right-radius: 30px;
+border-bottom: 3px solid black;
+background: rgba(250,250,250,1);
+}</string>
+        </property>
         <property name="text">
          <string>  Act 1</string>
         </property>
@@ -447,6 +474,16 @@ border-bottom-left-radius: 30px;</string>
             <width>0</width>
             <height>50</height>
            </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QLabel{
+background:rgba(200,200,200,1);
+font: 20pt &quot;华文楷体&quot;;
+border-bottom-right-radius: 20px;
+border-bottom-left-radius: 20px;
+border-top-right-radius:20px;
+text-align: left;
+}</string>
           </property>
           <property name="text">
            <string>  空阔的教室，惨白的灯光，离奇的儿歌，出路又在何方……    </string>
@@ -498,6 +535,16 @@ border-bottom-left-radius: 30px;</string>
           <height>55</height>
          </size>
         </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{ 
+font: italic 24pt &quot;Monotype Corsiva&quot;;
+text-align: left;
+border-bottom-right-radius: 30px;
+border-bottom-left-radius: 30px;
+border-bottom: 3px solid black;
+background: rgba(250,250,250,1);
+}</string>
+        </property>
         <property name="text">
          <string>  Level 2</string>
         </property>
@@ -519,8 +566,13 @@ border-bottom-left-radius: 30px;</string>
       <item>
        <widget class="QLabel" name="end2Label">
         <property name="styleSheet">
-         <string notr="true">border-radius: 20px;
-border:2px solid gray;</string>
+         <string notr="true">QLabel{
+background:rgba(200,200,200,1);
+font: 20pt &quot;华文楷体&quot;;
+border-radius: 20px;
+border:2px solid gray;
+text-align: left;
+}</string>
         </property>
         <property name="text">
          <string>   习得性无助(っ◞‸◟c)   </string>
@@ -542,8 +594,13 @@ border:2px solid gray;</string>
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">border-bottom-right-radius:0px;
-border-bottom-left-radius: 30px;</string>
+         <string notr="true">QPushButton{ 
+font: italic 24pt &quot;Monotype Corsiva&quot;;
+text-align: left;
+border-bottom-left-radius: 30px;
+border-bottom: 3px solid black;
+background: rgba(250,250,250,1);
+}</string>
         </property>
         <property name="text">
          <string>    Ending</string>
@@ -574,6 +631,15 @@ border-bottom-left-radius: 30px;</string>
           <height>55</height>
          </size>
         </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{ 
+font: italic 24pt &quot;Monotype Corsiva&quot;;
+text-align: left;
+border-bottom-right-radius: 30px;
+border-bottom: 3px solid black;
+background: rgba(250,250,250,1);
+}</string>
+        </property>
         <property name="text">
          <string>  Act 2</string>
         </property>
@@ -591,6 +657,16 @@ border-bottom-left-radius: 30px;</string>
             <width>0</width>
             <height>50</height>
            </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QLabel{
+background:rgba(200,200,200,1);
+font: 20pt &quot;华文楷体&quot;;
+border-bottom-right-radius: 20px;
+border-bottom-left-radius: 20px;
+border-top-right-radius:20px;
+text-align: left;
+}</string>
           </property>
           <property name="text">
            <string>  四处皆是墙壁，身后即是鬼影，无处可逃……无处！    </string>
@@ -642,6 +718,16 @@ border-bottom-left-radius: 30px;</string>
           <height>55</height>
          </size>
         </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{ 
+font: italic 24pt &quot;Monotype Corsiva&quot;;
+text-align: left;
+border-bottom-right-radius: 30px;
+border-bottom-left-radius: 30px;
+border-bottom: 3px solid black;
+background: rgba(250,250,250,1);
+}</string>
+        </property>
         <property name="text">
          <string>  Level 3</string>
         </property>
@@ -663,8 +749,13 @@ border-bottom-left-radius: 30px;</string>
       <item>
        <widget class="QLabel" name="end3Label">
         <property name="styleSheet">
-         <string notr="true">border-radius: 20px;
-border:2px solid gray;</string>
+         <string notr="true">QLabel{
+background:rgba(200,200,200,1);
+font: 20pt &quot;华文楷体&quot;;
+border-radius: 20px;
+border:2px solid gray;
+text-align: left;
+}</string>
         </property>
         <property name="text">
          <string>   就凭你 也配直视我   </string>
@@ -686,8 +777,13 @@ border:2px solid gray;</string>
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">border-bottom-right-radius:0px;
-border-bottom-left-radius: 30px;</string>
+         <string notr="true">QPushButton{ 
+font: italic 24pt &quot;Monotype Corsiva&quot;;
+text-align: left;
+border-bottom-left-radius: 30px;
+border-bottom: 3px solid black;
+background: rgba(250,250,250,1);
+}</string>
         </property>
         <property name="text">
          <string>    Ending</string>
@@ -721,6 +817,15 @@ border-bottom-left-radius: 30px;</string>
           <height>55</height>
          </size>
         </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{ 
+font: italic 24pt &quot;Monotype Corsiva&quot;;
+text-align: left;
+border-bottom-right-radius: 30px;
+border-bottom: 3px solid black;
+background: rgba(250,250,250,1);
+}</string>
+        </property>
         <property name="text">
          <string>  Ending</string>
         </property>
@@ -735,8 +840,13 @@ border-bottom-left-radius: 30px;</string>
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">border-radius: 20px;
-border:2px solid gray;</string>
+         <string notr="true">QLabel{
+background:rgba(200,200,200,1);
+font: 20pt &quot;华文楷体&quot;;
+border-radius: 20px;
+border:2px solid gray;
+text-align: left;
+}</string>
         </property>
         <property name="text">
          <string>   真的猛士！   </string>
@@ -759,8 +869,12 @@ border:2px solid gray;</string>
       <item>
        <widget class="QLabel" name="extraLabel">
         <property name="styleSheet">
-         <string notr="true">border-top-right-radius:0px;
-border-top-left-radius: 20px;</string>
+         <string notr="true">QLabel{
+background:rgba(200,200,200,1);
+font: 20pt &quot;华文楷体&quot;;
+border-radius: 20px;
+text-align: left;
+}</string>
         </property>
         <property name="text">
          <string>    狮狮都有光明的未来  </string>
@@ -774,6 +888,15 @@ border-top-left-radius: 20px;</string>
           <width>0</width>
           <height>55</height>
          </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{ 
+font: italic 24pt &quot;Monotype Corsiva&quot;;
+text-align: left;
+border-bottom-left-radius: 30px;
+border-bottom: 3px solid black;
+background: rgba(250,250,250,1);
+}</string>
         </property>
         <property name="text">
          <string>  Extra Chapter    </string>

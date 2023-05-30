@@ -40,7 +40,8 @@ private:
 
     QListWidget* tasklist;
     QListWidget* bufflist;
-    MyLabel* title;
+    MyLabel* titletask;
+    MyLabel* titlebuff;
     MyLabel* finish;
     QLabel* name;
     QLabel* icon;
