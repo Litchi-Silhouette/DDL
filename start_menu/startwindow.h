@@ -15,6 +15,8 @@ class StartWindow : public QMainWindow
 public:
     StartWindow(QWidget *parent = nullptr);
     ~StartWindow();
+signals:
+    void changeWindow(int index);
 protected:
     void paintEvent(QPaintEvent*);
     void hideEvent(QHideEvent* );

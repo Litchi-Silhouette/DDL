@@ -21,11 +21,13 @@ class LevelWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    static Game gamePages;
     LevelWindow(QWidget *parent = nullptr,const int cur_level = 0);
     ~LevelWindow();
 
     void endGame();
+signals:
+    void changeWindow(int index);
+
 protected:
     //DDL_List 部分操作
     void resettask(int fin = 0, int all = 0){
@@ -125,7 +127,7 @@ protected slots:
     void pause();
     void turnNext();
     void showEvent(QShowEvent* event);
-    void hideEvent(QHideEvent* event);
+
     virtual void startCount();
     virtual void restart();
     virtual void changeGameProcess(bool topause);
@@ -149,6 +151,7 @@ private:
     QGraphicsBlurEffect* blureffect = new QGraphicsBlurEffect;
     Ui::LevelWindow *ui;
     int level;
+    static Game statics;
 };
 #endif // LEVELWINDOW_H
 

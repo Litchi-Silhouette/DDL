@@ -282,15 +282,21 @@ void SetDialog::changeEffect(int cur){
 }
 
 EndDialog::EndDialog(QWidget* parent)
-    :MyDialog(parent),t(new QTimer(this))
+    :MyDialog(parent)
 {
     btn = new QPushButton("",this);
-    btn->setStyleSheet("QPushButton{border:0px; border-image:url(:/pic/image/accomplish.png);}");
-    btn->setMinimumSize(80,100);
-    info = new QLabel("「 先狮创业未半而中道崩殂 」",this);
+    btn->setStyleSheet("QPushButton{border-image:url(:/pic/image/accomplish.png);"
+                        "text-align: left; padding-left: 50px;}");
+    btn->setFont(QFont("STKaiti", 14, QFont::Bold));
+    btn->setFixedSize(350,80);
+    btn->setVisible(false);
+    connect(btn, &QPushButton::clicked, this, &EndDialog::close);
+    info = new QLabel("",this);
     info->setFont(QFont("STKaiti", 18, QFont::Bold));
     info->setAlignment(Qt::AlignCenter);
     pic = new QLabel(this);
+    pic->setAlignment(Qt::AlignCenter);
+    pic->setFixedSize(700,400);
 
     auto mainLay = new QVBoxLayout;
     mainLay->setSpacing(5);
@@ -306,4 +312,48 @@ EndDialog::~EndDialog()
     delete btn;
     delete info;
     delete pic;
+}
+
+void EndDialog::setIndex(int index)
+{
+    switch(index){
+    case 1:
+        picPath = ":/pic/image/ending1.png";
+        iconPath = ":/pic/image/ending1icon.png";
+        acc = " 结局成就\n 中道崩殂… ";
+        info->setText("「 先狮创业未半而中道崩殂 」");
+        break;
+    case 2:
+        picPath = ":/pic/image/ending2.png";
+        iconPath = ":/pic/image/ending2icon.png";
+        acc = " 结局成就\n 习得性无助(っ◞‸◟c) ";
+        info->setText("「 可怜绩点无狮顾，惟余三和跳大神 」");
+        break;
+    case 3:
+        picPath = ":/pic/image/ending3.png";
+        iconPath = ":/pic/image/ending3icon.png";
+        acc = " 结局成就\n 就凭你 也配直视我 ";
+        info->setText("「 惊涛骇浪从容渡，越是艰难越向前 」");
+        break;
+    case 4:
+        picPath = ":/pic/image/ending4.png";
+        iconPath = ":/pic/image/ending4icon.png";
+        acc = " 结局成就\n 真的猛士！ ";
+        info->setText("「 真的猛士，敢于直面惨淡的狮生，敢于正视眼前的DDL 」");
+        break;
+    default:
+        qDebug()<<"no ending";
+        exit(0);
+        break;
+    }
+    btn->setIconSize(QSize(60,60));
+    btn->setIcon(QIcon(iconPath));
+    btn->setText(acc);
+    pic->setPixmap(QPixmap(picPath).scaled(pic->size(),Qt::KeepAspectRatio));
+}
+
+void EndDialog::showEvent(QShowEvent* event)
+{
+    QTimer::singleShot(1000,btn, &QPushButton::show);
+    MyDialog::showEvent(event);
 }

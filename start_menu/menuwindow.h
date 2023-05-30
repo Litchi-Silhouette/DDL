@@ -23,7 +23,8 @@ private slots:
     void on_setBtn_clicked();
 
     void on_exitBtn_clicked();
-
+signals:
+    void changeWindow(int index);
 private:
     void setBlur(int extent);
 

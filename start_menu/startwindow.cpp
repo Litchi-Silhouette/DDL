@@ -49,11 +49,12 @@ void StartWindow::blink(){
 void StartWindow::hideEvent(QHideEvent* event){
     QMainWindow::hideEvent(event);
     p->stop();
+    emit changeWindow(2);
 }
 
 void StartWindow::stayRed(){
     p->stop();
     index = 1;
     update();
-    QTimer::singleShot(1000, this, &StartWindow::hide);
+    QTimer::singleShot(1000, this, &StartWindow::close);
 }

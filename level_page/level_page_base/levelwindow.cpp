@@ -8,7 +8,7 @@ LevelWindow::LevelWindow(QWidget *parent, const int cur_level)
     , level(cur_level)
 {
     ui->setupUi(this);
-    //setWindowFlags(Qt::FramelessWindowHint);
+    setWindowFlags(Qt::FramelessWindowHint);
     QIcon window(QString(":/page/level_image/icon_w.png"));
     setWindowIcon(window);
     setWindowTitle(QString("Escape form Dead Line!"));
@@ -30,13 +30,13 @@ LevelWindow::LevelWindow(QWidget *parent, const int cur_level)
 
     double_bar = new DoubleLive(this);
 
-    auto it = gamePages.all_buffs.find(level);
-    if(it == gamePages.all_buffs.end())
-        gamePages.all_buffs[level] = new ItemHash;
-    it = gamePages.all_tasks.find(level);
-    if(it == gamePages.all_tasks.end())
-        gamePages.all_tasks[level] = new ItemHash;
-    list = new DDL_List((level == 3) ,this, &gamePages.all_items , gamePages.all_tasks[level], gamePages.all_buffs[level]);
+    auto it = statics.all_buffs.find(level);
+    if(it == statics.all_buffs.end())
+        statics.all_buffs[level] = new ItemHash;
+    it = statics.all_tasks.find(level);
+    if(it == statics.all_tasks.end())
+        statics.all_tasks[level] = new ItemHash;
+    list = new DDL_List((level == 3) ,this, &statics.all_items , statics.all_tasks[level], statics.all_buffs[level]);
 
     map_border = new QFrame(this);
     map_border->setFrameShadow(QFrame::Sunken);
@@ -153,7 +153,8 @@ void LevelWindow::endGame(){
 
 void LevelWindow::turnNext(){
     startDlg->close();
-    hide();
+    emit changeWindow(2);
+    close();
 }
 
 void LevelWindow::showEvent(QShowEvent* event){
@@ -180,11 +181,6 @@ void LevelWindow::changeGameProcess(bool pause){
         pause_b->start_time();
         state = 1;
     }
-}
-
-void LevelWindow::hideEvent(QHideEvent* event){
-    QMainWindow::hideEvent(event);
-    gamePages.nextlevel((level+1)%2+1)->show();
 }
 
 void LevelWindow::restart(){

@@ -20,7 +20,8 @@ protected:
     void timerEvent(QTimerEvent*) override;
     void showEvent(QShowEvent*) override;
     void paintEvent(QPaintEvent* event) override;
-
+signals:
+    void changeWindow(int index);
 private slots:
     void closeGradully();
 private:

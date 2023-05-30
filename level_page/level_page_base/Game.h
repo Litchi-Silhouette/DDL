@@ -30,23 +30,14 @@ public:
 
 using ItemHash = QHash<QListWidgetItem*, task_info>;
 
-class Game{
-public:
-    QMainWindow* start;
-    QMainWindow* menu;
-    QMainWindow* end;
-
-    QHash<int , QMainWindow*> intervals;
-    QHash<int , QMainWindow*> ends;
-    QHash<int , QMainWindow*> levels;
-
+struct Game{
     QHash<int , ItemHash*> all_tasks;
     QHash<int , ItemHash*> all_buffs;
     QHash<int , QListWidgetItem*> all_items;
 
-    QMainWindow* nextlevel(int temp){
-        return levels[temp];
-    }
+    bool getEndings[5] = {};
+    bool getLevels[4] = {};
+    bool getActs[4] = {true};
 };
 
 #endif // GAME_H

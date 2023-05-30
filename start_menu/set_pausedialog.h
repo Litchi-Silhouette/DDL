@@ -141,12 +141,16 @@ public:
     explicit EndDialog(QWidget *parent = nullptr);
     ~EndDialog();
     void setIndex(int);     //1-4:for accomplish index
+protected:
+    void showEvent(QShowEvent*);
 signals:
 private:
     QLabel* pic;
     QLabel* info;
-    QTimer* t;
     QPushButton* btn;
+    QString picPath;
+    QString iconPath;
+    QString acc;
 };
 
 #endif // ENDDIALOG_H

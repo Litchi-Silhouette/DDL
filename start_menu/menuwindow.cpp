@@ -37,6 +37,7 @@ void MenuWindow::on_setBtn_clicked()
 
 void MenuWindow::on_exitBtn_clicked()
 {
+    emit changeWindow(-1);
     close();
 }
 
