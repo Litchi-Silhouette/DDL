@@ -26,7 +26,7 @@ DDL_List::DDL_List(const bool isThird, QWidget *parent, QHash<int , QListWidgetI
             "QListWidget::item:selected{border-width:3;color:black;background:rgba(220,220,220,0.6);}"
             "QListWidget::item:selected:active{border-width:3;color:black;background:rgba(220,220,220,0.6);}";
 
-    QFont cur("Microsoft Yi Baiti",18,QFont::Bold);
+    QFont cur("华文楷体",18,QFont::Bold);
     tasklist = new QListWidget(this);
     tasklist->setStyleSheet(temp);
     tasklist->setFont(cur);

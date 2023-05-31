@@ -11,7 +11,7 @@ live_bar::live_bar(QWidget *parent)
 
     live_show = new QLabel("生命值",this);
     live_show->setAlignment(Qt::AlignHCenter|Qt::AlignBottom);
-    live_show->setStyleSheet("QLabel{font:bold;}");
+    live_show->setFont(QFont("华文楷体",24,QFont::Bold));
 
     live_show->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
 

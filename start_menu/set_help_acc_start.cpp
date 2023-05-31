@@ -218,7 +218,7 @@ void SetDialog::changeEffect(int cur){
     num2->setText(QString("%1").arg(cur/10));
 }
 
-EndDialog::EndDialog(QWidget* parent)
+AccDialog::AccDialog(QWidget* parent)
     :MyDialog(parent)
 {
     btn = new QPushButton("",this);
@@ -227,7 +227,7 @@ EndDialog::EndDialog(QWidget* parent)
     btn->setFont(QFont("STKaiti", 14, QFont::Bold));
     btn->setFixedSize(350,80);
     btn->setVisible(false);
-    connect(btn, &QPushButton::clicked, this, &EndDialog::close);
+    connect(btn, &QPushButton::clicked, this, &AccDialog::close);
     info = new QLabel("",this);
     info->setFont(QFont("STKaiti", 18, QFont::Bold));
     info->setAlignment(Qt::AlignCenter);
@@ -244,14 +244,14 @@ EndDialog::EndDialog(QWidget* parent)
     setLayout(mainLay);
 }
 
-EndDialog::~EndDialog()
+AccDialog::~AccDialog()
 {
     delete btn;
     delete info;
     delete pic;
 }
 
-void EndDialog::setIndex(int index)
+void AccDialog::setIndex(int index)
 {
     switch(index){
     case 1:
@@ -289,7 +289,7 @@ void EndDialog::setIndex(int index)
     pic->setPixmap(QPixmap(picPath).scaled(pic->size(),Qt::KeepAspectRatio));
 }
 
-void EndDialog::showEvent(QShowEvent* event)
+void AccDialog::showEvent(QShowEvent* event)
 {
     QTimer::singleShot(1000,btn, &QPushButton::show);
     MyDialog::showEvent(event);

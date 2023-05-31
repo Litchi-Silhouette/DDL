@@ -12,11 +12,10 @@ LevelWindow::LevelWindow(QWidget *parent, const int cur_level)
     QIcon window(QString(":/page/level_image/icon_w.png"));
     setWindowIcon(window);
     setWindowTitle(QString("Escape form Dead Line!"));
-    setGeometry(0,0,1200,675);
 
     pause_b = new pause_block(level,this);
     pause_b->setMaximumWidth(150);
-    connect(pause_b->btn, &QPushButton::clicked, this, &LevelWindow::pause);
+    connect(pause_b->getBtn(), &QPushButton::clicked, this, &LevelWindow::pause);
 
     auto live_warn = new QVBoxLayout;
 
@@ -90,7 +89,6 @@ LevelWindow::~LevelWindow()
     delete pause_b;
     delete map_border;
     delete pauseDlg;
-    delete blureffect;
     delete double_bar;
 }
 
@@ -116,6 +114,7 @@ void LevelWindow::pause(){
 }
 
 void LevelWindow::setBlur(int extent){
+    QGraphicsBlurEffect* blureffect = new QGraphicsBlurEffect;
     blureffect->setBlurRadius(extent);
     setGraphicsEffect(blureffect);
 }

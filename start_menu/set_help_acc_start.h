@@ -106,12 +106,12 @@ private:
 #include <QPushButton>
 #include <QTimer>
 
-class EndDialog : public MyDialog
+class AccDialog : public MyDialog
 {
     Q_OBJECT
 public:
-    explicit EndDialog(QWidget *parent = nullptr);
-    ~EndDialog();
+    explicit AccDialog(QWidget *parent = nullptr);
+    ~AccDialog();
     void setIndex(int);     //1-4:for accomplish index
 protected:
     void showEvent(QShowEvent*);

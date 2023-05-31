@@ -148,7 +148,6 @@ private:
     PauseDialog* pauseDlg;
     StartDialog* startDlg;
 
-    QGraphicsBlurEffect* blureffect = new QGraphicsBlurEffect;
     Ui::LevelWindow *ui;
     int level;
     static Game statics;

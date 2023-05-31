@@ -3,7 +3,7 @@
 MyLabel::MyLabel(QWidget* parent, const QString& text)
     :QLabel(text, parent)
 {
-    QFont temp("Microsoft Yi Baiti",18,QFont::Bold);
+    QFont temp("华文楷体",18,QFont::Bold);
     setMargin(0);
     setAlignment(Qt::AlignCenter);
     setFont(temp);

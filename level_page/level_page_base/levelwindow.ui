@@ -10,11 +10,18 @@
     <height>675</height>
    </rect>
   </property>
+  <property name="palette">
+   <palette>
+    <active/>
+    <inactive/>
+    <disabled/>
+   </palette>
+  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QMainWindow{background: rgba(245,245,245,1);}</string>
+   <string notr="true"/>
   </property>
   <widget class="QWidget" name="centralwidget"/>
  </widget>
