@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include <QTimer>
-#include "set_pausedialog.h"
+#include "set_help_acc_start.h"
 
 namespace Ui {
 class LoadWindow;

@@ -41,3 +41,30 @@ struct Game{
 };
 
 #endif // GAME_H
+
+#ifndef MYDIALOG_H
+#define MYDIALOG_H
+
+#include <QDialog>
+
+class MyDialog : public QDialog
+{
+    Q_OBJECT
+public:
+    explicit MyDialog(QWidget *parent = nullptr)
+        : QDialog{parent}
+    {
+        setMouseTracking(true);
+        Qt::WindowFlags flags = Qt::Dialog;
+        flags |= Qt::FramelessWindowHint;
+        flags |= Qt::Tool;                 //程序不在任务栏显示
+        flags |= Qt::WindowStaysOnTopHint; //置顶显示
+        setWindowFlags(flags);
+        setAttribute(Qt::WA_TranslucentBackground, true);
+    }
+
+signals:
+
+};
+
+#endif // MYDIALOG_H

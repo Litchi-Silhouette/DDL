@@ -176,18 +176,18 @@ DoubleLive::DoubleLive(QWidget* parent):
     lionBar->setMaximumHeight(20);
     lionBar->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
 
-    lionTitle = new QLabel("Boss ", this);
-    lionTitle->setFont(QFont("DejaVu Sans Mono",20, QFont::Bold));
-    bossTitle = new QLabel("Lion ", this);
-    bossTitle->setFont(QFont("DejaVu Sans Mono",20, QFont::Bold));
+    lionTitle = new QLabel("",this);
+    lionTitle->setPixmap(QPixmap(":/page/level_image/lionIcon.png").scaled(80,80,Qt::KeepAspectRatio));
+    bossTitle = new QLabel("", this);
+    bossTitle->setPixmap(QPixmap(":/page/level_image/bossIcon.png").scaled(80,80,Qt::KeepAspectRatio));
 
-    auto mainLay = new QVBoxLayout;
+    auto mainLay = new QGridLayout;
     mainLay->setContentsMargins(0,0,0,0);
     mainLay->setSpacing(0);
-    mainLay->addWidget(bossTitle, 1, Qt::AlignLeft);
-    mainLay->addWidget(bossBar, 1, Qt::AlignVCenter);
-    mainLay->addWidget(lionTitle, 1, Qt::AlignLeft);
-    mainLay->addWidget(lionBar, 1, Qt::AlignVCenter);
+    mainLay->addWidget(bossTitle,0,0,1,1);
+    mainLay->addWidget(bossBar, 0,1,1,1);
+    mainLay->addWidget(lionTitle, 1,0,1,1);
+    mainLay->addWidget(lionBar, 1,1,1,1);
     setLayout(mainLay);
 
 }

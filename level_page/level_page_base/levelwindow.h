@@ -9,8 +9,8 @@
 #include "live_bar.h"
 #include "warning_icon.h"
 #include "ddl_list.h"
-#include "set_pausedialog.h"
-#include "Game.h"
+#include "pause_start_end.h"
+#include "Game.hpp"
 
 namespace Ui {
 class LevelWindow;

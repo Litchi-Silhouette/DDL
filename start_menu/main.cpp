@@ -1,5 +1,5 @@
 #include "controlwindow.h"
-#include "set_pausedialog.h"
+#include "set_help_acc_start.h"
 
 #include <QApplication>
 

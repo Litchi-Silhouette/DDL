@@ -22,12 +22,16 @@ protected slots:
     void showEvent(QShowEvent*);
 private slots:
     void toWindow(int index);
+    void toLevel1();
+    void toLevel2();
+    void toLevel3();
 private:
     Ui::ControlWindow *ui;
     QStackedWidget* mainWidget;
     LoadWindow* load;
     StartWindow* start;
     MenuWindow* menu;
+    QMainWindow* on = nullptr;
 };
 
 #endif // CONTROLWINDOW_H

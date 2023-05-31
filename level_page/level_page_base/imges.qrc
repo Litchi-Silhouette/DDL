@@ -14,5 +14,7 @@
         <file>level_image/continue_nor_gray.png</file>
         <file>level_image/continue_on_gray.png</file>
         <file>level_image/continue.png</file>
+        <file>level_image/bossIcon.png</file>
+        <file>level_image/lionIcon.png</file>
     </qresource>
 </RCC>

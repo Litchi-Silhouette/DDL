@@ -15,34 +15,6 @@ signals:
 
 #endif // MYDIALOG_H
 
-#ifndef PAUSEDIALOG_H
-#define PAUSEDIALOG_H
-
-#include <QLayout>
-#include <QPushButton>
-
-class PauseDialog : public MyDialog
-{
-    Q_OBJECT
-public:
-    explicit PauseDialog(QWidget *parent = nullptr);
-    ~PauseDialog();
-    int getChoice() const;
-signals:
-private slots:
-    void back();
-    void restart();
-    void conti();
-private:
-    QHBoxLayout* main_lay;
-    QPushButton* backBtn;
-    QPushButton* restartBtn;
-    QPushButton* continueBtn;
-    int choice = 0;
-};
-
-#endif // MYDIALOG_H
-
 #ifndef STARTDIALOG_H
 #define STARTDIALOG_H
 #include <QLabel>

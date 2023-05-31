@@ -1,16 +1,4 @@
-#include "set_pausedialog.h"
-
-MyDialog::MyDialog(QWidget *parent)
-    : QDialog{parent}
-{
-    setMouseTracking(true);
-    Qt::WindowFlags flags = Qt::Dialog;
-    flags |= Qt::FramelessWindowHint;
-    flags |= Qt::Tool;                 //程序不在任务栏显示
-    flags |= Qt::WindowStaysOnTopHint; //置顶显示
-    setWindowFlags(flags);
-    setAttribute(Qt::WA_TranslucentBackground, true);
-}
+#include "pause_start_end.h"
 
 PauseDialog::PauseDialog(QWidget* parent)
     :MyDialog(parent)

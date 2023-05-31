@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QListWidget>
 #include "mylabel.h"
-#include "Game.h"
+#include "Game.hpp"
 
 class DDL_List : public QWidget
 {

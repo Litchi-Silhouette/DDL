@@ -15,17 +15,17 @@ SOURCES += \
     main.cpp \
     mylabel.cpp \
     pause_button.cpp \
-    set_pausedialog.cpp \
+    pause_start_end.cpp \
     warning_icon.cpp
 
 HEADERS += \
-    Game.h \
+    Game.hpp \
     ddl_list.h \
     levelwindow.h \
     live_bar.h \
     mylabel.h \
     pause_button.h \
-    set_pausedialog.h \
+    pause_start_end.h \
     warning_icon.h
 
 FORMS += \

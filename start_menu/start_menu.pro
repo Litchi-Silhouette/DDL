@@ -13,14 +13,14 @@ SOURCES += \
     loadwindow.cpp \
     main.cpp \
     menuwindow.cpp \
-    set_pausedialog.cpp \
+    set_help_acc_start.cpp \
     startwindow.cpp
 
 HEADERS += \
     controlwindow.h \
     loadwindow.h \
     menuwindow.h \
-    set_pausedialog.h \
+    set_help_acc_start.h \
     startwindow.h
 
 FORMS += \

@@ -31,6 +31,11 @@ ControlWindow::~ControlWindow()
 {
     delete ui;
     delete mainWidget;
+    delete load;
+    delete start;
+    delete menu;
+    //if(on)
+    //    delete on;
 }
 
 void ControlWindow::toWindow(int index)
@@ -45,4 +50,19 @@ void ControlWindow::showEvent(QShowEvent* event)
 {
     QMainWindow::showEvent(event);
     mainWidget->setCurrentIndex(0);
+}
+
+void ControlWindow::toLevel1()
+{
+
+}
+
+void ControlWindow::toLevel2()
+{
+
+}
+
+void ControlWindow::toLevel3()
+{
+
 }

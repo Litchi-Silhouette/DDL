@@ -163,7 +163,7 @@ void LevelWindow::showEvent(QShowEvent* event){
     {
         setIniLive(live, liveBoss);
         update_List();
-        set_mode(0);
+        set_mode(2);
         QTimer::singleShot(1000,this, &LevelWindow::startText1);
     }
     else if(state ==1 || state == 2)
