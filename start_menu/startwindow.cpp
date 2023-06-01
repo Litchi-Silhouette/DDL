@@ -32,11 +32,11 @@ void StartWindow::paintEvent(QPaintEvent*){
         back.load(nor);
 
     painter.drawPixmap(rect(),back);
-
 }
 
 void StartWindow::startBlink(){
     blink();
+    ui->tip->hide();
     p->start(interval);
     QTimer::singleShot(1000, this, &StartWindow::stayRed);
 }
@@ -49,11 +49,12 @@ void StartWindow::blink(){
 void StartWindow::hideEvent(QHideEvent* event){
     QMainWindow::hideEvent(event);
     p->stop();
+    emit changeWindow(2);
 }
 
 void StartWindow::stayRed(){
     p->stop();
     index = 1;
     update();
-    QTimer::singleShot(1000, this, &StartWindow::hide);
+    QTimer::singleShot(1000, this, &StartWindow::close);
 }

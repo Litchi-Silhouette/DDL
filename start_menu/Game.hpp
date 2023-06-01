@@ -30,23 +30,41 @@ public:
 
 using ItemHash = QHash<QListWidgetItem*, task_info>;
 
-class Game{
-public:
-    QMainWindow* start;
-    QMainWindow* menu;
-    QMainWindow* end;
-
-    QHash<int , QMainWindow*> intervals;
-    QHash<int , QMainWindow*> ends;
-    QHash<int , QMainWindow*> levels;
-
+struct Game{
     QHash<int , ItemHash*> all_tasks;
     QHash<int , ItemHash*> all_buffs;
     QHash<int , QListWidgetItem*> all_items;
 
-    QMainWindow* nextlevel(int temp){
-        return levels[temp];
-    }
+    bool getEndings[5] = {};
+    bool getLevels[4] = {};
+    bool getActs[4] = {true};
 };
 
 #endif // GAME_H
+
+#ifndef MYDIALOG_H
+#define MYDIALOG_H
+
+#include <QDialog>
+
+class MyDialog : public QDialog
+{
+    Q_OBJECT
+public:
+    explicit MyDialog(QWidget *parent = nullptr)
+        : QDialog{parent}
+    {
+        setMouseTracking(true);
+        Qt::WindowFlags flags = Qt::Dialog;
+        flags |= Qt::FramelessWindowHint;
+        flags |= Qt::Tool;                 //程序不在任务栏显示
+        flags |= Qt::WindowStaysOnTopHint; //置顶显示
+        setWindowFlags(flags);
+        setAttribute(Qt::WA_TranslucentBackground, true);
+    }
+
+signals:
+
+};
+
+#endif // MYDIALOG_H

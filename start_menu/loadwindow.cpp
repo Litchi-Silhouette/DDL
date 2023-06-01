@@ -17,7 +17,7 @@ LoadWindow::LoadWindow(QWidget *parent):
     center = new StartDialog(this);
     center->setAttribute(Qt::WA_DeleteOnClose, true);
     center->resetFont(QFont("STKaiti", 20, QFont::Bold));
-    center->setStartText("3W  出品", 60);
+    center->setStartText("     3W    出品", 60);
     center->setMinimumSize(550,200);
 }
 
@@ -29,7 +29,7 @@ void LoadWindow::showEvent(QShowEvent* event){
     QMainWindow::showEvent(event);
     updateTimer = startTimer(interval);
     QTimer::singleShot(1,center, &StartDialog::show);
-    QTimer::singleShot(1500, this, &LoadWindow::closeGradully);
+    QTimer::singleShot(2000, this, &LoadWindow::closeGradully);
 }
 
 void LoadWindow::timerEvent(QTimerEvent* event){
@@ -43,6 +43,7 @@ void LoadWindow::timerEvent(QTimerEvent* event){
     else if(colour == 0){
         killTimer(updateTimer);
         center->close();
+        emit changeWindow(1);
         close();
     }
 }

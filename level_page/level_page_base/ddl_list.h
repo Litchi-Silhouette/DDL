@@ -4,13 +4,13 @@
 #include <QWidget>
 #include <QListWidget>
 #include "mylabel.h"
-#include "Game.h"
+#include "Game.hpp"
 
 class DDL_List : public QWidget
 {
     Q_OBJECT
 public:
-    explicit DDL_List(QWidget *parent = nullptr, QHash<int , QListWidgetItem*>* _all = nullptr,
+    explicit DDL_List(const bool isThird, QWidget *parent = nullptr, QHash<int , QListWidgetItem*>* _all = nullptr,
                       QHash<QListWidgetItem*, task_info>* _task = nullptr, QHash<QListWidgetItem*, task_info>* _buff = nullptr);
     ~DDL_List();
     void set_ini_task(int fin = 0, int all = 0);
@@ -40,7 +40,8 @@ private:
 
     QListWidget* tasklist;
     QListWidget* bufflist;
-    MyLabel* title;
+    MyLabel* titletask;
+    MyLabel* titlebuff;
     MyLabel* finish;
     QLabel* name;
     QLabel* icon;

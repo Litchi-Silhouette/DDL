@@ -1,13 +1,11 @@
-#include "levelwindow.h".h"
+#include "levelwindow.h"
 #include <QApplication>
 
-Game LevelWindow::gamePages;
+Game LevelWindow::statics;
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    LevelWindow w(nullptr,1), p(nullptr, 2);
-    w.gamePages.levels[1] = &p;
-    p.gamePages.levels[2] = &w;
+    LevelWindow w(nullptr,1);
     w.show();
     return a.exec();
 }

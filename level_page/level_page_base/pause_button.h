@@ -1,23 +1,11 @@
-#ifndef PAUSE_BUTTON_H
-#define PAUSE_BUTTON_H
-
-#include <QPushButton>
-
-class pause_button : public QPushButton
-{
-    Q_OBJECT
-public:
-    explicit pause_button(const QString& text, QWidget *parent = nullptr);
-};
-
-#endif // PAUSE_BUTTON_H
-
 #ifndef PAUSE_BLOCK_H
 #define PAUSE_BLOCK_H
 
 #include "mylabel.h"
 #include <QTimer>
 #include <QResizeEvent>
+#include <QPushButton>
+
 class pause_block: public QWidget
 {
     Q_OBJECT
@@ -26,7 +14,9 @@ public:
     ~pause_block();
     void start_time();
     void pause_time();
-    pause_button* btn;
+    QPushButton* getBtn(){
+        return btn;
+    }
 
 private slots:
     void update_time();
@@ -36,6 +26,7 @@ private:
     MyLabel* time_t;
     MyLabel* level_l;
     MyLabel* level_t;
+    QPushButton* btn;
     QTimer* timer;
     int time;
 };
@@ -74,8 +65,8 @@ public:
     void pause_time(){
         center->pause_time();
     }
-    pause_button* getbtn(){
-        return center->btn;
+    QPushButton* getbtn(){
+        return center->getBtn();
     }
 
 protected:

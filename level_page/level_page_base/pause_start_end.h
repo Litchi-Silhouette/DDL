@@ -1,23 +1,6 @@
-#ifndef MYDIALOG_H
-#define MYDIALOG_H
-
-#include <QDialog>
-
-class MyDialog : public QDialog
-{
-    Q_OBJECT
-public:
-    explicit MyDialog(QWidget *parent = nullptr);
-
-signals:
-
-};
-
-#endif // MYDIALOG_H
-
 #ifndef PAUSEDIALOG_H
 #define PAUSEDIALOG_H
-
+#include"Game.hpp"
 #include <QLayout>
 #include <QPushButton>
 
@@ -47,6 +30,7 @@ private:
 #define STARTDIALOG_H
 #include<QLabel>
 #include <QLayout>
+#include"Game.hpp"
 
 class StartDialog : public MyDialog
 {
@@ -55,10 +39,59 @@ public:
     explicit StartDialog(QWidget *parent = nullptr);
     ~StartDialog();
     void setStartText(const QString& _text, int fontsize);
-    void resetFont(const QFont&);
 signals:
 private:
     QLabel* literature;
 };
 
 #endif // STARTDIALOG_H
+
+#ifndef ENDDIALOG_H
+#define ENDDIALOG_H
+#include<QLabel>
+#include <QLayout>
+#include"Game.hpp"
+
+class EndDialog : public MyDialog
+{
+    Q_OBJECT
+public:
+    explicit EndDialog(QWidget *parent = nullptr);
+    ~EndDialog();
+    int getChoice(){
+        return choice;
+    }
+signals:
+private slots:
+    void back();
+    void next();
+private:
+
+    QLabel* literature;
+    QPushButton* nextBtn;
+    QPushButton* backBtn;
+    int choice = 0;
+};
+
+#endif // ENDDIALOG_H
+
+#ifndef MOVIEDIALOG_H
+#define MOVIEDIALOG_H
+#include<QLabel>
+#include <QLayout>
+#include"Game.hpp"
+
+class MovieDialog : public MyDialog
+{
+    Q_OBJECT
+public:
+    //explicit MovieDialog(QWidget *parent = nullptr);
+    //~MovieDialog();
+
+signals:
+private:
+private slots:
+
+};
+
+#endif // MOVIEDIALOG_H

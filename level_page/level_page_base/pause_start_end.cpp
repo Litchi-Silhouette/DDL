@@ -1,16 +1,4 @@
-#include "set_pausedialog.h"
-
-MyDialog::MyDialog(QWidget *parent)
-    : QDialog{parent}
-{
-    setMouseTracking(true);
-    Qt::WindowFlags flags = Qt::Dialog;
-    flags |= Qt::FramelessWindowHint;
-    flags |= Qt::Tool;                 //程序不在任务栏显示
-    flags |= Qt::WindowStaysOnTopHint; //置顶显示
-    setWindowFlags(flags);
-    setAttribute(Qt::WA_TranslucentBackground, true);
-}
+#include "pause_start_end.h"
 
 PauseDialog::PauseDialog(QWidget* parent)
     :MyDialog(parent)
@@ -46,6 +34,7 @@ PauseDialog::PauseDialog(QWidget* parent)
     main_lay->addWidget(continueBtn,1);
 
     setLayout(main_lay);
+    clearMask();
 }
 
 PauseDialog::~PauseDialog(){
@@ -79,6 +68,7 @@ StartDialog::StartDialog(QWidget* parent)
 {
     literature = new QLabel(this);
     literature->setFont(QFont("STHupo", 20, QFont::Bold));
+    literature->setAlignment(Qt::AlignCenter);
     literature->setMinimumSize(400,200);
 }
 
@@ -86,14 +76,58 @@ StartDialog::~StartDialog(){
     delete literature;
 }
 
-void StartDialog::resetFont(const QFont& cur){
-    literature->setFont(cur);
-}
-
 void StartDialog::setStartText(const QString& _text, int fontSize){
     auto temp = literature->font();
     temp.setPointSize(fontSize);
     literature->setFont(temp);
-    literature->setAlignment(Qt::AlignCenter);
     literature->setText(_text);
+}
+
+EndDialog::EndDialog(QWidget* parent):
+    MyDialog(parent)
+{
+    backBtn = new QPushButton(this);
+    backBtn->setStyleSheet("QPushButton{border-width:0px;"
+                           "border-image:url(:/page/level_image/back_nor_gray.png);}"
+                           "QPushButton:hover{border-image:url(:/page/level_image/back_on_gray.png);}"
+                           "QPushButton:pressed{border-image:url(:/page/level_image/back.png);}"
+                           );
+    backBtn->setFixedSize(80,80);
+    connect(backBtn, &QPushButton::clicked, this, &EndDialog::back);
+
+    nextBtn = new QPushButton(this);
+    nextBtn->setStyleSheet("QPushButton{border:0px;"
+                            "border-image:url(:/page/level_image/continue_nor_gray.png);}"
+                            "QPushButton:hover{border-image:url(:/page/level_image/continue_on_gray.png);}"
+                            "QPushButton:pressed{border-image:url(:/page/level_image/continue.png);}"
+                            );
+    nextBtn->setFixedSize(80,80);
+    connect(nextBtn, &QPushButton::clicked, this, &EndDialog::next);
+
+    literature = new QLabel(this);
+    literature->setText("游戏结束");
+    literature->setFont(QFont("华文楷体",50, QFont::Bold));
+
+    auto mainLay = new QGridLayout(this);
+    mainLay->addWidget(literature,0,0,1,2);
+    mainLay->addWidget(backBtn,1,0,1,1);
+    mainLay->addWidget(nextBtn,1,1,1,1);
+    setLayout(mainLay);
+}
+
+EndDialog::~EndDialog()
+{
+    delete backBtn;
+    delete nextBtn;
+    delete literature;
+}
+
+void EndDialog::next(){
+    choice = 0;
+    close();
+}
+
+void EndDialog::back(){
+    choice = 1;
+    close();
 }

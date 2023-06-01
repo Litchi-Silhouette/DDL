@@ -116,3 +116,37 @@ private:
 };
 
 #endif // KEEPRATIOWIDGET_H
+
+#ifndef DOUBLELIVE_H
+#define DOUBLELIVE_H
+
+#include <QWidget>
+#include<QProgressBar>
+#include<QLabel>
+#include<QTimer>
+
+class DoubleLive: public QWidget
+{
+    Q_OBJECT
+public:
+    DoubleLive(QWidget* parent = nullptr);
+    ~DoubleLive();
+    void set_live(const int x, bool isLion = true);
+    void setiniLive(const int lion, const int boss);
+private slots:
+    void changeLive();
+private:
+    QProgressBar* bossBar;
+    QProgressBar* lionBar;
+    QLabel* bossTitle;
+    QLabel* lionTitle;
+    QTimer* t;
+    int bossLiveCur = 100;
+    int lionLiveCur = 100;
+    int bossLiveAim = 100;
+    int lionLiveAim = 100;
+    int singleStep = 5;
+    int interval = 100;
+};
+
+#endif // DOUBLELIVE_H

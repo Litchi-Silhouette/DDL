@@ -1,20 +1,5 @@
 #include "pause_button.h"
 #include <QLayout>
-#include <QResizeEvent>
-
-pause_button::pause_button(const QString &text, QWidget *parent) :
-    QPushButton(text ,parent)
-{
-    setWindowFlags(Qt::FramelessWindowHint);
-    setAttribute(Qt::WA_TranslucentBackground,true);
-    setStyleSheet("QPushButton{border-width:0px;"
-                  "border-image:url(:/page/level_image/stop_nor_gray.png);}"
-                  "QPushButton:hover{border-image:url(:/page/level_image/stop_on_gray.png);}"
-                  "QPushButton:pressed{border-image:url(:/page/level_image/stop_on.png);}"
-                  );
-    setText("");
-    setFixedSize(50,50);
-}
 
 pause_block::pause_block(const int cur_level, QWidget* parent, int startTime)
     :QWidget(parent),level(cur_level),time(startTime)
@@ -22,7 +7,13 @@ pause_block::pause_block(const int cur_level, QWidget* parent, int startTime)
     setWindowFlags(Qt::FramelessWindowHint);
     setAttribute(Qt::WA_TranslucentBackground,true);
     setGeometry(100,100,100,100);
-    btn = new pause_button("&C",this);
+    btn = new QPushButton("",this);
+    btn->setStyleSheet("QPushButton{border-width:0px;"
+                  "border-image:url(:/page/level_image/stop_nor_gray.png);}"
+                  "QPushButton:hover{border-image:url(:/page/level_image/stop_on_gray.png);}"
+                  "QPushButton:pressed{border-image:url(:/page/level_image/stop_on.png);}"
+                  );
+    btn->setFixedSize(50,50);
 
     time_l = new MyLabel(this, "00:00:00");
     time_t = new MyLabel(this, "游戏时间");
@@ -54,7 +45,7 @@ pause_block::pause_block(const int cur_level, QWidget* parent, int startTime)
     down->setContentsMargins(0,0,0,0);
     main_lay->addLayout(up);
     main_lay->addLayout(down);
-    main_lay->setSpacing(0);
+    main_lay->setSpacing(20);
     main_lay->setStretchFactor(up,1);
     main_lay->setStretchFactor(down,1);
     main_lay->setContentsMargins(0,0,0,0);

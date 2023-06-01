@@ -8,27 +8,34 @@ LevelWindow::LevelWindow(QWidget *parent, const int cur_level)
     , level(cur_level)
 {
     ui->setupUi(this);
-    //setWindowFlags(Qt::FramelessWindowHint);
+    setWindowFlags(Qt::FramelessWindowHint);
     QIcon window(QString(":/page/level_image/icon_w.png"));
     setWindowIcon(window);
     setWindowTitle(QString("Escape form Dead Line!"));
-    setGeometry(0,0,1200,675);
 
     pause_b = new pause_block(level,this);
     pause_b->setMaximumWidth(150);
-    connect(pause_b->btn, &QPushButton::clicked, this, &LevelWindow::pause);
+    connect(pause_b->getBtn(), &QPushButton::clicked, this, &LevelWindow::pause);
 
+    auto live_warn = new QVBoxLayout;
+
+    live_warn->setContentsMargins(0,0,0,0);
+    live_warn->setSpacing(5);
     bar = new KeepRatioLiveBar(this);
-
     warning = new KeepRatioWarning(this);
 
-    auto it = gamePages.all_buffs.find(level);
-    if(it == gamePages.all_buffs.end())
-        gamePages.all_buffs[level] = new ItemHash;
-    it = gamePages.all_tasks.find(level);
-    if(it == gamePages.all_tasks.end())
-        gamePages.all_tasks[level] = new ItemHash;
-    list = new DDL_List(this, &gamePages.all_items , gamePages.all_tasks[level], gamePages.all_buffs[level]);
+    live_warn->addWidget(warning, 1);
+    live_warn->addWidget(bar, 1);
+
+    double_bar = new DoubleLive(this);
+
+    auto it = statics.all_buffs.find(level);
+    if(it == statics.all_buffs.end())
+        statics.all_buffs[level] = new ItemHash;
+    it = statics.all_tasks.find(level);
+    if(it == statics.all_tasks.end())
+        statics.all_tasks[level] = new ItemHash;
+    list = new DDL_List((level == 3) ,this, &statics.all_items , statics.all_tasks[level], statics.all_buffs[level]);
 
     map_border = new QFrame(this);
     map_border->setFrameShadow(QFrame::Sunken);
@@ -38,20 +45,31 @@ LevelWindow::LevelWindow(QWidget *parent, const int cur_level)
 
     pauseDlg  = new PauseDialog(this);
     startDlg = new StartDialog(this);
+    endDlg = new EndDialog(this);
 
     auto up = new QHBoxLayout;
     main_lay = new QVBoxLayout;
 
     up->setContentsMargins(5,5,5,0);
     up->setSpacing(5);
-    up->addWidget(list);
-    up->addWidget(warning);
-    up->addWidget(bar);
-    up->addWidget(pause_b);
-    up->setStretchFactor(list,4);
-    up->setStretchFactor(warning,1);
-    up->setStretchFactor(bar,1);
-    up->setStretchFactor(pause_b,1);
+    if(level!=3)
+    {
+        double_bar->setVisible(false);
+        up->addWidget(list,5);
+        up->addStretch(1);
+        up->addLayout(live_warn, 1);
+    }
+    else
+    {
+        live = 100;
+        warning->setVisible(false);
+        bar->setVisible(false);
+        up->addWidget(double_bar, 2);
+        up->addStretch(1);
+        up->addWidget(list, 2);
+        up->addStretch(1);
+    }
+    up->addWidget(pause_b, 1);
 
     main_lay->setContentsMargins(0,0,0,0);
     main_lay->setSpacing(5);
@@ -72,7 +90,8 @@ LevelWindow::~LevelWindow()
     delete pause_b;
     delete map_border;
     delete pauseDlg;
-    delete blureffect;
+    delete double_bar;
+    delete endDlg;
 }
 
 void LevelWindow::pause(){
@@ -82,7 +101,7 @@ void LevelWindow::pause(){
     pauseDlg->exec();
     switch (pauseDlg->getChoice()) {
     case 1:
-        hide();
+        close();
         break;
     case 2:
         restart();
@@ -97,6 +116,7 @@ void LevelWindow::pause(){
 }
 
 void LevelWindow::setBlur(int extent){
+    QGraphicsBlurEffect* blureffect = new QGraphicsBlurEffect;
     blureffect->setBlurRadius(extent);
     setGraphicsEffect(blureffect);
 }
@@ -127,23 +147,29 @@ void LevelWindow::startCount(){
 
 void LevelWindow::endGame(){
     setBlur(10);
-    startDlg->open();
-    startDlg->setStartText("游戏结束",50);
-    QTimer::singleShot(1500, this, &LevelWindow::turnNext);
+    endDlg->open();
+    QTimer::singleShot(1500, this, &LevelWindow::close);
 }
 
-void LevelWindow::turnNext(){
-    startDlg->close();
-    hide();
+void LevelWindow::hideEvent(QHideEvent* event){
+    if(endDlg->isActiveWindow())
+        endDlg->close();
+    if(state == 4)
+        emit changeWindow(level);
+    else if(state == 3)
+        emit changeWindow(2);
+    else
+        emit changeWindow(2);
+    QMainWindow::hideEvent(event);
 }
 
 void LevelWindow::showEvent(QShowEvent* event){
     QMainWindow::showEvent(event);
     if(state == 0)
     {
-        update_live();
+        setIniLive(live, liveBoss);
         update_List();
-        set_mode(0);
+        set_mode(2);
         QTimer::singleShot(1000,this, &LevelWindow::startText1);
     }
     else if(state ==1 || state == 2)
@@ -163,14 +189,23 @@ void LevelWindow::changeGameProcess(bool pause){
     }
 }
 
-void LevelWindow::hideEvent(QHideEvent* event){
-    QMainWindow::hideEvent(event);
-    gamePages.nextlevel((level+1)%2+1)->show();
-}
-
 void LevelWindow::restart(){
     clearList();
     state = 1;
     pause_b->start_time();
 }
 
+void LevelWindow::halfMovie(){
+    switch(level){
+    case 1:
+
+        break;
+    case 2:
+        break;
+    case 3:
+        break;
+    default:
+        exit(0);
+        break;
+    }
+}
