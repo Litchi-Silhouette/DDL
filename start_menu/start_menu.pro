@@ -17,6 +17,7 @@ SOURCES += \
     startwindow.cpp
 
 HEADERS += \
+    Game.hpp \
     controlwindow.h \
     loadwindow.h \
     menuwindow.h \

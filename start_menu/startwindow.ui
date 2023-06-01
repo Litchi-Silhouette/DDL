@@ -94,7 +94,7 @@ color: rgb(240, 240, 240);
        <string notr="true">QPushButton{background: transparent;}</string>
       </property>
       <property name="text">
-       <string>PushButton</string>
+       <string/>
       </property>
      </widget>
     </item>

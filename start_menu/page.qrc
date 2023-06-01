@@ -27,5 +27,6 @@
         <file>image/ending3icon.png</file>
         <file>image/ending4.png</file>
         <file>image/ending4icon.png</file>
+        <file>image/background.png</file>
     </qresource>
 </RCC>

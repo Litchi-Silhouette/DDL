@@ -46,6 +46,33 @@
       </item>
       <item>
        <widget class="QLabel" name="tip">
+        <property name="palette">
+         <palette>
+          <active>
+           <colorrole role="WindowText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>71</red>
+              <green>71</green>
+              <blue>71</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </active>
+          <inactive>
+           <colorrole role="WindowText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>71</red>
+              <green>71</green>
+              <blue>71</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </inactive>
+          <disabled/>
+         </palette>
+        </property>
         <property name="font">
          <font>
           <family>华文楷体</family>

@@ -1,24 +1,8 @@
-#ifndef MYDIALOG_H
-#define MYDIALOG_H
-
-#include <QDialog>
-
-class MyDialog : public QDialog
-{
-    Q_OBJECT
-public:
-    explicit MyDialog(QWidget *parent = nullptr);
-
-signals:
-
-};
-
-#endif // MYDIALOG_H
-
 #ifndef STARTDIALOG_H
 #define STARTDIALOG_H
 #include <QLabel>
 #include <QLayout>
+#include "Game.hpp"
 
 class StartDialog : public MyDialog
 {

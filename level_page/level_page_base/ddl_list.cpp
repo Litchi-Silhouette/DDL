@@ -305,7 +305,7 @@ void DDL_List::clear(){
 
 void DDL_List::showIni(){
     name->setFont(QFont("Caveat",20, QFont::Bold));
-    name->setText(" Easecaping!");
+    name->setText(" Escaping!");
     QPixmap ini(":/page/level_image/icon_w.png");
     icon->setPixmap(ini.scaled(name->size(),Qt::KeepAspectRatio));
     info->setText("");

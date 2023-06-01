@@ -1,15 +1,4 @@
 #include "set_help_acc_start.h"
-MyDialog::MyDialog(QWidget *parent)
-    : QDialog{parent}
-{
-    setMouseTracking(true);
-    Qt::WindowFlags flags = Qt::Dialog;
-    flags |= Qt::FramelessWindowHint;
-    flags |= Qt::Tool;                 //程序不在任务栏显示
-    flags |= Qt::WindowStaysOnTopHint; //置顶显示
-    setWindowFlags(flags);
-    setAttribute(Qt::WA_TranslucentBackground, true);
-}
 
 StartDialog::StartDialog(QWidget* parent)
     :MyDialog(parent)
@@ -100,13 +89,17 @@ void HelpDialog::setContent(const QString& text){
 SetDialog::SetDialog(QWidget* parent)
     :MyDialog(parent)
 {
-    auto tempTitle = QFont("STKaiti", 20, QFont::Bold);
-    auto tempNum = QFont("STKaiti", 14, QFont::Bold);
-    setFont(tempTitle);
+    auto tempTitle = QFont("华文楷体", 20, QFont::Bold);
+    auto tempNum = QFont("华文楷体", 14, QFont::Bold);
+
     tip1 = new QLabel("音乐 ", this);
     tip2 = new QLabel("音效 ", this);
     tip3 = new QLabel("声音 ", this);
     tip4 = new QLabel("重置 ", this);
+    tip1->setFont(tempTitle);
+    tip2->setFont(tempTitle);
+    tip3->setFont(tempTitle);
+    tip4->setFont(tempTitle);
     num1 = new QLabel(" ", this);
     num1->setAlignment(Qt::AlignVCenter|Qt::AlignLeft);
     num1->setFont(tempNum);
@@ -234,6 +227,11 @@ AccDialog::AccDialog(QWidget* parent)
     pic = new QLabel(this);
     pic->setAlignment(Qt::AlignCenter);
     pic->setFixedSize(700,400);
+    pic->setStyleSheet("background: rgba(248,248,255,1)");
+    pic->setFrameShape(QFrame::Box);
+    pic->setFrameShadow(QFrame::Sunken);
+    pic->setLineWidth(3);
+    pic->setMidLineWidth(3);
 
     auto mainLay = new QVBoxLayout;
     mainLay->setSpacing(5);

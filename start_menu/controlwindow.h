@@ -6,6 +6,7 @@
 #include "startwindow.h"
 #include "loadwindow.h"
 #include "menuwindow.h"
+#include "Game.hpp"
 
 namespace Ui {
 class ControlWindow;
@@ -18,6 +19,10 @@ class ControlWindow : public QMainWindow
 public:
     explicit ControlWindow(QWidget *parent = nullptr);
     ~ControlWindow();
+    bool loadStatics(const QString& _path = "");
+    bool dumpStatics();
+signals:
+    void gameProgress(int);
 protected slots:
     void showEvent(QShowEvent*);
 private slots:
@@ -32,6 +37,8 @@ private:
     StartWindow* start;
     MenuWindow* menu;
     QMainWindow* on = nullptr;
+    Game statics;
+    QString path;
 };
 
 #endif // CONTROLWINDOW_H

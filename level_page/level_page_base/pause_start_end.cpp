@@ -82,3 +82,52 @@ void StartDialog::setStartText(const QString& _text, int fontSize){
     literature->setFont(temp);
     literature->setText(_text);
 }
+
+EndDialog::EndDialog(QWidget* parent):
+    MyDialog(parent)
+{
+    backBtn = new QPushButton(this);
+    backBtn->setStyleSheet("QPushButton{border-width:0px;"
+                           "border-image:url(:/page/level_image/back_nor_gray.png);}"
+                           "QPushButton:hover{border-image:url(:/page/level_image/back_on_gray.png);}"
+                           "QPushButton:pressed{border-image:url(:/page/level_image/back.png);}"
+                           );
+    backBtn->setFixedSize(80,80);
+    connect(backBtn, &QPushButton::clicked, this, &EndDialog::back);
+
+    nextBtn = new QPushButton(this);
+    nextBtn->setStyleSheet("QPushButton{border:0px;"
+                            "border-image:url(:/page/level_image/continue_nor_gray.png);}"
+                            "QPushButton:hover{border-image:url(:/page/level_image/continue_on_gray.png);}"
+                            "QPushButton:pressed{border-image:url(:/page/level_image/continue.png);}"
+                            );
+    nextBtn->setFixedSize(80,80);
+    connect(nextBtn, &QPushButton::clicked, this, &EndDialog::next);
+
+    literature = new QLabel(this);
+    literature->setText("游戏结束");
+    literature->setFont(QFont("华文楷体",50, QFont::Bold));
+
+    auto mainLay = new QGridLayout(this);
+    mainLay->addWidget(literature,0,0,1,2);
+    mainLay->addWidget(backBtn,1,0,1,1);
+    mainLay->addWidget(nextBtn,1,1,1,1);
+    setLayout(mainLay);
+}
+
+EndDialog::~EndDialog()
+{
+    delete backBtn;
+    delete nextBtn;
+    delete literature;
+}
+
+void EndDialog::next(){
+    choice = 0;
+    close();
+}
+
+void EndDialog::back(){
+    choice = 1;
+    close();
+}

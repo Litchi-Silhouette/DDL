@@ -114,6 +114,8 @@ protected:
     QFrame* getWidget(){
         return map_border;
     }
+    //half操作
+    virtual void halfMovie();
 
     int live = 5;
     int liveBoss = 100;
@@ -125,7 +127,7 @@ protected:
     QVBoxLayout* main_lay;
 protected slots:
     void pause();
-    void turnNext();
+    void hideEvent(QHideEvent* event);
     void showEvent(QShowEvent* event);
 
     virtual void startCount();
@@ -147,6 +149,7 @@ private:
     QFrame* map_border;
     PauseDialog* pauseDlg;
     StartDialog* startDlg;
+    EndDialog* endDlg;
 
     Ui::LevelWindow *ui;
     int level;

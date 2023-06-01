@@ -45,3 +45,53 @@ private:
 };
 
 #endif // STARTDIALOG_H
+
+#ifndef ENDDIALOG_H
+#define ENDDIALOG_H
+#include<QLabel>
+#include <QLayout>
+#include"Game.hpp"
+
+class EndDialog : public MyDialog
+{
+    Q_OBJECT
+public:
+    explicit EndDialog(QWidget *parent = nullptr);
+    ~EndDialog();
+    int getChoice(){
+        return choice;
+    }
+signals:
+private slots:
+    void back();
+    void next();
+private:
+
+    QLabel* literature;
+    QPushButton* nextBtn;
+    QPushButton* backBtn;
+    int choice = 0;
+};
+
+#endif // ENDDIALOG_H
+
+#ifndef MOVIEDIALOG_H
+#define MOVIEDIALOG_H
+#include<QLabel>
+#include <QLayout>
+#include"Game.hpp"
+
+class MovieDialog : public MyDialog
+{
+    Q_OBJECT
+public:
+    //explicit MovieDialog(QWidget *parent = nullptr);
+    //~MovieDialog();
+
+signals:
+private:
+private slots:
+
+};
+
+#endif // MOVIEDIALOG_H

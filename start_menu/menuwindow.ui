@@ -10,6 +10,13 @@
     <height>675</height>
    </rect>
   </property>
+  <property name="palette">
+   <palette>
+    <active/>
+    <inactive/>
+    <disabled/>
+   </palette>
+  </property>
   <property name="cursor">
    <cursorShape>ArrowCursor</cursorShape>
   </property>
@@ -17,10 +24,14 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true"/>
+   <string notr="true">QMainWindow{background: url(:/pic/image/background.png);}
+QPushButton{border-radius: 5px;}</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="spacing">
+     <number>10</number>
+    </property>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <property name="spacing">
@@ -242,7 +253,7 @@ font: italic 24pt &quot;Monotype Corsiva&quot;;
 text-align: left;
 border-bottom-right-radius: 30px;
 border-bottom: 3px solid black;
-background: rgba(250,250,250,1);
+background: rgba(255,250,240,1);
 }</string>
         </property>
         <property name="text">
@@ -280,7 +291,7 @@ background: rgba(250,250,250,1);
           </property>
           <property name="styleSheet">
            <string notr="true">QLabel{
-background:rgba(200,200,200,1);
+background: rgba(255,255,240,1);
 font: 20pt &quot;华文楷体&quot;;
 border-bottom-right-radius: 20px;
 border-bottom-left-radius: 20px;
@@ -341,6 +352,9 @@ text-align: left;
           <height>55</height>
          </size>
         </property>
+        <property name="cursor">
+         <cursorShape>CrossCursor</cursorShape>
+        </property>
         <property name="styleSheet">
          <string notr="true">QPushButton{ 
 font: italic 24pt &quot;Monotype Corsiva&quot;;
@@ -348,7 +362,7 @@ text-align: left;
 border-bottom-right-radius: 30px;
 border-bottom-left-radius: 30px;
 border-bottom: 3px solid black;
-background: rgba(250,250,250,1);
+background: rgba(255,250,240,1);
 }</string>
         </property>
         <property name="text">
@@ -371,11 +385,24 @@ background: rgba(250,250,250,1);
       </item>
       <item>
        <widget class="QLabel" name="end1Label">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>55</height>
+         </size>
+        </property>
         <property name="styleSheet">
          <string notr="true">QLabel{
-background:rgba(200,200,200,1);
+background: rgba(255,255,240,1);
 font: 20pt &quot;华文楷体&quot;;
 border-radius: 20px;
+border:2px solid gray;
 text-align: left;
 }</string>
         </property>
@@ -410,13 +437,16 @@ text-align: left;
           <height>55</height>
          </size>
         </property>
+        <property name="cursor">
+         <cursorShape>CrossCursor</cursorShape>
+        </property>
         <property name="styleSheet">
          <string notr="true">QPushButton{ 
 font: italic 24pt &quot;Monotype Corsiva&quot;;
 text-align: left;
 border-bottom-left-radius: 30px;
 border-bottom: 3px solid black;
-background: rgba(250,250,250,1);
+background: rgba(255,250,240,1);
 }</string>
         </property>
         <property name="text">
@@ -448,13 +478,16 @@ background: rgba(250,250,250,1);
           <height>55</height>
          </size>
         </property>
+        <property name="cursor">
+         <cursorShape>CrossCursor</cursorShape>
+        </property>
         <property name="styleSheet">
          <string notr="true">QPushButton{ 
 font: italic 24pt &quot;Monotype Corsiva&quot;;
 text-align: left;
 border-bottom-right-radius: 30px;
 border-bottom: 3px solid black;
-background: rgba(250,250,250,1);
+background: rgba(255,250,240,1);
 }</string>
         </property>
         <property name="text">
@@ -468,7 +501,13 @@ background: rgba(250,250,250,1);
          <number>60</number>
         </property>
         <item>
-         <widget class="QLabel" name="label_2">
+         <widget class="QLabel" name="act1Label">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="minimumSize">
            <size>
             <width>0</width>
@@ -477,7 +516,7 @@ background: rgba(250,250,250,1);
           </property>
           <property name="styleSheet">
            <string notr="true">QLabel{
-background:rgba(200,200,200,1);
+background: rgba(255,255,240,1);
 font: 20pt &quot;华文楷体&quot;;
 border-bottom-right-radius: 20px;
 border-bottom-left-radius: 20px;
@@ -535,6 +574,9 @@ text-align: left;
           <height>55</height>
          </size>
         </property>
+        <property name="cursor">
+         <cursorShape>CrossCursor</cursorShape>
+        </property>
         <property name="styleSheet">
          <string notr="true">QPushButton{ 
 font: italic 24pt &quot;Monotype Corsiva&quot;;
@@ -542,7 +584,7 @@ text-align: left;
 border-bottom-right-radius: 30px;
 border-bottom-left-radius: 30px;
 border-bottom: 3px solid black;
-background: rgba(250,250,250,1);
+background: rgba(255,250,240,1);
 }</string>
         </property>
         <property name="text">
@@ -565,9 +607,21 @@ background: rgba(250,250,250,1);
       </item>
       <item>
        <widget class="QLabel" name="end2Label">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>55</height>
+         </size>
+        </property>
         <property name="styleSheet">
          <string notr="true">QLabel{
-background:rgba(200,200,200,1);
+background: rgba(255,255,240,1);
 font: 20pt &quot;华文楷体&quot;;
 border-radius: 20px;
 border:2px solid gray;
@@ -593,13 +647,16 @@ text-align: left;
           <height>55</height>
          </size>
         </property>
+        <property name="cursor">
+         <cursorShape>CrossCursor</cursorShape>
+        </property>
         <property name="styleSheet">
          <string notr="true">QPushButton{ 
 font: italic 24pt &quot;Monotype Corsiva&quot;;
 text-align: left;
 border-bottom-left-radius: 30px;
 border-bottom: 3px solid black;
-background: rgba(250,250,250,1);
+background: rgba(255,250,240,1);
 }</string>
         </property>
         <property name="text">
@@ -631,13 +688,16 @@ background: rgba(250,250,250,1);
           <height>55</height>
          </size>
         </property>
+        <property name="cursor">
+         <cursorShape>CrossCursor</cursorShape>
+        </property>
         <property name="styleSheet">
          <string notr="true">QPushButton{ 
 font: italic 24pt &quot;Monotype Corsiva&quot;;
 text-align: left;
 border-bottom-right-radius: 30px;
 border-bottom: 3px solid black;
-background: rgba(250,250,250,1);
+background: rgba(255,250,240,1);
 }</string>
         </property>
         <property name="text">
@@ -651,7 +711,13 @@ background: rgba(250,250,250,1);
          <number>60</number>
         </property>
         <item>
-         <widget class="QLabel" name="label_3">
+         <widget class="QLabel" name="act2Label">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="minimumSize">
            <size>
             <width>0</width>
@@ -660,7 +726,7 @@ background: rgba(250,250,250,1);
           </property>
           <property name="styleSheet">
            <string notr="true">QLabel{
-background:rgba(200,200,200,1);
+background: rgba(255,255,240,1);
 font: 20pt &quot;华文楷体&quot;;
 border-bottom-right-radius: 20px;
 border-bottom-left-radius: 20px;
@@ -718,6 +784,9 @@ text-align: left;
           <height>55</height>
          </size>
         </property>
+        <property name="cursor">
+         <cursorShape>CrossCursor</cursorShape>
+        </property>
         <property name="styleSheet">
          <string notr="true">QPushButton{ 
 font: italic 24pt &quot;Monotype Corsiva&quot;;
@@ -725,7 +794,7 @@ text-align: left;
 border-bottom-right-radius: 30px;
 border-bottom-left-radius: 30px;
 border-bottom: 3px solid black;
-background: rgba(250,250,250,1);
+background: rgba(255,250,240,1);
 }</string>
         </property>
         <property name="text">
@@ -748,9 +817,21 @@ background: rgba(250,250,250,1);
       </item>
       <item>
        <widget class="QLabel" name="end3Label">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>55</height>
+         </size>
+        </property>
         <property name="styleSheet">
          <string notr="true">QLabel{
-background:rgba(200,200,200,1);
+background: rgba(255,255,240,1);
 font: 20pt &quot;华文楷体&quot;;
 border-radius: 20px;
 border:2px solid gray;
@@ -776,13 +857,16 @@ text-align: left;
           <height>55</height>
          </size>
         </property>
+        <property name="cursor">
+         <cursorShape>CrossCursor</cursorShape>
+        </property>
         <property name="styleSheet">
          <string notr="true">QPushButton{ 
 font: italic 24pt &quot;Monotype Corsiva&quot;;
 text-align: left;
 border-bottom-left-radius: 30px;
 border-bottom: 3px solid black;
-background: rgba(250,250,250,1);
+background: rgba(255,250,240,1);
 }</string>
         </property>
         <property name="text">
@@ -817,13 +901,16 @@ background: rgba(250,250,250,1);
           <height>55</height>
          </size>
         </property>
+        <property name="cursor">
+         <cursorShape>CrossCursor</cursorShape>
+        </property>
         <property name="styleSheet">
          <string notr="true">QPushButton{ 
 font: italic 24pt &quot;Monotype Corsiva&quot;;
 text-align: left;
 border-bottom-right-radius: 30px;
 border-bottom: 3px solid black;
-background: rgba(250,250,250,1);
+background: rgba(255,250,240,1);
 }</string>
         </property>
         <property name="text">
@@ -833,6 +920,12 @@ background: rgba(250,250,250,1);
       </item>
       <item>
        <widget class="QLabel" name="end4Label">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
@@ -841,7 +934,7 @@ background: rgba(250,250,250,1);
         </property>
         <property name="styleSheet">
          <string notr="true">QLabel{
-background:rgba(200,200,200,1);
+background: rgba(255,255,240,1);
 font: 20pt &quot;华文楷体&quot;;
 border-radius: 20px;
 border:2px solid gray;
@@ -868,9 +961,21 @@ text-align: left;
       </item>
       <item>
        <widget class="QLabel" name="extraLabel">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>50</height>
+         </size>
+        </property>
         <property name="styleSheet">
          <string notr="true">QLabel{
-background:rgba(200,200,200,1);
+background: rgba(255,255,240,1);
 font: 20pt &quot;华文楷体&quot;;
 border-radius: 20px;
 text-align: left;
@@ -889,13 +994,16 @@ text-align: left;
           <height>55</height>
          </size>
         </property>
+        <property name="cursor">
+         <cursorShape>CrossCursor</cursorShape>
+        </property>
         <property name="styleSheet">
          <string notr="true">QPushButton{ 
 font: italic 24pt &quot;Monotype Corsiva&quot;;
 text-align: left;
 border-bottom-left-radius: 30px;
 border-bottom: 3px solid black;
-background: rgba(250,250,250,1);
+background: rgba(255,250,240,1);
 }</string>
         </property>
         <property name="text">
@@ -904,6 +1012,19 @@ background: rgba(250,250,250,1);
        </widget>
       </item>
      </layout>
+    </item>
+    <item>
+     <spacer name="verticalSpacer">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
+      </property>
+     </spacer>
     </item>
    </layout>
   </widget>

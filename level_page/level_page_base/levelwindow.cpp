@@ -45,6 +45,7 @@ LevelWindow::LevelWindow(QWidget *parent, const int cur_level)
 
     pauseDlg  = new PauseDialog(this);
     startDlg = new StartDialog(this);
+    endDlg = new EndDialog(this);
 
     auto up = new QHBoxLayout;
     main_lay = new QVBoxLayout;
@@ -90,6 +91,7 @@ LevelWindow::~LevelWindow()
     delete map_border;
     delete pauseDlg;
     delete double_bar;
+    delete endDlg;
 }
 
 void LevelWindow::pause(){
@@ -99,7 +101,7 @@ void LevelWindow::pause(){
     pauseDlg->exec();
     switch (pauseDlg->getChoice()) {
     case 1:
-        hide();
+        close();
         break;
     case 2:
         restart();
@@ -145,15 +147,20 @@ void LevelWindow::startCount(){
 
 void LevelWindow::endGame(){
     setBlur(10);
-    startDlg->open();
-    startDlg->setStartText("游戏结束",50);
-    QTimer::singleShot(1500, this, &LevelWindow::turnNext);
+    endDlg->open();
+    QTimer::singleShot(1500, this, &LevelWindow::close);
 }
 
-void LevelWindow::turnNext(){
-    startDlg->close();
-    emit changeWindow(2);
-    close();
+void LevelWindow::hideEvent(QHideEvent* event){
+    if(endDlg->isActiveWindow())
+        endDlg->close();
+    if(state == 4)
+        emit changeWindow(level);
+    else if(state == 3)
+        emit changeWindow(2);
+    else
+        emit changeWindow(2);
+    QMainWindow::hideEvent(event);
 }
 
 void LevelWindow::showEvent(QShowEvent* event){
@@ -188,3 +195,17 @@ void LevelWindow::restart(){
     pause_b->start_time();
 }
 
+void LevelWindow::halfMovie(){
+    switch(level){
+    case 1:
+
+        break;
+    case 2:
+        break;
+    case 3:
+        break;
+    default:
+        exit(0);
+        break;
+    }
+}

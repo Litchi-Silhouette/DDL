@@ -29,7 +29,7 @@ void LoadWindow::showEvent(QShowEvent* event){
     QMainWindow::showEvent(event);
     updateTimer = startTimer(interval);
     QTimer::singleShot(1,center, &StartDialog::show);
-    QTimer::singleShot(1500, this, &LoadWindow::closeGradully);
+    QTimer::singleShot(2000, this, &LoadWindow::closeGradully);
 }
 
 void LoadWindow::timerEvent(QTimerEvent* event){
