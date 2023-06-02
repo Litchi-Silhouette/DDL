@@ -20,7 +20,7 @@ DDL_List::DDL_List(const bool isThird, QWidget *parent, QHash<int , QListWidgetI
     finish->setAlignment(Qt::AlignRight|Qt::AlignVCenter);
     set_ini_task(0,0);
 
-    QString temp = "QListWidget{background: rgba(220,220,220,0.6); border:0px;border-radius:5px}"
+    QString temp = "QListWidget{background: transparent; border:2px solid black;border-radius:5px}"
             "QListWidget::item{background:rgba(220,220,220,0.6);height:40px;border:1px solid gray;border-radius:5px}"
             "QListWidget::item:hover{background:rgba(210,210,210,1);}"
             "QListWidget::item:selected{border-width:3;color:black;background:rgba(220,220,220,0.6);}"

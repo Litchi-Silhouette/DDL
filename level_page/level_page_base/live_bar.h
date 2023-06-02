@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include<QProgressBar>
-#include<QLabel>
+#include "mylabel.h"
 
 class stick:public QWidget
 {

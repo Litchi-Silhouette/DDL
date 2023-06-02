@@ -3,7 +3,6 @@
 
 #include "mylabel.h"
 #include <QTimer>
-#include <QResizeEvent>
 #include <QPushButton>
 
 class pause_block: public QWidget

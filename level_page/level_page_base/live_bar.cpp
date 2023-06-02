@@ -9,9 +9,8 @@ live_bar::live_bar(QWidget *parent)
     setWindowFlags(Qt::FramelessWindowHint);
     setAttribute(Qt::WA_TranslucentBackground,true);
 
-    live_show = new QLabel("生命值",this);
+    live_show = new MyLabel(this, "生命值");
     live_show->setAlignment(Qt::AlignHCenter|Qt::AlignBottom);
-    live_show->setFont(QFont("华文楷体",24,QFont::Bold));
 
     live_show->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
 
