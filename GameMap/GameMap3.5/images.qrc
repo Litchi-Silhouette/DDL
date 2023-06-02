@@ -1,0 +1,24 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>images/player_lion.jpg</file>
+        <file>images/obstacle4.jpg</file>
+        <file>images/task1.jpg</file>
+        <file>images/buff1.jpg</file>
+        <file>images/background1.png</file>
+        <file>images/boss1.png</file>
+        <file>images/boss2.png</file>
+        <file>images/warning1.jpg</file>
+        <file>images/boss3.png</file>
+        <file>images/bullet1.jpg</file>
+        <file>images/bullet2.jpg</file>
+        <file>images/bullet3.jpg</file>
+        <file>images/buff2.jpg</file>
+        <file>images/special2.png</file>
+        <file>images/bomb1.png</file>
+        <file>images/bomb2.png</file>
+        <file>images/special3.png</file>
+        <file>images/special1.png</file>
+        <file>images/missle1.png</file>
+        <file>images/barrier1.jpg</file>
+    </qresource>
+</RCC>
