@@ -1,0 +1,21 @@
+{
+  "level": [
+    false,
+    true,
+    false,
+    false
+  ],
+  "act": [
+    true,
+    true,
+    false,
+    false
+  ],
+  "ending": [
+    false,
+    false,
+    true,
+    false,
+    false
+  ]
+}

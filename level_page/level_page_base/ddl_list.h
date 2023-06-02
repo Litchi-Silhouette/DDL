@@ -28,6 +28,10 @@ public:
         bufflist->setVisible(can);
     }
     void clear();
+    void fixSize(){
+        info->setFixedSize(info->size());
+        setFixedSize(size());
+    }
 signals:
 private slots:
     void task_click(QListWidgetItem *item);

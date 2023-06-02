@@ -26,10 +26,9 @@ DDL_List::DDL_List(const bool isThird, QWidget *parent, QHash<int , QListWidgetI
             "QListWidget::item:selected{border-width:3;color:black;background:rgba(220,220,220,0.6);}"
             "QListWidget::item:selected:active{border-width:3;color:black;background:rgba(220,220,220,0.6);}";
 
-    QFont cur("华文楷体",18,QFont::Bold);
     tasklist = new QListWidget(this);
     tasklist->setStyleSheet(temp);
-    tasklist->setFont(cur);
+    tasklist->setFont(QFont("华文楷体",14,QFont::Bold));
     tasklist->setSpacing(5);
     tasklist->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     tasklist->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -58,6 +57,7 @@ DDL_List::DDL_List(const bool isThird, QWidget *parent, QHash<int , QListWidgetI
     info->setFrameShadow(QFrame::Sunken);
     info->setLineWidth(2);
     info->setMidLineWidth(2);
+    info->setWordWrap(true);
     clear();
 
     auto left = new QVBoxLayout;
@@ -195,7 +195,8 @@ void DDL_List::remove_buff(const int index)
 void DDL_List::set_info(QListWidgetItem* cur, bool is_buff, bool is_nor)
 {
     auto curTFont = titletask->font();
-    auto curFFont = curTFont;
+    auto curFFont = tasklist->font();
+    qDebug()<<name->size()<<info->size();
     if(is_nor)
     {
         QPalette pe = titletask->palette();
