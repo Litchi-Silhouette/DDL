@@ -129,6 +129,9 @@ protected slots:
     void pause();
     void hideEvent(QHideEvent* event);
     void showEvent(QShowEvent* event);
+    void closeGradually();
+    void timerEvent(QTimerEvent* event);
+    void paintEvent(QPaintEvent* event);
 
     virtual void startCount();
     virtual void restart();
@@ -152,7 +155,11 @@ private:
     EndDialog* endDlg;
 
     Ui::LevelWindow *ui;
+    QGraphicsBlurEffect* blureffect = new QGraphicsBlurEffect(this);
     static Game statics;
+    int updateTimer;
+    int curBKColor = 5;
+    int colourStep = 10;
 };
 #endif // LEVELWINDOW_H
 

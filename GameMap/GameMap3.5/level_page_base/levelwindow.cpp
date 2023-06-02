@@ -103,18 +103,23 @@ void LevelWindow::pause(){
         restart();
         break;
     case 3:
+        setBlur(0);
         changeGameProcess(false);
         break;
     default:
         break;
     }
-    setBlur(0);
 }
 
 void LevelWindow::setBlur(int extent){
-    QGraphicsBlurEffect* blureffect = new QGraphicsBlurEffect;
-    blureffect->setBlurRadius(extent);
-    setGraphicsEffect(blureffect);
+    if(extent)
+    {
+        blureffect->setEnabled(true);
+        blureffect->setBlurRadius(extent);
+        setGraphicsEffect(blureffect);
+    }else
+        blureffect->setEnabled(false);
+
 }
 
 void LevelWindow::startText1(){

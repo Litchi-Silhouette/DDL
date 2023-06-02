@@ -6,6 +6,6 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     LevelWindow w(nullptr,3);
-    w.show();
+    w.showFullScreen();
     return a.exec();
 }

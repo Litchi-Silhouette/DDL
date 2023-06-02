@@ -307,7 +307,7 @@ void DDL_List::clear(){
 void DDL_List::showIni(){
     name->setFont(QFont("Caveat",20, QFont::Bold));
     name->setText(" Escaping!");
-    QPixmap ini(":/page/level_image/icon_w.png");
+    QPixmap ini(":/page/level_image/bossIcon.png");
     icon->setPixmap(ini.scaled(name->size(),Qt::KeepAspectRatio));
     info->setText("");
     clearBuffSelected();

@@ -152,6 +152,7 @@ private:
     EndDialog* endDlg;
 
     Ui::LevelWindow *ui;
+    QGraphicsBlurEffect* blureffect = new QGraphicsBlurEffect(this);
     static Game statics;
 };
 #endif // LEVELWINDOW_H

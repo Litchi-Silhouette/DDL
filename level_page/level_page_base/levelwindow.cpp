@@ -1,6 +1,7 @@
 #include "levelwindow.h"
 #include "ui_levelwindow.h"
 #include <QSizePolicy>
+#include <QPainter>
 
 LevelWindow::LevelWindow(QWidget *parent, const int cur_level)
     : windowBase(parent)
@@ -60,10 +61,10 @@ LevelWindow::LevelWindow(QWidget *parent, const int cur_level)
         live = 100;
         warning->setVisible(false);
         bar->setVisible(false);
-        up->addWidget(double_bar, 2);
+        up->addWidget(double_bar, 3);
         up->addStretch(1);
-        up->addWidget(list, 2);
-        up->addStretch(1);
+        up->addWidget(list, 3);
+        up->addStretch(2);
     }
     up->addWidget(pause_b, 1);
 
@@ -97,7 +98,7 @@ void LevelWindow::pause(){
     pauseDlg->exec();
     switch (pauseDlg->getChoice()) {
     case 1:
-        close();
+        closeGradually();
         break;
     case 2:
         restart();
@@ -112,9 +113,14 @@ void LevelWindow::pause(){
 }
 
 void LevelWindow::setBlur(int extent){
-    QGraphicsBlurEffect* blureffect = new QGraphicsBlurEffect;
-    blureffect->setBlurRadius(extent);
-    setGraphicsEffect(blureffect);
+    if(extent)
+    {
+        blureffect->setEnabled(true);
+        blureffect->setBlurRadius(extent);
+        setGraphicsEffect(blureffect);
+    }
+    else
+        blureffect->setEnabled(false);
 }
 
 void LevelWindow::startText1(){
@@ -141,10 +147,41 @@ void LevelWindow::startCount(){
     state = 1;
 }
 
+void LevelWindow::timerEvent(QTimerEvent* event){
+    if(event->timerId() == updateTimer)
+    {
+        curBKColor += colourStep;
+        update();
+    }
+    if(curBKColor >= 245)
+    {
+        killTimer(updateTimer);
+        startText1();
+    }
+    else if(curBKColor <= 0){
+        killTimer(updateTimer);
+        close();
+    }
+}
+
+void LevelWindow::paintEvent(QPaintEvent*){
+    QPainter painter(this);
+    QBrush brush;
+    brush.setColor(qRgba(curBKColor,curBKColor,curBKColor,1));
+    brush.setStyle(Qt::SolidPattern);
+    painter.setBrush(brush);
+    painter.drawRect(rect());
+}
+
+void LevelWindow::closeGradually(){
+    colourStep = -colourStep;
+    updateTimer = startTimer(interval);
+}
+
 void LevelWindow::endGame(){
     setBlur(10);
     endDlg->open();
-    QTimer::singleShot(1500, this, &LevelWindow::close);
+    QTimer::singleShot(1500, this, &LevelWindow::closeGradually);
 }
 
 void LevelWindow::hideEvent(QHideEvent* event){
@@ -164,15 +201,17 @@ void LevelWindow::hideEvent(QHideEvent* event){
 
 void LevelWindow::showEvent(QShowEvent* event){
     QMainWindow::showEvent(event);
+    updateTimer = startTimer(interval);
     if(state == 0)
     {
         setIniLive(live, liveBoss);
         update_List();
         set_mode(0);
-        QTimer::singleShot(1000,this, &LevelWindow::startText1);
     }
-    else if(state ==1 || state == 2)
-        QTimer::singleShot(100,this, &LevelWindow::pause);
+    else {
+        qDebug()<<"error state";
+        exit(0);
+    }
     list->fixSize();
 }
 
