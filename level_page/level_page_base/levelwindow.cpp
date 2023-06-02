@@ -79,6 +79,7 @@ LevelWindow::LevelWindow(QWidget *parent, const int cur_level)
     main_lay->setStretchFactor(map_border,21);
 
     ui->centralwidget->setLayout(main_lay);
+    add_task(":/page/level_image/bossIcon.png", "好像翘课", "为什么程设又有又有又有又有又有又有又有又有又有这么多作业了", 12);
 }
 
 LevelWindow::~LevelWindow()
@@ -174,6 +175,7 @@ void LevelWindow::showEvent(QShowEvent* event){
     }
     else if(state ==1 || state == 2)
         QTimer::singleShot(100,this, &LevelWindow::pause);
+    list->fixSize();
 }
 
 void LevelWindow::changeGameProcess(bool pause){
