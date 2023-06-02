@@ -3,15 +3,11 @@
 #include <QSizePolicy>
 
 LevelWindow::LevelWindow(QWidget *parent, const int cur_level)
-    : QMainWindow(parent)
+    : windowBase(parent)
     , ui(new Ui::LevelWindow)
     , level(cur_level)
 {
     ui->setupUi(this);
-    setWindowFlags(Qt::FramelessWindowHint);
-    QIcon window(QString(":/page/level_image/icon_w.png"));
-    setWindowIcon(window);
-    setWindowTitle(QString("Escape form Dead Line!"));
 
     pause_b = new pause_block(level,this);
     pause_b->setMaximumWidth(150);
@@ -79,7 +75,6 @@ LevelWindow::LevelWindow(QWidget *parent, const int cur_level)
     main_lay->setStretchFactor(map_border,21);
 
     ui->centralwidget->setLayout(main_lay);
-    add_task(":/page/level_image/bossIcon.png", "好像翘课", "为什么程设又有又有又有又有又有又有又有又有又有这么多作业了", 12);
 }
 
 LevelWindow::~LevelWindow()

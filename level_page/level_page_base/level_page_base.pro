@@ -16,7 +16,8 @@ SOURCES += \
     mylabel.cpp \
     pause_button.cpp \
     pause_start_end.cpp \
-    warning_icon.cpp
+    warning_icon.cpp \
+    windowbase.cpp
 
 HEADERS += \
     Game.hpp \
@@ -26,10 +27,12 @@ HEADERS += \
     mylabel.h \
     pause_button.h \
     pause_start_end.h \
-    warning_icon.h
+    warning_icon.h \
+    windowbase.h
 
 FORMS += \
-    levelwindow.ui
+    levelwindow.ui \
+    windowbase.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

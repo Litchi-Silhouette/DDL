@@ -196,6 +196,7 @@ void DDL_List::set_info(QListWidgetItem* cur, bool is_buff, bool is_nor)
 {
     auto curTFont = titletask->font();
     auto curFFont = curTFont;
+    qDebug()<<name->size();
     if(is_nor)
     {
         QPalette pe = titletask->palette();
@@ -228,6 +229,7 @@ void DDL_List::set_info(QListWidgetItem* cur, bool is_buff, bool is_nor)
         info->setFont(curFFont);
         info->setText(temp.getinfo());
     }
+    qDebug()<<"icon"<<icon->size();
 }
 
 void DDL_List::buff_click(QListWidgetItem *item)

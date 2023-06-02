@@ -64,8 +64,8 @@ private:
 
 #endif // SETDIALOG_H
 
-#ifndef ENDDIALOG_H
-#define ENDDIALOG_H
+#ifndef ACCDIALOG_H
+#define ACCDIALOG_H
 
 #include <QTimer>
 
@@ -88,4 +88,4 @@ private:
     QString acc;
 };
 
-#endif // ENDDIALOG_H
+#endif // ACCDIALOG_H

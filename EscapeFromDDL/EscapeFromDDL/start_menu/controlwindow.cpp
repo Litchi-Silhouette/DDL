@@ -53,18 +53,31 @@ void ControlWindow::toWindow(int index)
 {
     if(0<=index && index<10)
         mainWidget->setCurrentIndex(index);
-    else {
-        if(curWindow)
+    else if(index == -1){
+        dumpStatics();
+        close();
+    }else
+    {
+        if(curWindow){
+            mainWidget->removeWidget(curWindow);
             delete curWindow;
+        }
         switch(index){
         case 10:
             curWindow = new QMainWindow(this);
             break;
         case 21:
-            curWindow = new MainWindowOne(this);
+            curWindow = new MainWindowOne;
+            break;
+        case 22:
+            curWindow = new MainWindowTwo;
+            break;
+        case 23:
+            curWindow = new MainWindowThree;
             break;
         }
-        close();
+        mainWidget->addWidget(curWindow);
+        connect(curWindow, &LevelWindow::changeWindow, this, &ControlWindow::toWindow);
     }
 }
 

@@ -11,12 +11,13 @@
 #include "ddl_list.h"
 #include "pause_start_end.h"
 #include "Game.hpp"
+#include "windowbase.h"
 
 namespace Ui {
 class LevelWindow;
 }
 
-class LevelWindow : public QMainWindow
+class LevelWindow : public windowBase
 {
     Q_OBJECT
 
@@ -25,8 +26,6 @@ public:
     ~LevelWindow();
 
     void endGame();
-signals:
-    void changeWindow(int index);
 
 protected:
     //DDL_List 部分操作
