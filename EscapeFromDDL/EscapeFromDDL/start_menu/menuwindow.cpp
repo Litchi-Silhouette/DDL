@@ -13,6 +13,7 @@ MenuWindow::MenuWindow(Game& game, QWidget *parent) :
     QIcon window(QString(":/pic/image/icon_w.png"));
     setWindowIcon(window);
     setWindowTitle(QString("Escape from Dead Line!"));
+    ui->frame->layout()->setContentsMargins(10,0,10,0);
 }
 
 MenuWindow::~MenuWindow()
@@ -70,3 +71,26 @@ void MenuWindow::updateBtn(){
     ui->end4Btn->setVisible(statics.getEndings[4]);
     ui->end4Label->setVisible(statics.getEndings[4]);
 }
+
+void MenuWindow::on_level1Btn_clicked()
+{
+    emit changeWindow(21);
+}
+
+void MenuWindow::showEvent(QShowEvent* event)
+{
+    QMainWindow::showEvent(event);
+    //updateBtn();
+}
+
+void MenuWindow::on_level2Btn_clicked()
+{
+    emit changeWindow(22);
+}
+
+
+void MenuWindow::on_level3Btn_clicked()
+{
+    emit changeWindow(23);
+}
+

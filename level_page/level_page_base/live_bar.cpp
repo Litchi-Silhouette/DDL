@@ -25,8 +25,6 @@ live_bar::live_bar(QWidget *parent)
     main_lay->setStretchFactor(live_show,1);
     main_lay->setStretchFactor(bar,1);
     setLayout(main_lay);
-
-    set_live(100);
 }
 
 live_bar::~live_bar()
@@ -220,7 +218,6 @@ void DoubleLive::changeLive()
         lionLiveCur -= singleStep;
         auto cur = lionBar->styleSheet();
         int s = cur.indexOf("#");
-        int p = cur.indexOf(";width");
         QString tempcolor;
         if(lionLiveCur>60)
             tempcolor = "#FFD700";
@@ -228,7 +225,7 @@ void DoubleLive::changeLive()
             tempcolor = "#FFB90F";
         else
             tempcolor = "#FF0000";
-        lionBar->setStyleSheet(cur.mid(0,s) + tempcolor + cur.mid(p));
+        lionBar->setStyleSheet(cur.mid(0,s) + tempcolor + ";}");
         lionBar->setValue(lionLiveCur);
     }
     if(bossLiveAim < bossLiveCur)

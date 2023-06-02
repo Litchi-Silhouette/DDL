@@ -1,18 +1,19 @@
 #ifndef CONTROLWINDOW_H
 #define CONTROLWINDOW_H
 
-#include <QMainWindow>
 #include <QStackedWidget>
 #include "startwindow.h"
 #include "loadwindow.h"
 #include "menuwindow.h"
+#include "windowbase.h"
 #include "Game.hpp"
+
 
 namespace Ui {
 class ControlWindow;
 }
 
-class ControlWindow : public QMainWindow
+class ControlWindow : public windowBase
 {
     Q_OBJECT
 
@@ -27,16 +28,17 @@ protected slots:
     void showEvent(QShowEvent*);
 private slots:
     void toWindow(int index);
-    void toLevel1();
-    void toLevel2();
-    void toLevel3();
+    //0:load 1:start 2:menu 3:extra
+    //10:prologue 11:act1 12:act2 13:ending4
+    //21:level1 22:level2 23:level3
+    //31:ending1 32:ending2 33:ending3
 private:
     Ui::ControlWindow *ui;
     QStackedWidget* mainWidget;
     LoadWindow* load;
     StartWindow* start;
     MenuWindow* menu;
-    QMainWindow* on = nullptr;
+    windowBase* curWindow = nullptr;
     Game statics;
     QString path;
 };

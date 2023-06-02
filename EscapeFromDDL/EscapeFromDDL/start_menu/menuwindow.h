@@ -18,12 +18,20 @@ public:
     explicit MenuWindow(Game& game, QWidget *parent = nullptr);
     ~MenuWindow();
     void updateBtn();
+protected:
+    void showEvent(QShowEvent*);
 private slots:
     void on_helpBtn_clicked();
 
     void on_setBtn_clicked();
 
     void on_exitBtn_clicked();
+    void on_level1Btn_clicked();
+
+    void on_level2Btn_clicked();
+
+    void on_level3Btn_clicked();
+
 signals:
     void changeWindow(int index);
 private:

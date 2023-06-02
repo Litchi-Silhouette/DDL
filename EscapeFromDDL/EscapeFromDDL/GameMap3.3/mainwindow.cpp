@@ -15,10 +15,17 @@ int MainWindow::MAP_HEIGHT = 0;
 MainWindow::MainWindow(QWidget *parent, int level)
     : LevelWindow(parent,level)
 {
-    setAttribute(Qt::WA_DeleteOnClose);
     setMapVisible(false);
-    showFullScreen();//调用resize event
+    //showFullScreen();//调用resize event
 
+
+}
+
+MainWindow::~MainWindow(){delete pgamemap;}
+
+void MainWindow::showEvent(QShowEvent* event)
+{
+    LevelWindow::showEvent(event);
     switch(level){
     case 1:
         pgamemap = new GameMapOne(this);break;
@@ -40,10 +47,6 @@ MainWindow::MainWindow(QWidget *parent, int level)
     ptaskbuff_board->show();
 
 }
-
-MainWindow::~MainWindow(){delete pgamemap;}
-
-
 
 void MainWindow::renew_taskbuff_board(TaskBuff * ptb){
     ptaskbuff_board->setText("名称 "+ptb->name+"\n文字 "+ptb->explanation);

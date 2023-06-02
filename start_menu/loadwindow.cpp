@@ -5,14 +5,10 @@
 #include <QPainter>
 
 LoadWindow::LoadWindow(QWidget *parent):
-    QMainWindow{parent},
+    windowBase(parent),
     ui(new Ui::LoadWindow)
 {
     ui->setupUi(this);
-    setWindowFlags(Qt::FramelessWindowHint);
-    QIcon window(QString(":/pic/image/icon_w.png"));
-    setWindowIcon(window);
-    setWindowTitle(QString("Escape form Dead Line!"));
 
     center = new StartDialog(this);
     center->setAttribute(Qt::WA_DeleteOnClose, true);

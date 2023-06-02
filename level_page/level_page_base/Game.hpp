@@ -68,3 +68,39 @@ signals:
 };
 
 #endif // MYDIALOG_H
+
+#ifndef STARTDIALOG_H
+#define STARTDIALOG_H
+#include <QLabel>
+#include <QLayout>
+
+class StartDialog : public MyDialog
+{
+    Q_OBJECT
+public:
+    explicit StartDialog(QWidget *parent = nullptr)
+        :MyDialog(parent)
+    {
+        literature = new QLabel(this);
+        literature->setFont(QFont("STHupo", 20, QFont::Bold));
+        literature->setMinimumSize(400,200);
+    }
+    ~StartDialog(){
+        delete literature;
+    }
+    void setStartText(const QString& _text, int fontSize){
+        auto temp = literature->font();
+        temp.setPointSize(fontSize);
+        literature->setFont(temp);
+        literature->setAlignment(Qt::AlignCenter);
+        literature->setText(_text);
+    }
+    void resetFont(const QFont& cur){
+        literature->setFont(cur);
+    }
+signals:
+private:
+    QLabel* literature;
+};
+
+#endif // STARTDIALOG_H

@@ -2,14 +2,10 @@
 #include "ui_startwindow.h"
 #include <QPainter>
 StartWindow::StartWindow(QWidget *parent)
-    : QMainWindow(parent)
+    : windowBase(parent)
     , ui(new Ui::StartWindow)
 {
     ui->setupUi(this);
-    setWindowFlags(Qt::FramelessWindowHint);
-    QIcon window(QString(":/pic/image/icon_w.png"));
-    setWindowIcon(window);
-    setWindowTitle(QString("Escape form Dead Line!"));
 
     p = new QTimer(this);
     connect(p, &QTimer::timeout, this, &StartWindow::blink);

@@ -13,22 +13,25 @@ SOURCES += \
     loadwindow.cpp \
     main.cpp \
     menuwindow.cpp \
-    set_help_acc_start.cpp \
-    startwindow.cpp
+    set_help_acc.cpp \
+    startwindow.cpp \
+    windowbase.cpp
 
 HEADERS += \
     Game.hpp \
     controlwindow.h \
     loadwindow.h \
     menuwindow.h \
-    set_help_acc_start.h \
-    startwindow.h
+    set_help_acc.h \
+    startwindow.h \
+    windowbase.h
 
 FORMS += \
     controlwindow.ui \
     loadwindow.ui \
     menuwindow.ui \
-    startwindow.ui
+    startwindow.ui \
+    windowbase.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

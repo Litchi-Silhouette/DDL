@@ -1,7 +1,10 @@
+#include"Game.hpp"
+#include<QLabel>
+#include <QLayout>
+
 #ifndef PAUSEDIALOG_H
 #define PAUSEDIALOG_H
-#include"Game.hpp"
-#include <QLayout>
+
 #include <QPushButton>
 
 class PauseDialog : public MyDialog
@@ -26,31 +29,8 @@ private:
 
 #endif // MYDIALOG_H
 
-#ifndef STARTDIALOG_H
-#define STARTDIALOG_H
-#include<QLabel>
-#include <QLayout>
-#include"Game.hpp"
-
-class StartDialog : public MyDialog
-{
-    Q_OBJECT
-public:
-    explicit StartDialog(QWidget *parent = nullptr);
-    ~StartDialog();
-    void setStartText(const QString& _text, int fontsize);
-signals:
-private:
-    QLabel* literature;
-};
-
-#endif // STARTDIALOG_H
-
 #ifndef ENDDIALOG_H
 #define ENDDIALOG_H
-#include<QLabel>
-#include <QLayout>
-#include"Game.hpp"
 
 class EndDialog : public MyDialog
 {
@@ -77,9 +57,6 @@ private:
 
 #ifndef MOVIEDIALOG_H
 #define MOVIEDIALOG_H
-#include<QLabel>
-#include <QLayout>
-#include"Game.hpp"
 
 class MovieDialog : public MyDialog
 {

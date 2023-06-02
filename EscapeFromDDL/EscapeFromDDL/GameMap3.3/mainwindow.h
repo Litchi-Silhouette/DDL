@@ -49,7 +49,7 @@ protected:
     void keyPressEvent(QKeyEvent*) override{};//需继承wzl的levelwindow并重载
     void resizeEvent(QResizeEvent *) override;//
     virtual void changeGameProcess(bool pause_or_continue); // true pause false continue
-
+    void showEvent(QShowEvent*);
 };
 
 #endif // MAINWINDOW_H

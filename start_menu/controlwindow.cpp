@@ -9,7 +9,7 @@
 #include <QJsonArray>
 
 ControlWindow::ControlWindow(QWidget *parent) :
-    QMainWindow(parent),
+    windowBase(parent),
     ui(new Ui::ControlWindow),
     mainWidget(new QStackedWidget(this)),
     load(new LoadWindow),
@@ -17,10 +17,6 @@ ControlWindow::ControlWindow(QWidget *parent) :
     menu(new MenuWindow(statics))
 {
     ui->setupUi(this);
-    setWindowFlags(Qt::FramelessWindowHint);
-    QIcon window(QString(":/pic/image/icon_w.png"));
-    setWindowIcon(window);
-    setWindowTitle(QString("Escape form Dead Line!"));
 
     ui->verticalLayout->setContentsMargins(0,0,0,0);
     ui->verticalLayout->setSpacing(0);
@@ -34,7 +30,6 @@ ControlWindow::ControlWindow(QWidget *parent) :
     connect(menu, &MenuWindow::changeWindow, this, &ControlWindow::toWindow);
 
     loadStatics("X:\\GitHub_pro\\DDL\\start_menu\\statics.json");
-    menu->updateBtn();
 }
 
 ControlWindow::~ControlWindow()
@@ -44,37 +39,51 @@ ControlWindow::~ControlWindow()
     delete load;
     delete start;
     delete menu;
-    //if(on)
-    //    delete on;
+    if(curWindow)
+        delete curWindow;
 }
 
 void ControlWindow::toWindow(int index)
 {
-    if(index!=-1)
+    if(0<=index && index<10)
         mainWidget->setCurrentIndex(index);
-    else
+    else if(index == -1){
+        dumpStatics();
         close();
+    }else
+    {
+        if(curWindow){
+            mainWidget->removeWidget(curWindow);
+            delete curWindow;
+        }
+        switch(index){
+        case 10:
+            //curWindow = new QMainWindow(this);
+            break;
+        case 21:
+            //curWindow = new MainWindowOne;
+            break;
+        case 22:
+            //curWindow = new MainWindowTwo;
+            break;
+        case 23:
+            //curWindow = new MainWindowThree;
+            break;
+        default:
+            qDebug()<<"unavailable index"<<index;
+            exit(0);
+            break;
+        }
+        mainWidget->addWidget(curWindow);
+        connect(curWindow, &windowBase::changeWindow, this, &ControlWindow::toWindow);
+        mainWidget->setCurrentWidget(curWindow);
+    }
 }
 
 void ControlWindow::showEvent(QShowEvent* event)
 {
     QMainWindow::showEvent(event);
     mainWidget->setCurrentIndex(0);
-}
-
-void ControlWindow::toLevel1()
-{
-
-}
-
-void ControlWindow::toLevel2()
-{
-
-}
-
-void ControlWindow::toLevel3()
-{
-
 }
 
 bool ControlWindow::loadStatics(const QString& _path)

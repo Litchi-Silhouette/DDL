@@ -21,7 +21,6 @@ SOURCES += \
     GameMap3.3/gamemapthree.cpp \
     GameMap3.3/gamemaptwo.cpp \
     GameMap3.3/init.cpp \
-    GameMap3.3/main.cpp \
     GameMap3.3/mainwindow.cpp \
     GameMap3.3/mainwindowone.cpp \
     GameMap3.3/mainwindowthree.cpp \
@@ -29,7 +28,8 @@ SOURCES += \
     GameMap3.3/obstacle.cpp \
     GameMap3.3/taskbuff.cpp \
     GameMap3.3/taskbuffinstance.cpp \
-    GameMap3.3/taskbuffprocessor.cpp
+    GameMap3.3/taskbuffprocessor.cpp \
+    main.cpp
 
 HEADERS += \
     GameMap3.3/config.h \

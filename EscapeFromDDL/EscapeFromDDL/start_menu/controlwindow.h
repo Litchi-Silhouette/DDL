@@ -34,16 +34,13 @@ private slots:
     //10:prologue 11:act1 12:act2 13:ending4
     //21:level1 22:level2 23:level3
     //31:ending1 32:ending2 33:ending3
-    void toLevel1();
-    void toLevel2();
-    void toLevel3();
 private:
     Ui::ControlWindow *ui;
     QStackedWidget* mainWidget;
     LoadWindow* load;
     StartWindow* start;
     MenuWindow* menu;
-    QMainWindow* curWindow = nullptr;
+    LevelWindow* curWindow = nullptr;
     Game statics;
     QString path;
 };

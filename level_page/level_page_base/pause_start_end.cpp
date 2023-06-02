@@ -63,26 +63,6 @@ void PauseDialog::conti(){
     close();
 }
 
-StartDialog::StartDialog(QWidget* parent)
-    :MyDialog(parent)
-{
-    literature = new QLabel(this);
-    literature->setFont(QFont("STHupo", 20, QFont::Bold));
-    literature->setAlignment(Qt::AlignCenter);
-    literature->setMinimumSize(400,200);
-}
-
-StartDialog::~StartDialog(){
-    delete literature;
-}
-
-void StartDialog::setStartText(const QString& _text, int fontSize){
-    auto temp = literature->font();
-    temp.setPointSize(fontSize);
-    literature->setFont(temp);
-    literature->setText(_text);
-}
-
 EndDialog::EndDialog(QWidget* parent):
     MyDialog(parent)
 {

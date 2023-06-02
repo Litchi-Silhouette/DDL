@@ -1,6 +1,5 @@
 #include "controlwindow.h"
 #include "ui_controlwindow.h"
-#include <qobject.h>
 #include <QFile>
 #include <QTextStream>
 #include <QJsonDocument>
@@ -35,7 +34,6 @@ ControlWindow::ControlWindow(QWidget *parent) :
     connect(menu, &MenuWindow::changeWindow, this, &ControlWindow::toWindow);
 
     loadStatics("X:\\GitHub_pro\\DDL\\start_menu\\statics.json");
-    menu->updateBtn();
 }
 
 ControlWindow::~ControlWindow()
@@ -64,7 +62,7 @@ void ControlWindow::toWindow(int index)
         }
         switch(index){
         case 10:
-            curWindow = new QMainWindow(this);
+            //curWindow = new QMainWindow(this);
             break;
         case 21:
             curWindow = new MainWindowOne;
@@ -75,9 +73,14 @@ void ControlWindow::toWindow(int index)
         case 23:
             curWindow = new MainWindowThree;
             break;
+        default:
+            qDebug()<<"unavailable index"<<index;
+            exit(0);
+            break;
         }
         mainWidget->addWidget(curWindow);
         connect(curWindow, &LevelWindow::changeWindow, this, &ControlWindow::toWindow);
+        mainWidget->setCurrentWidget(curWindow);
     }
 }
 
@@ -85,21 +88,6 @@ void ControlWindow::showEvent(QShowEvent* event)
 {
     QMainWindow::showEvent(event);
     mainWidget->setCurrentIndex(0);
-}
-
-void ControlWindow::toLevel1()
-{
-
-}
-
-void ControlWindow::toLevel2()
-{
-
-}
-
-void ControlWindow::toLevel3()
-{
-
 }
 
 bool ControlWindow::loadStatics(const QString& _path)

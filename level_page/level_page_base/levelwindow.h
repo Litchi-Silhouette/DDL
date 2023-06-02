@@ -116,6 +116,7 @@ protected:
     //half操作
     virtual void halfMovie();
 
+    int level;
     int live = 5;
     int liveBoss = 100;
     int finished = 0;
@@ -151,7 +152,6 @@ private:
     EndDialog* endDlg;
 
     Ui::LevelWindow *ui;
-    int level;
     static Game statics;
 };
 #endif // LEVELWINDOW_H

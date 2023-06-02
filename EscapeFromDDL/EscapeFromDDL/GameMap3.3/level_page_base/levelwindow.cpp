@@ -154,12 +154,15 @@ void LevelWindow::endGame(){
 void LevelWindow::hideEvent(QHideEvent* event){
     if(endDlg->isActiveWindow())
         endDlg->close();
-    if(state == 4)
-        emit changeWindow(level+10);
-    else if(state == 3)
-        emit changeWindow(level+30);
-    else
-        emit changeWindow(2);
+    if(state)
+    {
+        if(state == 4)
+            emit changeWindow(level+10);
+        else if(state == 3)
+            emit changeWindow(level+30);
+        else
+            emit changeWindow(2);
+    }
     QMainWindow::hideEvent(event);
 }
 
