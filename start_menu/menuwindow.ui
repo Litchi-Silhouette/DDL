@@ -20,9 +20,6 @@
   <property name="cursor">
    <cursorShape>ArrowCursor</cursorShape>
   </property>
-  <property name="windowTitle">
-   <string>MainWindow</string>
-  </property>
   <property name="styleSheet">
    <string notr="true">QMainWindow{background: url(:/pic/image/background.png);}
 QPushButton{border-radius: 5px;}</string>
@@ -113,7 +110,7 @@ border-width: 0px; border-style: solid;border-color: rgb(200, 200, 200);</string
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="page.qrc">:/pic/image/icon_w.png</pixmap>
+            <pixmap>:/pic/image/icon_w.png</pixmap>
            </property>
            <property name="scaledContents">
             <bool>true</bool>
@@ -1062,8 +1059,6 @@ background: rgba(255,250,240,1);
    </layout>
   </widget>
  </widget>
- <resources>
-  <include location="page.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

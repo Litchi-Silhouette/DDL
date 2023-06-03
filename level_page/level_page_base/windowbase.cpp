@@ -7,9 +7,8 @@ windowBase::windowBase(QWidget *parent) :
 {
     ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint);
-    QIcon window(QString(":/page/level_image/icon_w.png"));
+    QIcon window(QString(":/pic/image/icon_w.png"));
     setWindowIcon(window);
-    setWindowTitle(QString("Escape form Dead Line!"));
 }
 
 windowBase::~windowBase()

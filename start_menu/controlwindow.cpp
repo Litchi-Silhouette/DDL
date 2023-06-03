@@ -14,7 +14,7 @@ ControlWindow::ControlWindow(QWidget *parent) :
     mainWidget(new QStackedWidget(this)),
     load(new LoadWindow),
     start(new StartWindow),
-    menu(new MenuWindow(statics))
+    menu(new MenuWindow(statistics))
 {
     ui->setupUi(this);
 
@@ -36,11 +36,6 @@ ControlWindow::~ControlWindow()
 {
     delete ui;
     delete mainWidget;
-    delete load;
-    delete start;
-    delete menu;
-    if(curWindow)
-        delete curWindow;
 }
 
 void ControlWindow::toWindow(int index)
@@ -116,7 +111,7 @@ bool ControlWindow::loadStatics(const QString& _path)
             for(int i=0;i<levels.size();++i){
                 auto cur = levels.at(i);
                 if(cur.isBool())
-                    statics.getLevels[i] = cur.toBool();
+                    statistics.getLevels[i] = cur.toBool();
             }
         }else sig = false;
 
@@ -125,7 +120,7 @@ bool ControlWindow::loadStatics(const QString& _path)
             for(int i=0;i<acts.size();++i){
                 auto cur = acts.at(i);
                 if(cur.isBool())
-                    statics.getActs[i] = cur.toBool();
+                    statistics.getActs[i] = cur.toBool();
             }
         }else sig = false;
 
@@ -134,8 +129,29 @@ bool ControlWindow::loadStatics(const QString& _path)
             for(int i=0;i<endings.size();++i){
                 auto cur = endings.at(i);
                 if(cur.isBool())
-                    statics.getEndings[i] = cur.toBool();
+                    statistics.getEndings[i] = cur.toBool();
             }
+        }else sig = false;
+
+        if(obj.contains("audio")){
+            auto cur = obj.value("audio");
+            if(cur.isBool())
+                statistics.audioMode = cur.toBool();
+
+        }else sig = false;
+
+        if(obj.contains("effect")){
+            auto cur = obj.value("effect");
+            if(cur.isDouble())
+                statistics.effect = cur.toDouble();
+
+        }else sig = false;
+
+        if(obj.contains("music")){
+            auto cur = obj.value("music");
+            if(cur.isDouble())
+                statistics.music = cur.toDouble();
+
         }else sig = false;
     }
     return sig;
@@ -146,21 +162,24 @@ bool ControlWindow::dumpStatics()
     QJsonObject obj;
     QJsonArray levels;
     for(int i=0;i<4;++i){
-        levels.append(statics.getLevels[i]);
+        levels.append(statistics.getLevels[i]);
     }
     obj.insert("level", levels);
 
     QJsonArray acts;
     for(int i=0;i<4;++i){
-        acts.append(statics.getLevels[i]);
+        acts.append(statistics.getActs[i]);
     }
     obj.insert("act", acts);
 
     QJsonArray endings;
     for(int i=0;i<5;++i){
-        endings.append(statics.getLevels[i]);
+        endings.append(statistics.getEndings[i]);
     }
     obj.insert("ending", endings);
+    obj.insert("audio", QJsonValue(statistics.audioMode));
+    obj.insert("effect", QJsonValue(statistics.effect));
+    obj.insert("music", QJsonValue(statistics.music));
 
     QJsonDocument doc;
     doc.setObject(obj);

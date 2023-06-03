@@ -33,22 +33,26 @@ private:
 #include <QDialog>
 #include <QLabel>
 #include <QSlider>
+#include "Game.hpp"
 
 class SetDialog : public MyDialog
 {
     Q_OBJECT
 public:
-    explicit SetDialog(QWidget *parent = nullptr);
+    explicit SetDialog(Game& game, QWidget *parent = nullptr);
     ~SetDialog();
-
 signals:
 private slots:
     void changeMode();
     void changeAudio(int);
     void changeEffect(int);
+    void resetGame();
+    void setIni();
+protected:
+    void showEvent(QShowEvent*);
 private:
     void setPattern(bool on);
-
+    QWidget* content;
     QLabel* tip1;
     QLabel* tip2;
     QLabel* tip3;
@@ -60,6 +64,8 @@ private:
     QPushButton* audio;
     QPushButton* reset;
     QPushButton* back;
+
+    Game& statistics;
 };
 
 #endif // SETDIALOG_H
@@ -73,12 +79,13 @@ class AccDialog : public MyDialog
 {
     Q_OBJECT
 public:
-    explicit AccDialog(QWidget *parent = nullptr);
+    explicit AccDialog(int index, QWidget *parent = nullptr);
     ~AccDialog();
     void setIndex(int);     //1-4:for accomplish index
 protected:
     void showEvent(QShowEvent*);
 signals:
+    void end();
 private:
     QLabel* pic;
     QLabel* info;

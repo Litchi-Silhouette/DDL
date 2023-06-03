@@ -23,7 +23,7 @@ HelpDialog::HelpDialog(QWidget* parent)
     connect(back, &QPushButton::clicked, this, &HelpDialog::close);
 
     center = new QScrollArea(this);
-    center->setBackgroundRole(QPalette::Dark);
+    //center->setBackgroundRole(QPalette::Dark);
     center->setFixedSize(800,450);
     center->setAlignment(Qt::AlignHCenter|Qt::AlignTop);
     center->setFrameStyle(QFrame::Box);
@@ -37,16 +37,16 @@ HelpDialog::HelpDialog(QWidget* parent)
     mainLay->setSpacing(10);
     mainLay->setContentsMargins(0,0,0,0);
     mainLay->addWidget(title, 1, Qt::AlignCenter);
-    mainLay->addWidget(center);
+    mainLay->addWidget(center,0, Qt::AlignCenter);
     mainLay->addWidget(back, 1, Qt::AlignCenter);
 
     setLayout(mainLay);
+    setStyleSheet("QDialog{background: rgba(248, 248, 255, 150);}");
 }
 
 HelpDialog::~HelpDialog()
 {
     delete center;
-    delete content;
     delete back;
     delete title;
 }
@@ -62,24 +62,24 @@ void HelpDialog::setContent(const QString& text){
     subLay->insertWidget(subLay->count() - 1, p);
 }
 
-SetDialog::SetDialog(QWidget* parent)
-    :MyDialog(parent)
+SetDialog::SetDialog(Game& game, QWidget* parent)
+    :MyDialog(parent), statistics(game)
 {
     auto tempTitle = QFont("华文楷体", 20, QFont::Bold);
     auto tempNum = QFont("华文楷体", 14, QFont::Bold);
-
-    tip1 = new QLabel("音乐 ", this);
-    tip2 = new QLabel("音效 ", this);
-    tip3 = new QLabel("声音 ", this);
-    tip4 = new QLabel("重置 ", this);
+    content = new QWidget(this);
+    tip1 = new QLabel("音乐 ", content);
+    tip2 = new QLabel("音效 ", content);
+    tip3 = new QLabel("声音 ", content);
+    tip4 = new QLabel("重置 ", content);
     tip1->setFont(tempTitle);
     tip2->setFont(tempTitle);
     tip3->setFont(tempTitle);
     tip4->setFont(tempTitle);
-    num1 = new QLabel(" ", this);
+    num1 = new QLabel(" ", content);
     num1->setAlignment(Qt::AlignVCenter|Qt::AlignLeft);
     num1->setFont(tempNum);
-    num2 = new QLabel(" ", this);
+    num2 = new QLabel(" ", content);
     num2->setAlignment(Qt::AlignVCenter|Qt::AlignLeft);
     num2->setFont(tempNum);
 
@@ -92,8 +92,8 @@ SetDialog::SetDialog(QWidget* parent)
             "QSlider::handle:horizontal:hover {background: rgb(119,136,153); width: 18px; "
                                         "border-radius: 9px; margin: -6px;}";
 
-    change1 = new QSlider(Qt::Horizontal, this);
-    change2 = new QSlider(Qt::Horizontal, this);
+    change1 = new QSlider(Qt::Horizontal, content);
+    change2 = new QSlider(Qt::Horizontal, content);
     change1->setMaximum(100);
     change1->setMinimum(0);
     change1->setSingleStep(10);
@@ -106,15 +106,12 @@ SetDialog::SetDialog(QWidget* parent)
     change2->setMinimumHeight(30);
     connect(change1, &QSlider::valueChanged, this, &SetDialog::changeAudio);
     connect(change2, &QSlider::valueChanged, this, &SetDialog::changeEffect);
-    change1->setValue(5);
-    change2->setValue(5);
 
-    audio = new QPushButton("",this);
+    audio = new QPushButton("",content);
     audio->setFixedSize(80,80);
     connect(audio, &QPushButton::clicked, this, &SetDialog::changeMode);
-    setPattern(true);
 
-    back = new QPushButton("",this);
+    back = new QPushButton("",content);
     back->setStyleSheet("QPushButton{border:0px;"
                   "border-image:url(:/pic/image/go_nor_gray.png);}"
                   "QPushButton:hover{border-image:url(:/pic/image/go_gray.png);}"
@@ -123,13 +120,13 @@ SetDialog::SetDialog(QWidget* parent)
     back->setFixedSize(80,80);
     connect(back, &QPushButton::clicked, this, &SetDialog::close);
 
-    reset = new QPushButton("",this);
+    reset = new QPushButton("",content);
     reset->setStyleSheet("QPushButton{border:0px;"
                   "border-image:url(:/pic/image/restart_gray.png);}"
                   "QPushButton:hover{border-image:url(:/pic/image/restart.png);}"
                   );
     reset->setFixedSize(80,80);
-    //connect(back, &QPushButton::clicked, this, &SetDialog::close);
+    connect(reset, &QPushButton::clicked, this, &SetDialog::resetGame);
 
     auto mainLay = new QGridLayout;
     mainLay->addWidget(tip1,0,0,1,1);
@@ -144,7 +141,13 @@ SetDialog::SetDialog(QWidget* parent)
     mainLay->addWidget(audio,2,1,1,1);
     mainLay->addWidget(back,3,1,1,2,Qt::AlignCenter);
 
-    setLayout(mainLay);
+    content->setLayout(mainLay);
+    content->adjustSize();
+    content->setFixedSize(content->size());
+    auto lay = new QVBoxLayout;
+    lay->addWidget(content, 0, Qt::AlignCenter);
+    setLayout(lay);
+    setStyleSheet("QDialog{background: rgba(248, 248, 255, 150);}");
 }
 
 SetDialog::~SetDialog()
@@ -162,6 +165,11 @@ SetDialog::~SetDialog()
     delete back;
 }
 
+void SetDialog::setIni(){
+    change1->setValue(statistics.music*10);
+    change2->setValue(statistics.effect*10);
+}
+
 void SetDialog::setPattern(bool on)
 {
     if(on)
@@ -176,30 +184,54 @@ void SetDialog::setPattern(bool on)
                       );
 }
 
-void SetDialog::changeMode(){
+void SetDialog::resetGame(){
+    for(int i=0;i<4;++i){
+        statistics.getLevels[i] = 0;
+        statistics.getActs[i] = 0;
+        statistics.getEndings[i] = 0;
+    }
+    statistics.getEndings[4] = 0;
+    statistics.getActs[0] = true;
+}
 
+void SetDialog::changeMode(){
+    statistics.audioMode ^= 1;
+    setPattern(statistics.audioMode);
 }
 
 void SetDialog::changeAudio(int cur){
     num1->setText(QString("%1").arg(cur/10));
+    statistics.music = cur/10;
 }
 void SetDialog::changeEffect(int cur){
     num2->setText(QString("%1").arg(cur/10));
+    statistics.effect = cur/10;
 }
 
-AccDialog::AccDialog(QWidget* parent)
+void SetDialog::showEvent(QShowEvent* event){
+    MyDialog::showEvent(event);
+    setIni();
+    setPattern(statistics.audioMode);
+}
+
+AccDialog::AccDialog(int index, QWidget* parent)
     :MyDialog(parent)
 {
     btn = new QPushButton("",this);
     btn->setStyleSheet("QPushButton{border-image:url(:/pic/image/accomplish.png);"
-                        "text-align: left; padding-left: 50px;}");
-    btn->setFont(QFont("STKaiti", 14, QFont::Bold));
+                        "text-align: left; padding-left: 50px; color: black;"
+                       "font : bold 14pt \"STKaiti\";}");
     btn->setFixedSize(350,80);
     btn->setVisible(false);
-    connect(btn, &QPushButton::clicked, this, &AccDialog::close);
-    info = new QLabel("",this);
-    info->setFont(QFont("STKaiti", 18, QFont::Bold));
+    connect(btn, &QPushButton::clicked, this, [=](){
+        emit end();
+        close();
+    });
+    info = new QLabel("   ",this);
+    info->setFont(QFont("STKaiti", 19, QFont::Bold));
     info->setAlignment(Qt::AlignCenter);
+    info->adjustSize();
+    info->setFixedHeight(info->height());
     pic = new QLabel(this);
     pic->setAlignment(Qt::AlignCenter);
     pic->setFixedSize(700,400);
@@ -210,12 +242,16 @@ AccDialog::AccDialog(QWidget* parent)
     pic->setMidLineWidth(3);
 
     auto mainLay = new QVBoxLayout;
-    mainLay->setSpacing(5);
+    mainLay->setSpacing(20);
     mainLay->setContentsMargins(0,0,0,0);
-    mainLay->addWidget(pic, 6);
-    mainLay->addWidget(info, 1);
-    mainLay->addWidget(btn, 1, Qt::AlignCenter);
+    mainLay->addStretch();
+    mainLay->addWidget(pic, 0, Qt::AlignHCenter | Qt::AlignBottom);
+    mainLay->addWidget(info, 0);
+    mainLay->addWidget(btn, 0, Qt::AlignCenter);
+    mainLay->addStretch();
     setLayout(mainLay);
+    setStyleSheet("QDialog{background: rgba(248, 248, 255, 150);}");
+    setIndex(index);
 }
 
 AccDialog::~AccDialog()

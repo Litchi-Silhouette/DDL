@@ -38,6 +38,9 @@ struct Game{
     bool getEndings[5] = {};
     bool getLevels[4] = {};
     bool getActs[4] = {true};
+    int music;
+    int effect;
+    bool audioMode;
 };
 
 #endif // GAME_H
@@ -60,11 +63,13 @@ public:
         flags |= Qt::Tool;                 //程序不在任务栏显示
         flags |= Qt::WindowStaysOnTopHint; //置顶显示
         setWindowFlags(flags);
-        setAttribute(Qt::WA_TranslucentBackground, true);
     }
-
-signals:
-
+protected:
+    void showEvent(QShowEvent* event){
+        QDialog::showEvent(event);
+        if(parentWidget())
+            setGeometry(parentWidget()->rect());
+    }
 };
 
 #endif // MYDIALOG_H
@@ -81,9 +86,13 @@ public:
     explicit StartDialog(QWidget *parent = nullptr)
         :MyDialog(parent)
     {
+        setAttribute(Qt::WA_TranslucentBackground, true);
         literature = new QLabel(this);
         literature->setFont(QFont("STHupo", 20, QFont::Bold));
         literature->setMinimumSize(400,200);
+        auto mainLay = new QVBoxLayout(this);
+        mainLay->addWidget(literature, 0, Qt::AlignCenter);
+        setLayout(mainLay);
     }
     ~StartDialog(){
         delete literature;

@@ -5,6 +5,7 @@
 #include "startwindow.h"
 #include "loadwindow.h"
 #include "menuwindow.h"
+#include "endingwindow.h"
 #include "windowbase.h"
 #include "Game.hpp"
 
@@ -39,7 +40,7 @@ private:
     StartWindow* start;
     MenuWindow* menu;
     windowBase* curWindow = nullptr;
-    Game statics;
+    Game statistics;
     QString path;
 };
 

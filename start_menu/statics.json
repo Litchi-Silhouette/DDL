@@ -1,21 +1,24 @@
 {
     "act": [
-        false,
+        true,
         true,
         false,
         false
     ],
+    "audio": true,
+    "effect": 0,
     "ending": [
         false,
-        true,
         false,
+        true,
         false,
         false
     ],
     "level": [
         false,
         true,
-        false,
+        true,
         false
-    ]
+    ],
+    "music": 2
 }

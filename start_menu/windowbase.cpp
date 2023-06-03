@@ -9,7 +9,6 @@ windowBase::windowBase(QWidget *parent) :
     setWindowFlags(Qt::FramelessWindowHint);
     QIcon window(QString(":/pic/image/icon_w.png"));
     setWindowIcon(window);
-    setWindowTitle(QString("Escape form Dead Line!"));
 }
 
 windowBase::~windowBase()

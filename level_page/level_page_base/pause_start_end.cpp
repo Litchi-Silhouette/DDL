@@ -3,6 +3,7 @@
 PauseDialog::PauseDialog(QWidget* parent)
     :MyDialog(parent)
 {
+    setAttribute(Qt::WA_TranslucentBackground, true);
     backBtn = new QPushButton(this);
     backBtn->setStyleSheet("QPushButton{border-width:0px;"
                   "border-image:url(:/page/level_image/back_nor_gray.png);}"
@@ -29,12 +30,13 @@ PauseDialog::PauseDialog(QWidget* parent)
 
     main_lay = new QHBoxLayout(this);
     main_lay->setSpacing(20);
+    main_lay->addStretch();
     main_lay->addWidget(backBtn,1);
     main_lay->addWidget(restartBtn,1);
     main_lay->addWidget(continueBtn,1);
-
+    main_lay->addStretch();
     setLayout(main_lay);
-    clearMask();
+
 }
 
 PauseDialog::~PauseDialog(){
@@ -66,6 +68,7 @@ void PauseDialog::conti(){
 EndDialog::EndDialog(QWidget* parent):
     MyDialog(parent)
 {
+    setAttribute(Qt::WA_TranslucentBackground, true);
     backBtn = new QPushButton(this);
     backBtn->setStyleSheet("QPushButton{border-width:0px;"
                            "border-image:url(:/page/level_image/back_nor_gray.png);}"
@@ -87,11 +90,14 @@ EndDialog::EndDialog(QWidget* parent):
     literature = new QLabel(this);
     literature->setText("游戏结束");
     literature->setFont(QFont("华文楷体",50, QFont::Bold));
+    literature->adjustSize();
+    literature->setFixedSize(literature->size());
 
     auto mainLay = new QGridLayout(this);
-    mainLay->addWidget(literature,0,0,1,2);
-    mainLay->addWidget(backBtn,1,0,1,1);
-    mainLay->addWidget(nextBtn,1,1,1,1);
+    mainLay->setSpacing(10);
+    mainLay->addWidget(literature,0,0,1,2, Qt::AlignHCenter | Qt::AlignBottom);
+    mainLay->addWidget(backBtn,1,0,1,1, Qt::AlignTop |Qt::AlignRight);
+    mainLay->addWidget(nextBtn,1,1,1,1, Qt::AlignTop |Qt::AlignLeft);
     setLayout(mainLay);
 }
 
