@@ -2,18 +2,14 @@
 #include "ui_menuwindow.h"
 
 MenuWindow::MenuWindow(Game& game, QWidget *parent) :
-    QMainWindow(parent),
+    windowBase(parent),
     ui(new Ui::MenuWindow),
-    setDlg(new SetDialog(this)),
+    setDlg(new SetDialog(game, this)),
     helpDlg(new HelpDialog(this)),
-    statics(game)
+    statistics(game)
 {
     ui->setupUi(this);
-    setWindowFlags(Qt::FramelessWindowHint);
-    QIcon window(QString(":/pic/image/icon_w.png"));
-    setWindowIcon(window);
-    setWindowTitle(QString("Escape from Dead Line!"));
-    ui->frame->layout()->setContentsMargins(10,0,10,0);
+    ui->toolframe->layout()->setContentsMargins(10,0,10,0);
 }
 
 MenuWindow::~MenuWindow()
@@ -23,17 +19,14 @@ MenuWindow::~MenuWindow()
 
 void MenuWindow::on_helpBtn_clicked()
 {
-    setBlur(30);
     helpDlg->exec();
-    setBlur(0);
 }
 
 
 void MenuWindow::on_setBtn_clicked()
 {
-    setBlur(30);
     setDlg->exec();
-    setBlur(0);
+    updateBtn();
 }
 
 
@@ -43,33 +36,32 @@ void MenuWindow::on_exitBtn_clicked()
     close();
 }
 
-void MenuWindow::setBlur(int extent){
-    blureffect->setBlurRadius(extent);
-    setGraphicsEffect(blureffect);
-}
-
 void MenuWindow::updateBtn(){
-    ui->level1Btn->setVisible(statics.getLevels[1]);
-    ui->level2Btn->setVisible(statics.getLevels[2]);
-    ui->level3Btn->setVisible(statics.getLevels[3]);
+    ui->level1Btn->setVisible(statistics.getLevels[1]);
+    ui->level2Btn->setVisible(statistics.getLevels[2]);
+    ui->level3Btn->setVisible(statistics.getLevels[3]);
 
-    ui->act1Btn->setVisible(statics.getActs[1]);
-    ui->act1Label->setVisible(statics.getActs[1]);
-    ui->act2Btn->setVisible(statics.getActs[2]);
-    ui->act2Label->setVisible(statics.getActs[2]);
-    ui->prologueBtn->setVisible(statics.getActs[0]);
-    ui->proLabel->setVisible(statics.getActs[0]);
-    ui->extraChapter->setVisible(statics.getActs[3]);
-    ui->extraLabel->setVisible(statics.getActs[3]);
+    ui->act1Btn->setVisible(statistics.getActs[1]);
+    ui->act1Label->setVisible(statistics.getActs[1]);
+    ui->act2Btn->setVisible(statistics.getActs[2]);
+    ui->act2Label->setVisible(statistics.getActs[2]);
+    ui->prologueBtn->setVisible(statistics.getActs[0]);
+    ui->proLabel->setVisible(statistics.getActs[0]);
 
-    ui->end1Btn->setVisible(statics.getEndings[1]);
-    ui->end1Label->setVisible(statics.getEndings[1]);
-    ui->end2Btn->setVisible(statics.getEndings[2]);
-    ui->end2Label->setVisible(statics.getEndings[2]);
-    ui->end3Btn->setVisible(statics.getEndings[3]);
-    ui->end3Label->setVisible(statics.getEndings[3]);
-    ui->end4Btn->setVisible(statics.getEndings[4]);
-    ui->end4Label->setVisible(statics.getEndings[4]);
+    ui->end1Btn->setVisible(statistics.getEndings[1]);
+    ui->end1Label->setVisible(statistics.getEndings[1]);
+    ui->end2Btn->setVisible(statistics.getEndings[2]);
+    ui->end2Label->setVisible(statistics.getEndings[2]);
+    ui->end3Btn->setVisible(statistics.getEndings[3]);
+    ui->end3Label->setVisible(statistics.getEndings[3]);
+    ui->end4Btn->setVisible(statistics.getEndings[4]);
+    ui->end4Label->setVisible(statistics.getEndings[4]);
+
+    if(statistics.getEndings[1] && statistics.getEndings[3]
+        && statistics.getEndings[2] && statistics.getEndings[4])
+        statistics.getActs[3] = true;
+    ui->extraChapter->setVisible(statistics.getActs[3]);
+    ui->extraLabel->setVisible(statistics.getActs[3]);
 }
 
 void MenuWindow::on_level1Btn_clicked()
@@ -80,7 +72,7 @@ void MenuWindow::on_level1Btn_clicked()
 void MenuWindow::showEvent(QShowEvent* event)
 {
     QMainWindow::showEvent(event);
-    //updateBtn();
+    updateBtn();
 }
 
 void MenuWindow::on_level2Btn_clicked()
@@ -92,5 +84,53 @@ void MenuWindow::on_level2Btn_clicked()
 void MenuWindow::on_level3Btn_clicked()
 {
     emit changeWindow(23);
+}
+
+
+void MenuWindow::on_act1Btn_clicked()
+{
+    emit changeWindow(11);
+}
+
+
+void MenuWindow::on_act2Btn_clicked()
+{
+    emit changeWindow(12);
+}
+
+
+void MenuWindow::on_end4Btn_clicked()
+{
+    emit changeWindow(13);
+}
+
+
+void MenuWindow::on_prologueBtn_clicked()
+{
+    emit changeWindow(10);
+}
+
+
+void MenuWindow::on_end1Btn_clicked()
+{
+    emit changeWindow(31);
+}
+
+
+void MenuWindow::on_end2Btn_clicked()
+{
+    emit changeWindow(32);
+}
+
+
+void MenuWindow::on_end3Btn_clicked()
+{
+    emit changeWindow(33);
+}
+
+
+void MenuWindow::on_extraChapter_clicked()
+{
+    emit changeWindow(3);
 }
 

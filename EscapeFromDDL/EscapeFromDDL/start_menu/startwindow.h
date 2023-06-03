@@ -1,22 +1,21 @@
 #ifndef STARTWINDOW_H
 #define STARTWINDOW_H
 
-#include <QMainWindow>
+#include "../windowbase.h"
 #include <QTimer>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class StartWindow; }
 QT_END_NAMESPACE
 
-class StartWindow : public QMainWindow
+class StartWindow : public windowBase
 {
     Q_OBJECT
 
 public:
     StartWindow(QWidget *parent = nullptr);
     ~StartWindow();
-signals:
-    void changeWindow(int index);
+
 protected:
     void paintEvent(QPaintEvent*);
     void hideEvent(QHideEvent* );
