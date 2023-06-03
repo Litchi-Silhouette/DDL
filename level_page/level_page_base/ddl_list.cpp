@@ -196,7 +196,6 @@ void DDL_List::set_info(QListWidgetItem* cur, bool is_buff, bool is_nor)
 {
     auto curTFont = titletask->font();
     auto curFFont = tasklist->font();
-    qDebug()<<name->size()<<info->size();
     if(is_nor)
     {
         QPalette pe = titletask->palette();
@@ -214,7 +213,7 @@ void DDL_List::set_info(QListWidgetItem* cur, bool is_buff, bool is_nor)
     if(is_buff)
     {
         auto& temp = buffitems->find(cur).value();
-        icon->setPixmap(QIcon(temp.geticon()).pixmap(name->size(),Qt::KeepAspectRatio));
+        icon->setPixmap(QIcon(temp.geticon()).pixmap(icon->size(),Qt::KeepAspectRatio));
         name->setFont(curTFont);
         name->setText(QString(" %1").arg(temp.getname()));
         info->setFont(curFFont);
@@ -223,7 +222,7 @@ void DDL_List::set_info(QListWidgetItem* cur, bool is_buff, bool is_nor)
     else
     {
         auto& temp = taskitems->find(cur).value();
-        icon->setPixmap(QIcon(temp.geticon()).pixmap(name->size(),Qt::KeepAspectRatio));
+        icon->setPixmap(QIcon(temp.geticon()).pixmap(icon->size(),Qt::KeepAspectRatio));
         name->setFont(curTFont);
         name->setText(QString(" %1").arg(temp.getname()));
         info->setFont(curFFont);
@@ -307,9 +306,12 @@ void DDL_List::clear(){
 void DDL_List::showIni(){
     name->setFont(QFont("Caveat",20, QFont::Bold));
     name->setText(" Escaping!");
+    name->adjustSize();
     QPixmap ini(":/page/level_image/bossIcon.png");
     icon->setPixmap(ini.scaled(name->size(),Qt::KeepAspectRatio));
+    icon->adjustSize();
     info->setText("");
     clearBuffSelected();
     clearTaskSelected();
+    icon->setFixedSize(icon->size());
 }

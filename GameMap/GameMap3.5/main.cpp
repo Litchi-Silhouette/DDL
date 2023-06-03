@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
 
     QApplication a(argc, argv);
 
-    MainWindow *pwindow = new MainWindowThree();
+    MainWindow *pwindow = new MainWindowTwo();
 
     qDebug()<<"MainWindow size "<<pwindow->height()<<" "<<pwindow->width();
     pwindow->show();

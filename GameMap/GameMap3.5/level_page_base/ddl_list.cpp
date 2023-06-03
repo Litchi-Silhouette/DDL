@@ -8,7 +8,7 @@ DDL_List::DDL_List(const bool isThird, QWidget *parent, QHash<int , QListWidgetI
 {
     setWindowFlags(Qt::FramelessWindowHint);
     setAttribute(Qt::WA_TranslucentBackground,true);
-
+    setStyleSheet("border: 1px solid black");
     titletask = new MyLabel(this, "任务");
     titletask->setMinimumSize(30,30);
     titletask->setAlignment(Qt::AlignLeft|Qt::AlignVCenter);
@@ -213,7 +213,7 @@ void DDL_List::set_info(QListWidgetItem* cur, bool is_buff, bool is_nor)
     if(is_buff)
     {
         auto& temp = buffitems->find(cur).value();
-        icon->setPixmap(QIcon(temp.geticon()).pixmap(name->size(),Qt::KeepAspectRatio));
+        icon->setPixmap(QIcon(temp.geticon()).pixmap(icon->size(),Qt::KeepAspectRatio));
         name->setFont(curTFont);
         name->setText(QString(" %1").arg(temp.getname()));
         info->setFont(curFFont);
@@ -225,7 +225,7 @@ void DDL_List::set_info(QListWidgetItem* cur, bool is_buff, bool is_nor)
         name->setFont(curTFont);
         name->setText(QString(" %1").arg(temp.getname()));
         name->adjustSize();
-        icon->setPixmap(QIcon(temp.geticon()).pixmap(titletask->size(),Qt::KeepAspectRatio));
+        icon->setPixmap(QIcon(temp.geticon()).pixmap(icon->size(),Qt::KeepAspectRatio));
         info->setFont(curFFont);
         info->setText(temp.getinfo());
     }
@@ -307,9 +307,12 @@ void DDL_List::clear(){
 void DDL_List::showIni(){
     name->setFont(QFont("Caveat",20, QFont::Bold));
     name->setText(" Escaping!");
-    QPixmap ini(":/page/level_image/icon_w.png");
+    name->adjustSize();
+    QPixmap ini(":/page/level_image/bossIcon.png");
     icon->setPixmap(ini.scaled(name->size(),Qt::KeepAspectRatio));
+    icon->adjustSize();
     info->setText("");
     clearBuffSelected();
     clearTaskSelected();
+    icon->setFixedSize(icon->size());
 }
