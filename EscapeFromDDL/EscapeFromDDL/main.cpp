@@ -1,7 +1,7 @@
-#include "start_menu/controlwindow.h"
+#include "controlwindow.h"
 
 #include <QApplication>
-Game LevelWindow::statics;
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);

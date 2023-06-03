@@ -35,9 +35,12 @@ struct Game{
     QHash<int , ItemHash*> all_buffs;
     QHash<int , QListWidgetItem*> all_items;
 
-    bool getEndings[5] = {};
-    bool getLevels[4] = {};
-    bool getActs[4] = {true};
+    bool getEndings[5] = {}; //1-4对应四个结局
+    bool getLevels[4] = {};  //1-3对应level
+    bool getActs[4] = {true};//0 pro 1 act1 2 act2 3 extra
+    int music = 5;      //背景音乐音量
+    int effect = 5;     //特效音量0-10
+    bool audioMode = true; //是否有声音
 };
 
 #endif // GAME_H
@@ -60,11 +63,13 @@ public:
         flags |= Qt::Tool;                 //程序不在任务栏显示
         flags |= Qt::WindowStaysOnTopHint; //置顶显示
         setWindowFlags(flags);
-        setAttribute(Qt::WA_TranslucentBackground, true);
     }
-
-signals:
-
+protected:
+    void showEvent(QShowEvent* event){
+        QDialog::showEvent(event);
+        if(parentWidget())
+            setGeometry(parentWidget()->rect());
+    }
 };
 
 #endif // MYDIALOG_H
@@ -81,9 +86,13 @@ public:
     explicit StartDialog(QWidget *parent = nullptr)
         :MyDialog(parent)
     {
+        setAttribute(Qt::WA_TranslucentBackground, true);
         literature = new QLabel(this);
-        literature->setFont(QFont("STHupo", 20, QFont::Bold));
+        literature->setFont(QFont("方正趣黑简体", 20, QFont::Bold));
         literature->setMinimumSize(400,200);
+        auto mainLay = new QVBoxLayout(this);
+        mainLay->addWidget(literature, 0, Qt::AlignCenter);
+        setLayout(mainLay);
     }
     ~StartDialog(){
         delete literature;
@@ -104,3 +113,54 @@ private:
 };
 
 #endif // STARTDIALOG_H
+
+#ifndef MASK_H
+#define MASK_H
+
+#include <QWidget>
+#include <QPropertyAnimation>
+
+class CoverMask : public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit CoverMask(QWidget *parent = nullptr)
+        : QWidget{parent}
+    {
+        setiniP();
+        setWindowFlags(Qt::Widget | Qt::FramelessWindowHint | Qt::WindowSystemMenuHint | Qt::WindowStaysOnTopHint);
+        showAnimation = new QPropertyAnimation(this, "windowOpacity");
+        showAnimation->setDuration(1000);
+        showAnimation->setStartValue(1.0);
+        showAnimation->setEndValue(0.0);
+
+        closeAnimation = new QPropertyAnimation(this, "windowOpacity");
+        closeAnimation->setDuration(1000);
+        closeAnimation->setEndValue(1.0);
+        closeAnimation->setStartValue(0.0);
+
+        connect(showAnimation, &QPropertyAnimation::finished, this, [=](){  close(); emit showEnd(); });
+        connect(closeAnimation, &QPropertyAnimation::finished, this, [=](){  close(); emit closeEnd(); });
+    }
+    void startShow(){
+        show();
+        showAnimation->start();
+    }
+    void startClose(){
+        show();
+        closeAnimation->start();
+    }
+    void setiniP(QPalette tmp = QPalette(QColor(0,0,0,255))){
+        setPalette(tmp);
+    }
+signals:
+    void showEnd();
+    void closeEnd();
+
+private:
+    QPropertyAnimation *showAnimation;
+    QPropertyAnimation *closeAnimation;
+};
+
+#endif // MASK_H

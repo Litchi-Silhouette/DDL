@@ -20,9 +20,6 @@
   <property name="cursor">
    <cursorShape>ArrowCursor</cursorShape>
   </property>
-  <property name="windowTitle">
-   <string>MainWindow</string>
-  </property>
   <property name="styleSheet">
    <string notr="true">QMainWindow{background: url(:/pic/image/background.png);}
 QPushButton{border-radius: 5px;}</string>
@@ -137,7 +134,7 @@ border-width: 0px; border-style: solid;border-color: rgb(200, 200, 200);</string
        </spacer>
       </item>
       <item>
-       <widget class="QFrame" name="frame">
+       <widget class="QFrame" name="toolframe">
         <property name="frameShape">
          <enum>QFrame::Panel</enum>
         </property>
@@ -322,10 +319,18 @@ background: rgba(255,250,240,1);
             <height>50</height>
            </size>
           </property>
+          <property name="font">
+           <font>
+            <family>华文楷体</family>
+            <pointsize>16</pointsize>
+            <italic>false</italic>
+            <bold>false</bold>
+           </font>
+          </property>
           <property name="styleSheet">
            <string notr="true">QLabel{
-background: rgba(255,255,240,1);
-font: 20pt &quot;华文楷体&quot;;
+background: rgba(255,255,240,150);
+font: 16pt &quot;华文楷体&quot;;
 border-bottom-right-radius: 20px;
 border-bottom-left-radius: 20px;
 border-top-right-radius:20px;
@@ -432,7 +437,7 @@ background: rgba(255,250,240,1);
         </property>
         <property name="styleSheet">
          <string notr="true">QLabel{
-background: rgba(255,255,240,1);
+background: rgba(255,255,240,150);
 font: 20pt &quot;华文楷体&quot;;
 border-radius: 20px;
 border:2px solid gray;
@@ -549,8 +554,8 @@ background: rgba(255,250,240,1);
           </property>
           <property name="styleSheet">
            <string notr="true">QLabel{
-background: rgba(255,255,240,1);
-font: 20pt &quot;华文楷体&quot;;
+background: rgba(255,255,240,150);
+font: 16pt &quot;华文楷体&quot;;
 border-bottom-right-radius: 20px;
 border-bottom-left-radius: 20px;
 border-top-right-radius:20px;
@@ -654,7 +659,7 @@ background: rgba(255,250,240,1);
         </property>
         <property name="styleSheet">
          <string notr="true">QLabel{
-background: rgba(255,255,240,1);
+background: rgba(255,255,240,150);
 font: 20pt &quot;华文楷体&quot;;
 border-radius: 20px;
 border:2px solid gray;
@@ -759,8 +764,8 @@ background: rgba(255,250,240,1);
           </property>
           <property name="styleSheet">
            <string notr="true">QLabel{
-background: rgba(255,255,240,1);
-font: 20pt &quot;华文楷体&quot;;
+background: rgba(255,255,240,150);
+font: 16pt &quot;华文楷体&quot;;
 border-bottom-right-radius: 20px;
 border-bottom-left-radius: 20px;
 border-top-right-radius:20px;
@@ -864,7 +869,7 @@ background: rgba(255,250,240,1);
         </property>
         <property name="styleSheet">
          <string notr="true">QLabel{
-background: rgba(255,255,240,1);
+background: rgba(255,255,240,150);
 font: 20pt &quot;华文楷体&quot;;
 border-radius: 20px;
 border:2px solid gray;
@@ -967,7 +972,7 @@ background: rgba(255,250,240,1);
         </property>
         <property name="styleSheet">
          <string notr="true">QLabel{
-background: rgba(255,255,240,1);
+background: rgba(255,255,240,150);
 font: 20pt &quot;华文楷体&quot;;
 border-radius: 20px;
 border:2px solid gray;
@@ -1008,8 +1013,8 @@ text-align: left;
         </property>
         <property name="styleSheet">
          <string notr="true">QLabel{
-background: rgba(255,255,240,1);
-font: 20pt &quot;华文楷体&quot;;
+background: rgba(255,255,240,150);
+font: 16pt &quot;华文楷体&quot;;
 border-radius: 20px;
 text-align: left;
 }</string>

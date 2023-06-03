@@ -6,10 +6,10 @@
         false
     ],
     "audio": true,
-    "effect": 0,
+    "effect": 5,
     "ending": [
         false,
-        false,
+        true,
         true,
         false,
         false

@@ -1,16 +1,16 @@
 #ifndef MENUWINDOW_H
 #define MENUWINDOW_H
 
-#include <QMainWindow>
+#include "../windowbase.h"
 #include <QGraphicsEffect>
-#include "set_help_acc_start.h"
+#include "set_help_acc.h"
 #include "../Game.hpp"
 
 namespace Ui {
 class MenuWindow;
 }
 
-class MenuWindow : public QMainWindow
+class MenuWindow : public windowBase
 {
     Q_OBJECT
 
@@ -32,16 +32,28 @@ private slots:
 
     void on_level3Btn_clicked();
 
-signals:
-    void changeWindow(int index);
-private:
-    void setBlur(int extent);
+    void on_act1Btn_clicked();
 
+    void on_act2Btn_clicked();
+
+    void on_end4Btn_clicked();
+
+    void on_prologueBtn_clicked();
+
+    void on_end1Btn_clicked();
+
+    void on_end2Btn_clicked();
+
+    void on_end3Btn_clicked();
+
+    void on_extraChapter_clicked();
+
+private:
     Ui::MenuWindow *ui;
     SetDialog* setDlg;
     HelpDialog* helpDlg;
-    QGraphicsBlurEffect* blureffect = new QGraphicsBlurEffect;
-    Game& statics;
+
+    Game& statistics;
 };
 
 #endif // MENUWINDOW_H
