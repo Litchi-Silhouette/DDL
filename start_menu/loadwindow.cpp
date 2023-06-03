@@ -13,7 +13,7 @@ LoadWindow::LoadWindow(QWidget *parent):
     center = new StartDialog(this);
     center->setAttribute(Qt::WA_DeleteOnClose, true);
     center->resetFont(QFont("STKaiti", 20, QFont::Bold));
-    center->setStartText("     3W    出品", 60);
+    center->setStartText("3W    出品", 60);
     center->setMinimumSize(550,200);
 
     curMask = new CoverMask;

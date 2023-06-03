@@ -33,13 +33,11 @@ private slots:
     void on_level3Btn_clicked();
 
 private:
-    void setBlur(int extent);
-
     Ui::MenuWindow *ui;
     SetDialog* setDlg;
     HelpDialog* helpDlg;
-    QGraphicsBlurEffect* blureffect = new QGraphicsBlurEffect;
-    Game& statics;
+
+    Game& statistics;
 };
 
 #endif // MENUWINDOW_H

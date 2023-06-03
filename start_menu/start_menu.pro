@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     controlwindow.cpp \
+    endingwindow.cpp \
     loadwindow.cpp \
     main.cpp \
     menuwindow.cpp \
@@ -20,6 +21,7 @@ SOURCES += \
 HEADERS += \
     Game.hpp \
     controlwindow.h \
+    endingwindow.h \
     loadwindow.h \
     menuwindow.h \
     set_help_acc.h \
@@ -28,6 +30,7 @@ HEADERS += \
 
 FORMS += \
     controlwindow.ui \
+    endingwindow.ui \
     loadwindow.ui \
     menuwindow.ui \
     startwindow.ui \

@@ -29,4 +29,9 @@
         <file>image/ending4icon.png</file>
         <file>image/background.png</file>
     </qresource>
+    <qresource prefix="/literature">
+        <file>ending/ending1.json</file>
+        <file>ending/ending2.json</file>
+        <file>ending/ending3.json</file>
+    </qresource>
 </RCC>
