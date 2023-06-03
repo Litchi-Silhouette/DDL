@@ -166,10 +166,31 @@ void LevelWindow::hideEvent(QHideEvent* event){
         endDlg->close();
     if(state)
     {
-        if(state == 4)
-            emit changeWindow(level+10);
-        else if(state == 3)
-            emit changeWindow(level+30);
+        if(state == 5)
+            emit changeWindow(level+20);
+        else if(state == 4){
+            switch (level) {
+            case 1:
+            case 2:
+                statistics.getActs[level] = true;
+                break;
+            case 3:
+                statistics.getEndings[4] = true;
+            default:
+                break;
+            }
+            if(endDlg->getChoice())
+                emit changeWindow(2);
+            else
+                emit changeWindow(level+10);
+        }
+        else if(state == 3){
+            statistics.getEndings[level] = true;
+            if(endDlg->getChoice())
+                emit changeWindow(2);
+            else
+                emit changeWindow(level+30);
+        }
         else
             emit changeWindow(2);
     }
@@ -207,9 +228,8 @@ void LevelWindow::changeGameProcess(bool pause){
 }
 
 void LevelWindow::restart(){
-    clearList();
-    state = 1;
-    pause_b->start_time();
+    state = 5;
+    close();
 }
 
 void LevelWindow::halfMovie(){
