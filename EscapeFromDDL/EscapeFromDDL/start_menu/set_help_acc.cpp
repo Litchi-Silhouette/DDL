@@ -55,7 +55,7 @@ void HelpDialog::resetFont(const QFont& cur){
     content->setFont(cur);
 }
 
-void HelpDialog::setContent(const QString& text){
+void HelpDialog::addContent(const QString& text){
     auto p = new QLabel(text, content);
     p->setFont(QFont("STKaiti", 16, QFont::Bold));
     p->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
@@ -192,6 +192,7 @@ void SetDialog::resetGame(){
     }
     statistics.getEndings[4] = 0;
     statistics.getActs[0] = true;
+    emit progressChanged();
 }
 
 void SetDialog::changeMode(){
@@ -273,7 +274,7 @@ void AccDialog::setIndex(int index)
     case 2:
         picPath = ":/pic/image/ending2.png";
         iconPath = ":/pic/image/ending2icon.png";
-        acc = " 结局成就\n 习得性无助(っ◞‸◟c) ";
+        acc = " 结局成就\n 习得性无助(´･_･`) ";
         info->setText("「 可怜绩点无狮顾，惟余三和跳大神 」");
         break;
     case 3:

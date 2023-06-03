@@ -15,7 +15,7 @@ public:
     explicit HelpDialog(QWidget *parent = nullptr);
     ~HelpDialog();
     void resetFont(const QFont&);
-    void setContent(const QString&);
+    void addContent(const QString&);
 signals:
 private:
     QWidget* content;
@@ -42,6 +42,7 @@ public:
     explicit SetDialog(Game& game, QWidget *parent = nullptr);
     ~SetDialog();
 signals:
+    void progressChanged();
 private slots:
     void changeMode();
     void changeAudio(int);

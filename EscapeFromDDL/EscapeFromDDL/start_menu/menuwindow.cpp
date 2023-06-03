@@ -10,6 +10,7 @@ MenuWindow::MenuWindow(Game& game, QWidget *parent) :
 {
     ui->setupUi(this);
     ui->toolframe->layout()->setContentsMargins(10,0,10,0);
+    connect(setDlg, &SetDialog::progressChanged, this, &MenuWindow::updateBtn);
 }
 
 MenuWindow::~MenuWindow()
@@ -26,7 +27,6 @@ void MenuWindow::on_helpBtn_clicked()
 void MenuWindow::on_setBtn_clicked()
 {
     setDlg->exec();
-    updateBtn();
 }
 
 
