@@ -104,3 +104,54 @@ private:
 };
 
 #endif // STARTDIALOG_H
+
+#ifndef MASK_H
+#define MASK_H
+
+#include <QWidget>
+#include <QPropertyAnimation>
+
+class CoverMask : public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit CoverMask(QWidget *parent = nullptr)
+        : QWidget{parent}
+    {
+        setiniP();
+        setWindowFlags(Qt::Widget | Qt::FramelessWindowHint | Qt::WindowSystemMenuHint | Qt::WindowStaysOnTopHint);
+        showAnimation = new QPropertyAnimation(this, "windowOpacity");
+        showAnimation->setDuration(1000);
+        showAnimation->setStartValue(1.0);
+        showAnimation->setEndValue(0.0);
+
+        closeAnimation = new QPropertyAnimation(this, "windowOpacity");
+        closeAnimation->setDuration(1000);
+        closeAnimation->setEndValue(1.0);
+        closeAnimation->setStartValue(0.0);
+
+        connect(showAnimation, &QPropertyAnimation::finished, this, [=](){  close(); emit showEnd(); });
+        connect(closeAnimation, &QPropertyAnimation::finished, this, [=](){  close(); emit closeEnd(); });
+    }
+    void startShow(){
+        show();
+        showAnimation->start();
+    }
+    void startClose(){
+        show();
+        closeAnimation->start();
+    }
+    void setiniP(QPalette tmp = QPalette(QColor(0,0,0,255))){
+        setPalette(tmp);
+    }
+signals:
+    void showEnd();
+    void closeEnd();
+
+private:
+    QPropertyAnimation *showAnimation;
+    QPropertyAnimation *closeAnimation;
+};
+
+#endif // MASK_H

@@ -75,6 +75,8 @@ LevelWindow::LevelWindow(QWidget *parent, const int cur_level)
     main_lay->setStretchFactor(map_border,21);
 
     ui->centralwidget->setLayout(main_lay);
+    blureffect->setEnabled(false);
+    setGraphicsEffect(blureffect);
 }
 
 LevelWindow::~LevelWindow()
@@ -116,7 +118,7 @@ void LevelWindow::setBlur(int extent){
     {
         blureffect->setEnabled(true);
         blureffect->setBlurRadius(extent);
-        setGraphicsEffect(blureffect);
+
     }else
         blureffect->setEnabled(false);
 

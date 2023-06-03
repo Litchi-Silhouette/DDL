@@ -1,11 +1,11 @@
 #include "levelwindow.h"
 #include <QApplication>
 
-Game LevelWindow::statics;
+Game statics;
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    LevelWindow w(nullptr,3);
+    LevelWindow w(statics, nullptr,3);
     w.showFullScreen();
     return a.exec();
 }

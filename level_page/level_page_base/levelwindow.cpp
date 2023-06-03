@@ -3,10 +3,11 @@
 #include <QSizePolicy>
 #include <QPainter>
 
-LevelWindow::LevelWindow(QWidget *parent, const int cur_level)
+LevelWindow::LevelWindow(Game& game, QWidget *parent, const int cur_level)
     : windowBase(parent)
     , level(cur_level)
     , ui(new Ui::LevelWindow)
+    , statistics(game)
 {
     ui->setupUi(this);
 
@@ -26,13 +27,13 @@ LevelWindow::LevelWindow(QWidget *parent, const int cur_level)
 
     double_bar = new DoubleLive(this);
 
-    auto it = statics.all_buffs.find(level);
-    if(it == statics.all_buffs.end())
-        statics.all_buffs[level] = new ItemHash;
-    it = statics.all_tasks.find(level);
-    if(it == statics.all_tasks.end())
-        statics.all_tasks[level] = new ItemHash;
-    list = new DDL_List((level == 3) ,this, &statics.all_items , statics.all_tasks[level], statics.all_buffs[level]);
+    auto it = statistics.all_buffs.find(level);
+    if(it == statistics.all_buffs.end())
+        statistics.all_buffs[level] = new ItemHash;
+    it = statistics.all_tasks.find(level);
+    if(it == statistics.all_tasks.end())
+        statistics.all_tasks[level] = new ItemHash;
+    list = new DDL_List((level == 3) ,this, &statistics.all_items , statistics.all_tasks[level], statistics.all_buffs[level]);
 
     map_border = new QFrame(this);
     map_border->setFrameShadow(QFrame::Sunken);
@@ -76,6 +77,14 @@ LevelWindow::LevelWindow(QWidget *parent, const int cur_level)
     main_lay->setStretchFactor(map_border,21);
 
     ui->centralwidget->setLayout(main_lay);
+
+    blureffect = new QGraphicsBlurEffect(this);
+    setGraphicsEffect(blureffect);
+    blureffect->setEnabled(false);
+
+    curMask = new CoverMask;
+    connect(curMask, &CoverMask::showEnd, this, &LevelWindow::startText1);
+    connect(curMask, &CoverMask::closeEnd, this, &LevelWindow::close);
 }
 
 LevelWindow::~LevelWindow()
@@ -98,7 +107,7 @@ void LevelWindow::pause(){
     pauseDlg->exec();
     switch (pauseDlg->getChoice()) {
     case 1:
-        closeGradually();
+        curMask->startClose();
         break;
     case 2:
         restart();
@@ -117,7 +126,6 @@ void LevelWindow::setBlur(int extent){
     {
         blureffect->setEnabled(true);
         blureffect->setBlurRadius(extent);
-        setGraphicsEffect(blureffect);
     }
     else
         blureffect->setEnabled(false);
@@ -147,41 +155,10 @@ void LevelWindow::startCount(){
     state = 1;
 }
 
-void LevelWindow::timerEvent(QTimerEvent* event){
-    if(event->timerId() == updateTimer)
-    {
-        curBKColor += colourStep;
-        update();
-    }
-    if(curBKColor >= 245)
-    {
-        killTimer(updateTimer);
-        startText1();
-    }
-    else if(curBKColor <= 0){
-        killTimer(updateTimer);
-        close();
-    }
-}
-
-void LevelWindow::paintEvent(QPaintEvent*){
-    QPainter painter(this);
-    QBrush brush;
-    brush.setColor(qRgba(curBKColor,curBKColor,curBKColor,1));
-    brush.setStyle(Qt::SolidPattern);
-    painter.setBrush(brush);
-    painter.drawRect(rect());
-}
-
-void LevelWindow::closeGradually(){
-    colourStep = -colourStep;
-    updateTimer = startTimer(interval);
-}
-
 void LevelWindow::endGame(){
     setBlur(10);
     endDlg->open();
-    QTimer::singleShot(1500, this, &LevelWindow::closeGradually);
+    QTimer::singleShot(1500, this, &LevelWindow::close);
 }
 
 void LevelWindow::hideEvent(QHideEvent* event){
@@ -201,7 +178,8 @@ void LevelWindow::hideEvent(QHideEvent* event){
 
 void LevelWindow::showEvent(QShowEvent* event){
     QMainWindow::showEvent(event);
-    updateTimer = startTimer(interval);
+    curMask->setGeometry(rect());
+    curMask->startShow();
     if(state == 0)
     {
         setIniLive(live, liveBoss);

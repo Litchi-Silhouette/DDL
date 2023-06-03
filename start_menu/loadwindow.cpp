@@ -15,6 +15,9 @@ LoadWindow::LoadWindow(QWidget *parent):
     center->resetFont(QFont("STKaiti", 20, QFont::Bold));
     center->setStartText("     3W    出品", 60);
     center->setMinimumSize(550,200);
+
+    curMask = new CoverMask;
+    connect(curMask, &CoverMask::closeEnd, this, &LoadWindow::close);
 }
 
 LoadWindow::~LoadWindow(){
@@ -23,37 +26,15 @@ LoadWindow::~LoadWindow(){
 
 void LoadWindow::showEvent(QShowEvent* event){
     QMainWindow::showEvent(event);
-    updateTimer = startTimer(interval);
-    QTimer::singleShot(1,center, &StartDialog::show);
-    QTimer::singleShot(2000, this, &LoadWindow::closeGradully);
+    curMask->setGeometry(rect());
+    curMask->show();
+    QTimer::singleShot(100,center, &StartDialog::show);
+    QTimer::singleShot(1000, curMask, &CoverMask::startShow);
+    QTimer::singleShot(3000, curMask, &CoverMask::startClose);
 }
 
-void LoadWindow::timerEvent(QTimerEvent* event){
-    if(event->timerId() == updateTimer)
-    {
-        colour += mon;
-        update();
-    }
-    if(colour >= 245)
-        killTimer(updateTimer);
-    else if(colour == 0){
-        killTimer(updateTimer);
-        center->close();
-        emit changeWindow(1);
-        close();
-    }
-}
-
-void LoadWindow::paintEvent(QPaintEvent*){
-    QPainter painter(this);
-    QBrush brush;
-    brush.setColor(qRgba(colour,colour,colour,1));
-    brush.setStyle(Qt::SolidPattern);
-    painter.setBrush(brush);
-    painter.drawRect(rect());
-}
-
-void LoadWindow::closeGradully(){
-    mon = -10;
-    updateTimer = startTimer(interval);
+void LoadWindow::hideEvent(QHideEvent* event){
+    QMainWindow::hideEvent(event);
+    center->close();
+    emit changeWindow(1);
 }

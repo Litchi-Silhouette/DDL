@@ -22,7 +22,7 @@ class LevelWindow : public windowBase
     Q_OBJECT
 
 public:
-    LevelWindow(QWidget *parent = nullptr,const int cur_level = 0);
+    LevelWindow(Game& game, QWidget *parent = nullptr,const int cur_level = 0);
     ~LevelWindow();
 
     void endGame();
@@ -129,9 +129,6 @@ protected slots:
     void pause();
     void hideEvent(QHideEvent* event);
     void showEvent(QShowEvent* event);
-    void closeGradually();
-    void timerEvent(QTimerEvent* event);
-    void paintEvent(QPaintEvent* event);
 
     virtual void startCount();
     virtual void restart();
@@ -155,11 +152,9 @@ private:
     EndDialog* endDlg;
 
     Ui::LevelWindow *ui;
-    QGraphicsBlurEffect* blureffect = new QGraphicsBlurEffect(this);
-    static Game statics;
-    int updateTimer;
-    int curBKColor = 5;
-    int colourStep = 10;
+    QGraphicsBlurEffect* blureffect;
+    Game& statistics;
+    CoverMask* curMask;
 };
 #endif // LEVELWINDOW_H
 
