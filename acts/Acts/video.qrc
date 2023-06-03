@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/videos">
+        <file>videos/Prologue.mp4</file>
+        <file>videos/act1.mp4</file>
+        <file>videos/act2.mp4</file>
+        <file>videos/ending4.mp4</file>
+        <file>videos/final.mp4</file>
+        <file>videos/Prologue-page.jpg</file>
+    </qresource>
+</RCC>

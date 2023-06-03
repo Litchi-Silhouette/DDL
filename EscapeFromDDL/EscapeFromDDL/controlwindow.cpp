@@ -41,7 +41,7 @@ ControlWindow::~ControlWindow()
 
 void ControlWindow::toWindow(int index)
 {
-    if(0<=index && index<10)
+    if(0<=index && index<3)
         mainWidget->setCurrentIndex(index);
     else if(index == -1){
         dumpStatics();
@@ -49,8 +49,20 @@ void ControlWindow::toWindow(int index)
     }else
     {
         switch(index){
+        case 3:
+            tmpWindow = new ActWindow(4,this);
+            break;
         case 10:
-            //tmpWindow = new QMainWindow(this);
+            tmpWindow = new ActWindow(0,this);
+            break;
+        case 11:
+            tmpWindow = new ActWindow(1,this);
+            break;
+        case 12:
+            tmpWindow = new ActWindow(2,this);
+            break;
+        case 13:
+            tmpWindow = new ActWindow(3,this);
             break;
         case 21:
             tmpWindow = new MainWindowOne(statistics);

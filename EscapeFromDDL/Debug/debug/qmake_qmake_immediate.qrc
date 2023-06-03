@@ -1,5 +1,14 @@
 <!DOCTYPE RCC><RCC version="1.0">
 <qresource prefix="/">
-<file alias="GameMap3.3">X:/GameMap3.3</file>
+<file alias="Acts/actwindow.cpp">X:/GitHub_pro/DDL/EscapeFromDDL/EscapeFromDDL/Acts/actwindow.cpp</file>
+<file alias="Acts/actwindow.h">X:/GitHub_pro/DDL/EscapeFromDDL/EscapeFromDDL/Acts/actwindow.h</file>
+<file alias="Acts/actwindow.ui">X:/GitHub_pro/DDL/EscapeFromDDL/EscapeFromDDL/Acts/actwindow.ui</file>
+<file alias="Acts/video.qrc">X:/GitHub_pro/DDL/EscapeFromDDL/EscapeFromDDL/Acts/video.qrc</file>
+<file alias="Acts/videos/act1.mp4">X:/GitHub_pro/DDL/EscapeFromDDL/EscapeFromDDL/Acts/videos/act1.mp4</file>
+<file alias="Acts/videos/act2.mp4">X:/GitHub_pro/DDL/EscapeFromDDL/EscapeFromDDL/Acts/videos/act2.mp4</file>
+<file alias="Acts/videos/ending4.mp4">X:/GitHub_pro/DDL/EscapeFromDDL/EscapeFromDDL/Acts/videos/ending4.mp4</file>
+<file alias="Acts/videos/final.mp4">X:/GitHub_pro/DDL/EscapeFromDDL/EscapeFromDDL/Acts/videos/final.mp4</file>
+<file alias="Acts/videos/Prologue-page.jpg">X:/GitHub_pro/DDL/EscapeFromDDL/EscapeFromDDL/Acts/videos/Prologue-page.jpg</file>
+<file alias="Acts/videos/Prologue.mp4">X:/GitHub_pro/DDL/EscapeFromDDL/EscapeFromDDL/Acts/videos/Prologue.mp4</file>
 </qresource>
 </RCC>

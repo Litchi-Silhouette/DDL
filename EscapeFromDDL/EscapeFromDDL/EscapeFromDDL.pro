@@ -1,4 +1,4 @@
-QT       += core gui multimedia
+QT       += core gui multimedia multimediawidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -22,6 +22,19 @@ FORMS += \
     controlwindow.ui \
     windowbase.ui
 
+# Act part
+
+SOURCES += \
+    Acts/actwindow.cpp
+
+HEADERS += \
+    Acts/actwindow.h
+
+FORMS += \
+    Acts/actwindow.ui
+
+RESOURCES += \
+    Acts/video.qrc
 
 # GameMap part
 SOURCES += \

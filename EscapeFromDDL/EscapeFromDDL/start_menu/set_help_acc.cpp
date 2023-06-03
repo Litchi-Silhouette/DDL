@@ -221,7 +221,7 @@ AccDialog::AccDialog(int index, QWidget* parent)
     btn = new QPushButton("",this);
     btn->setStyleSheet("QPushButton{border-image:url(:/pic/image/accomplish.png);"
                         "text-align: left; padding-left: 50px; color: black;"
-                       "font : bold 14pt \"STKaiti\";}");
+                       "font : bold 14pt \"STKaiti\"; background: transparent;}");
     btn->setFixedSize(350,80);
     btn->setVisible(false);
     connect(btn, &QPushButton::clicked, this, [=](){
