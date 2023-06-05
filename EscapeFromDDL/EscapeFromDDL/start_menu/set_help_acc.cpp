@@ -62,8 +62,8 @@ void HelpDialog::addContent(const QString& text){
     subLay->insertWidget(subLay->count() - 1, p);
 }
 
-SetDialog::SetDialog(Game& game, QWidget* parent)
-    :MyDialog(parent), statistics(game)
+SetDialog::SetDialog(Game& game, QAudioOutput* _audio,QWidget* parent)
+    :MyDialog(parent), audioInherit(_audio), statistics(game)
 {
     auto tempTitle = QFont("华文楷体", 20, QFont::Bold);
     auto tempNum = QFont("华文楷体", 14, QFont::Bold);
@@ -198,11 +198,13 @@ void SetDialog::resetGame(){
 void SetDialog::changeMode(){
     statistics.audioMode ^= 1;
     setPattern(statistics.audioMode);
+    audioInherit->setMuted(!statistics.audioMode);
 }
 
 void SetDialog::changeAudio(int cur){
     num1->setText(QString("%1").arg(cur/10));
     statistics.music = cur/10;
+    audioInherit->setVolume((double)statistics.music/10);
 }
 void SetDialog::changeEffect(int cur){
     num2->setText(QString("%1").arg(cur/10));

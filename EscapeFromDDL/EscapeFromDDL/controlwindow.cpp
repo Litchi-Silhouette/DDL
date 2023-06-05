@@ -13,7 +13,7 @@ ControlWindow::ControlWindow(QWidget *parent) :
     ui(new Ui::ControlWindow),
     mainWidget(new QStackedWidget(this)),
     load(new LoadWindow),
-    start(new StartWindow),
+    start(new StartWindow(statistics)),
     menu(new MenuWindow(statistics))
 {
     ui->setupUi(this);
@@ -50,19 +50,19 @@ void ControlWindow::toWindow(int index)
     {
         switch(index){
         case 3:
-            tmpWindow = new ActWindow(4,this);
+            tmpWindow = new ActWindow(statistics,4,this);
             break;
         case 10:
-            tmpWindow = new ActWindow(0,this);
+            tmpWindow = new ActWindow(statistics,0,this);
             break;
         case 11:
-            tmpWindow = new ActWindow(1,this);
+            tmpWindow = new ActWindow(statistics,1,this);
             break;
         case 12:
-            tmpWindow = new ActWindow(2,this);
+            tmpWindow = new ActWindow(statistics,2,this);
             break;
         case 13:
-            tmpWindow = new ActWindow(3,this);
+            tmpWindow = new ActWindow(statistics,3,this);
             break;
         case 21:
             tmpWindow = new MainWindowOne(statistics);

@@ -63,6 +63,6 @@ void GameMap::start_game(){
 }
 
 void GameMap::end_game(bool win){
-    state = win ? 3 : 4;
+    state = win ? 4 : 3;
     parent_window->endGame();
 }

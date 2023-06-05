@@ -34,7 +34,8 @@ FORMS += \
     Acts/actwindow.ui
 
 RESOURCES += \
-    Acts/video.qrc
+    Acts/video.qrc \
+    music.qrc
 
 # GameMap part
 SOURCES += \

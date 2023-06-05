@@ -2,7 +2,10 @@
 #define STARTWINDOW_H
 
 #include "../windowbase.h"
+#include "../Game.hpp"
 #include <QTimer>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class StartWindow; }
@@ -13,12 +16,13 @@ class StartWindow : public windowBase
     Q_OBJECT
 
 public:
-    StartWindow(QWidget *parent = nullptr);
+    StartWindow(Game& game,QWidget *parent = nullptr);
     ~StartWindow();
 
 protected:
     void paintEvent(QPaintEvent*);
     void hideEvent(QHideEvent* );
+    void showEvent(QShowEvent* );
     void startBlink();
     void stayRed();
     void blink();
@@ -29,5 +33,8 @@ private:
     QString on = ":/pic/image/page_r.png";
     int index = 0;
     int interval = 100;
+    QMediaPlayer* player;
+    QAudioOutput* audio;
+    Game& statistics;
 };
 #endif // STARTWINDOW_H

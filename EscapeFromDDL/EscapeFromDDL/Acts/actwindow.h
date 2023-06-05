@@ -7,6 +7,7 @@
 #include <QMediaPlayer>
 #include <QVideoWidget>
 #include <QPushButton>
+#include <QAudioOutput>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class ActWindow; }
@@ -27,6 +28,7 @@ private:
     QString path;
     QVideoWidget* video;
     QMediaPlayer* player;
+    QAudioOutput* audio;
     AccDialog* acc = nullptr;
     QPushButton* p;
     int pageindex;

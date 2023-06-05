@@ -33,13 +33,14 @@ private:
 #include <QDialog>
 #include <QLabel>
 #include <QSlider>
-#include "Game.hpp"
+#include "../Game.hpp"
+#include <QAudioOutput>
 
 class SetDialog : public MyDialog
 {
     Q_OBJECT
 public:
-    explicit SetDialog(Game& game, QWidget *parent = nullptr);
+    explicit SetDialog(Game& game, QAudioOutput* _audio, QWidget *parent = nullptr);
     ~SetDialog();
 signals:
     void progressChanged();
@@ -65,7 +66,7 @@ private:
     QPushButton* audio;
     QPushButton* reset;
     QPushButton* back;
-
+    QAudioOutput* audioInherit;
     Game& statistics;
 };
 

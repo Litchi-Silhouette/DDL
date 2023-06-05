@@ -222,8 +222,8 @@ void GameMapThree::time_event_player_hit_taskbuff(){
             ptb->activated = false;
             if(ptb->type == "Task" || ptb->type == "task"){
                 TaskBuff::finished_task ++;
-                boss_live -= 10;
-                parent_window->finish_task_hurt_boss(10);
+                boss_live -= 50;
+                parent_window->finish_task_hurt_boss(50);
                 update_window_ddl_list();
             }
             remove_taskbuff(ptb);

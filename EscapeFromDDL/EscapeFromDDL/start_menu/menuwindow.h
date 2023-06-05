@@ -3,6 +3,8 @@
 
 #include "../windowbase.h"
 #include <QGraphicsEffect>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 #include "set_help_acc.h"
 #include "../Game.hpp"
 
@@ -20,6 +22,7 @@ public:
     void updateBtn();
 protected:
     void showEvent(QShowEvent*);
+    void hideEvent(QHideEvent*);
 private slots:
     void on_helpBtn_clicked();
 
@@ -52,8 +55,10 @@ private:
     Ui::MenuWindow *ui;
     SetDialog* setDlg;
     HelpDialog* helpDlg;
-
+    QMediaPlayer* player;
+    QAudioOutput* audio;
     Game& statistics;
 };
 
 #endif // MENUWINDOW_H
+//修改effect音量同时要对setDailog

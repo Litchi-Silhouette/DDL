@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/bkmusic">
+        <file>BKMusic/level.mp3</file>
+        <file>BKMusic/menu.mp3</file>
+        <file>BKMusic/start.mp3</file>
+    </qresource>
+</RCC>

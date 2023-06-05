@@ -4,13 +4,19 @@
 MenuWindow::MenuWindow(Game& game, QWidget *parent) :
     windowBase(parent),
     ui(new Ui::MenuWindow),
-    setDlg(new SetDialog(game, this)),
     helpDlg(new HelpDialog(this)),
     statistics(game)
 {
     ui->setupUi(this);
     ui->toolframe->layout()->setContentsMargins(10,0,10,0);
+    player = new QMediaPlayer(this);
+    audio = new QAudioOutput(this);
+    player->setAudioOutput(audio);
+    player->setSource(QUrl("qrc:/bkmusic/BKMusic/menu.mp3"));
+
+    setDlg = new SetDialog(statistics, audio, this);
     connect(setDlg, &SetDialog::progressChanged, this, &MenuWindow::updateBtn);
+
 }
 
 MenuWindow::~MenuWindow()
@@ -73,6 +79,15 @@ void MenuWindow::showEvent(QShowEvent* event)
 {
     QMainWindow::showEvent(event);
     updateBtn();
+    player->play();
+    audio->setMuted(!statistics.audioMode);
+    audio->setVolume((double)statistics.music/10);
+}
+
+void MenuWindow::hideEvent(QHideEvent* event)
+{
+    player->stop();
+    windowBase::hideEvent(event);
 }
 
 void MenuWindow::on_level2Btn_clicked()
