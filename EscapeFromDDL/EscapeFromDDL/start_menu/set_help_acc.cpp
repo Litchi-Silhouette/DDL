@@ -55,15 +55,15 @@ void HelpDialog::resetFont(const QFont& cur){
     content->setFont(cur);
 }
 
-void HelpDialog::setContent(const QString& text){
+void HelpDialog::addContent(const QString& text){
     auto p = new QLabel(text, content);
     p->setFont(QFont("STKaiti", 16, QFont::Bold));
     p->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
     subLay->insertWidget(subLay->count() - 1, p);
 }
 
-SetDialog::SetDialog(Game& game, QWidget* parent)
-    :MyDialog(parent), statistics(game)
+SetDialog::SetDialog(Game& game, QAudioOutput* _audio,QWidget* parent)
+    :MyDialog(parent), audioInherit(_audio), statistics(game)
 {
     auto tempTitle = QFont("华文楷体", 20, QFont::Bold);
     auto tempNum = QFont("华文楷体", 14, QFont::Bold);
@@ -192,16 +192,19 @@ void SetDialog::resetGame(){
     }
     statistics.getEndings[4] = 0;
     statistics.getActs[0] = true;
+    emit progressChanged();
 }
 
 void SetDialog::changeMode(){
     statistics.audioMode ^= 1;
     setPattern(statistics.audioMode);
+    audioInherit->setMuted(!statistics.audioMode);
 }
 
 void SetDialog::changeAudio(int cur){
     num1->setText(QString("%1").arg(cur/10));
     statistics.music = cur/10;
+    audioInherit->setVolume((double)statistics.music/10);
 }
 void SetDialog::changeEffect(int cur){
     num2->setText(QString("%1").arg(cur/10));
@@ -220,7 +223,7 @@ AccDialog::AccDialog(int index, QWidget* parent)
     btn = new QPushButton("",this);
     btn->setStyleSheet("QPushButton{border-image:url(:/pic/image/accomplish.png);"
                         "text-align: left; padding-left: 50px; color: black;"
-                       "font : bold 14pt \"STKaiti\";}");
+                       "font : bold 14pt \"STKaiti\"; background: transparent;}");
     btn->setFixedSize(350,80);
     btn->setVisible(false);
     connect(btn, &QPushButton::clicked, this, [=](){
@@ -273,7 +276,7 @@ void AccDialog::setIndex(int index)
     case 2:
         picPath = ":/pic/image/ending2.png";
         iconPath = ":/pic/image/ending2icon.png";
-        acc = " 结局成就\n 习得性无助(っ◞‸◟c) ";
+        acc = " 结局成就\n 习得性无助(´･_･`) ";
         info->setText("「 可怜绩点无狮顾，惟余三和跳大神 」");
         break;
     case 3:

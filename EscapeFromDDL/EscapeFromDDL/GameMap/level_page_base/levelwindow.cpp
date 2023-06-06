@@ -85,6 +85,11 @@ LevelWindow::LevelWindow(Game& game, QWidget *parent, const int cur_level)
     curMask = new CoverMask;
     connect(curMask, &CoverMask::showEnd, this, &LevelWindow::startText1);
     connect(curMask, &CoverMask::closeEnd, this, &LevelWindow::end);
+
+    player = new QMediaPlayer(this);
+    audio = new QAudioOutput(this);
+    player->setAudioOutput(audio);
+    player->setSource(QUrl("qrc:/bkmusic/BKMusic/level.mp3"));
 }
 
 LevelWindow::~LevelWindow()
@@ -153,6 +158,9 @@ void LevelWindow::startCount(){
     setBlur(0);
     pause_b->start_time();
     state = 1;
+    player->play();
+    audio->setMuted(!statistics.audioMode);
+    audio->setVolume((double)statistics.music/10);
 }
 
 void LevelWindow::endGame(){
@@ -164,6 +172,7 @@ void LevelWindow::endGame(){
 void LevelWindow::end(){
     if(endDlg->isActiveWindow())
         endDlg->close();
+    player->stop();
     if(state)
     {
         if(state == 5)

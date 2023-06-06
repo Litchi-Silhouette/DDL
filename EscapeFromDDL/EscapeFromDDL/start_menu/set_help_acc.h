@@ -15,7 +15,7 @@ public:
     explicit HelpDialog(QWidget *parent = nullptr);
     ~HelpDialog();
     void resetFont(const QFont&);
-    void setContent(const QString&);
+    void addContent(const QString&);
 signals:
 private:
     QWidget* content;
@@ -33,15 +33,17 @@ private:
 #include <QDialog>
 #include <QLabel>
 #include <QSlider>
-#include "Game.hpp"
+#include "../Game.hpp"
+#include <QAudioOutput>
 
 class SetDialog : public MyDialog
 {
     Q_OBJECT
 public:
-    explicit SetDialog(Game& game, QWidget *parent = nullptr);
+    explicit SetDialog(Game& game, QAudioOutput* _audio, QWidget *parent = nullptr);
     ~SetDialog();
 signals:
+    void progressChanged();
 private slots:
     void changeMode();
     void changeAudio(int);
@@ -64,7 +66,7 @@ private:
     QPushButton* audio;
     QPushButton* reset;
     QPushButton* back;
-
+    QAudioOutput* audioInherit;
     Game& statistics;
 };
 

@@ -6,6 +6,7 @@
 #include "./start_menu/loadwindow.h"
 #include "./start_menu/menuwindow.h"
 #include "./start_menu/endingwindow.h"
+#include "./Acts/actwindow.h"
 #include "./GameMap/init.cpp"
 #include "./GameMap/obstacle.cpp"
 #include "windowbase.h"

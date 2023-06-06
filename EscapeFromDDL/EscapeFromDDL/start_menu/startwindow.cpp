@@ -1,9 +1,12 @@
 #include "startwindow.h"
 #include "ui_startwindow.h"
 #include <QPainter>
-StartWindow::StartWindow(QWidget *parent)
+#include <QUrl>
+
+StartWindow::StartWindow(Game& game, QWidget *parent)
     : windowBase(parent)
     , ui(new Ui::StartWindow)
+    , statistics(game)
 {
     ui->setupUi(this);
 
@@ -12,6 +15,12 @@ StartWindow::StartWindow(QWidget *parent)
     connect(ui->pushButton, &QPushButton::clicked, this, &StartWindow::startBlink);
     connect(ui->tip, &QPushButton::clicked, this, &StartWindow::startBlink);
     connect(ui->back, &QPushButton::clicked, this, &StartWindow::startBlink);
+
+    player = new QMediaPlayer(this);
+    audio = new QAudioOutput(this);
+    player->setAudioOutput(audio);
+    player->setSource(QUrl("qrc:/bkmusic/BKMusic/start.mp3"));
+
 }
 
 StartWindow::~StartWindow()
@@ -42,9 +51,17 @@ void StartWindow::blink(){
     update();
 }
 
+void StartWindow::showEvent(QShowEvent* event){
+    windowBase::showEvent(event);
+    player->play();
+    audio->setMuted(!statistics.audioMode);
+    audio->setVolume((double)statistics.music/10);
+}
+
 void StartWindow::hideEvent(QHideEvent* event){
     QMainWindow::hideEvent(event);
     p->stop();
+    player->stop();
     emit changeWindow(2);
 }
 

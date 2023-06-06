@@ -5,6 +5,8 @@
 #include <QTimer>
 #include <QGraphicsEffect>
 #include <QLayout>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 #include "pause_button.h"
 #include "live_bar.h"
 #include "warning_icon.h"
@@ -155,6 +157,8 @@ private:
     QGraphicsBlurEffect* blureffect;
     Game& statistics;
     CoverMask* curMask;
+    QMediaPlayer* player;
+    QAudioOutput* audio;
 };
 #endif // LEVELWINDOW_H
 

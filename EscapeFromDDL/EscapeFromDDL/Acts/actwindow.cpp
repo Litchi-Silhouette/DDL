@@ -1,0 +1,89 @@
+#include "actwindow.h"
+#include "ui_actwindow.h"
+#include <QUrl>
+
+ActWindow::ActWindow(Game& game, int index, QWidget *parent)
+    : windowBase(parent)
+    , ui(new Ui::ActWindow)
+    , pageindex(index)
+    , statistics(game)
+{
+    ui->setupUi(this);
+    p = new QPushButton("Click to continue···");
+    p->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+    ui->pageLay2->addWidget(p);
+    switch (index) {
+    case 0:
+        path = "qrc:/videos/videos/Prologue.mp4";
+        break;
+    case 1:
+        path = "qrc:/videos/videos/act1.mp4";
+        break;
+    case 2:
+        path = "qrc:/videos/videos/act2.mp4";
+        break;
+    case 3:
+        path = "qrc:/videos/videos/ending4.mp4";
+        break;
+    case 4:
+        path = "qrc:/videos/videos/finalplus.mp4";
+        break;
+    default:
+        break;
+    }
+    player = new QMediaPlayer(this);
+    video = new QVideoWidget(this);
+    audio = new QAudioOutput(this);
+    player->setVideoOutput(video);
+    player->setAudioOutput(audio);
+    player->setSource(QUrl(path));
+    video->setAttribute(Qt::WA_OpaquePaintEvent);
+    ui->pageLay1->addWidget(video);
+
+    ui->stackedWidget->setCurrentIndex(0);
+    connect(player, &QMediaPlayer::playingChanged, this, [=](bool is){
+        if(!is && pageindex == 4)
+            emit changeWindow(2);
+        else if(!is && pageindex == 3){
+            acc = new AccDialog(4, this);
+            connect(acc, &AccDialog::end, this, [=](){
+                emit changeWindow(2);
+            });
+            acc->exec();
+        }else if(!is)
+            ui->stackedWidget->setCurrentIndex(1);
+    });
+    connect(p, &QPushButton::clicked, this, [=](){
+        switch (pageindex) {
+        case 0:
+            statistics.getLevels[1] = true;
+            emit changeWindow(21);
+            break;
+        case 1:
+            statistics.getLevels[2] = true;
+            emit changeWindow(22);
+            break;
+        case 2:
+            statistics.getLevels[3] = true;
+            emit changeWindow(23);
+            break;
+        default:
+            qDebug()<<"invalid index acts";
+            break;
+        }
+    });
+}
+
+ActWindow::~ActWindow()
+{
+    delete ui;
+    if(acc)
+        delete acc;
+}
+
+void ActWindow::showEvent(QShowEvent* event){
+    windowBase::showEvent(event);
+    player->play();
+    audio->setMuted(!statistics.audioMode);
+    audio->setVolume((double)statistics.music/10);
+}
