@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+QT       += core gui
+=======
 QT       += core gui multimedia multimediawidgets
+>>>>>>> 113068c4964fd413654c69506caece43a9ed7203
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
