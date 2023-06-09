@@ -40,12 +40,15 @@ ActWindow::ActWindow(Game& game, int index, QWidget *parent)
     video->setAttribute(Qt::WA_OpaquePaintEvent);
     ui->pageLay1->addWidget(video);
 
+    buttom = new QSoundEffect(this);
+    buttom->setSource(QUrl("qrc:/effects/sounds/buttom3.wav"));
+
     ui->stackedWidget->setCurrentIndex(0);
     connect(player, &QMediaPlayer::playingChanged, this, [=](bool is){
         if(!is && pageindex == 4)
             emit changeWindow(2);
         else if(!is && pageindex == 3){
-            acc = new AccDialog(4, this);
+            acc = new AccDialog(statistics, 4, this);
             connect(acc, &AccDialog::end, this, [=](){
                 emit changeWindow(2);
             });
@@ -54,6 +57,9 @@ ActWindow::ActWindow(Game& game, int index, QWidget *parent)
             ui->stackedWidget->setCurrentIndex(1);
     });
     connect(p, &QPushButton::clicked, this, [=](){
+        buttom->play();
+        buttom->setMuted(!statistics.audioMode);
+        buttom->setVolume((double)statistics.effect/10);
         switch (pageindex) {
         case 0:
             statistics.getLevels[1] = true;
@@ -79,6 +85,11 @@ ActWindow::~ActWindow()
     delete ui;
     if(acc)
         delete acc;
+    delete p;
+    delete player;
+    delete audio;
+    delete video;
+    delete buttom;
 }
 
 void ActWindow::showEvent(QShowEvent* event){

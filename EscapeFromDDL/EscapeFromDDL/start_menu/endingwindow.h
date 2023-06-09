@@ -10,6 +10,7 @@
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QJsonArray>
+#include <QSoundEffect>
 
 namespace Ui {
 class EndingWindow;
@@ -20,7 +21,7 @@ class EndingWindow : public windowBase
     Q_OBJECT
 
 public:
-    explicit EndingWindow(int index, QWidget *parent = nullptr);
+    explicit EndingWindow(Game& game, int index, QWidget *parent = nullptr);
     ~EndingWindow();
     void nextText();
 protected:
@@ -38,6 +39,8 @@ private:
     int page1Len = 0;
     int page2Len = 0;
     int interval = 2000;
+    Game& statistics;
+    QSoundEffect* buttom;
 };
 
 #endif // ENDINGWINDOW_H

@@ -41,7 +41,7 @@ LevelWindow::LevelWindow(Game& game, QWidget *parent, const int cur_level)
     map_border->setLineWidth(5);
     map_border->setMidLineWidth(5);
 
-    pauseDlg  = new PauseDialog(this);
+    pauseDlg  = new PauseDialog(game, this);
     startDlg = new StartDialog(this);
     endDlg = new EndDialog(this);
 
@@ -90,6 +90,14 @@ LevelWindow::LevelWindow(Game& game, QWidget *parent, const int cur_level)
     audio = new QAudioOutput(this);
     player->setAudioOutput(audio);
     player->setSource(QUrl("qrc:/bkmusic/BKMusic/level.mp3"));
+    player->setLoops(QMediaPlayer::Infinite);
+
+    start1 = new QSoundEffect(this);
+    start1->setSource(QUrl("qrc:/effects/sounds/start1.wav"));
+    start2 = new QSoundEffect(this);
+    start2->setSource(QUrl("qrc:/effects/sounds/start2.wav"));
+    buttom = new QSoundEffect(this);
+    buttom->setSource(QUrl("qrc:/effects/sounds/buttom3.wav"));
 }
 
 LevelWindow::~LevelWindow()
@@ -103,10 +111,20 @@ LevelWindow::~LevelWindow()
     delete pauseDlg;
     delete double_bar;
     delete endDlg;
+    delete blureffect;
+    delete curMask;
+    delete player;
+    delete audio;
+    delete start1;
+    delete start2;
+    delete buttom;
 }
 
 void LevelWindow::pause(){
     setBlur(30);
+    buttom->play();
+    buttom->setMuted(!statistics.audioMode);
+    buttom->setVolume((double)statistics.effect/10);
     changeGameProcess(true);
 
     pauseDlg->exec();
@@ -138,19 +156,28 @@ void LevelWindow::setBlur(int extent){
 
 void LevelWindow::startText1(){
     setBlur(10);
+    start1->play();
+    start1->setMuted(!statistics.audioMode);
+    start1->setVolume((double)statistics.effect/10);
     startDlg->open();
     startDlg->setStartText("好",90);
-    QTimer::singleShot(1500,this, &LevelWindow::startText2);
+    QTimer::singleShot(1000,this, &LevelWindow::startText2);
 }
 
 void LevelWindow::startText2(){
+    start1->play();
+    start1->setMuted(!statistics.audioMode);
+    start1->setVolume((double)statistics.effect/10);
     startDlg->setStartText("准备",60);
-    QTimer::singleShot(1500,this, &LevelWindow::startText3);
+    QTimer::singleShot(1000,this, &LevelWindow::startText3);
 }
 
 void LevelWindow::startText3(){
+    start2->play();
+    start2->setMuted(!statistics.audioMode);
+    start2->setVolume((double)statistics.effect/10);
     startDlg->setStartText("开始",80);
-    QTimer::singleShot(1500,this, &LevelWindow::startCount);
+    QTimer::singleShot(2000,this, &LevelWindow::startCount);
 }
 
 void LevelWindow::startCount(){
@@ -203,6 +230,7 @@ void LevelWindow::end(){
         else
             emit changeWindow(2);
     }
+    QTimer::singleShot(200, curMask, &CoverMask::close);
 }
 
 void LevelWindow::showEvent(QShowEvent* event){
@@ -227,9 +255,11 @@ void LevelWindow::changeGameProcess(bool pause){
     {
         state = 2;
         pause_b->pause_time();
+        player->pause();
     }
     else
     {
+        player->play();
         pause_b->start_time();
         state = 1;
     }

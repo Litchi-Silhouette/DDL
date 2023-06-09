@@ -6,12 +6,13 @@
 #define PAUSEDIALOG_H
 
 #include <QPushButton>
+#include <QSoundEffect>
 
 class PauseDialog : public MyDialog
 {
     Q_OBJECT
 public:
-    explicit PauseDialog(QWidget *parent = nullptr);
+    explicit PauseDialog(Game& game, QWidget *parent = nullptr);
     ~PauseDialog();
     int getChoice() const;
 signals:
@@ -25,6 +26,8 @@ private:
     QPushButton* restartBtn;
     QPushButton* continueBtn;
     int choice = 0;
+    Game& statistics;
+    QSoundEffect* buttom;
 };
 
 #endif // MYDIALOG_H

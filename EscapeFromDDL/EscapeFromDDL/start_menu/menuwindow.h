@@ -5,6 +5,7 @@
 #include <QGraphicsEffect>
 #include <QMediaPlayer>
 #include <QAudioOutput>
+#include <QSoundEffect>
 #include "set_help_acc.h"
 #include "../Game.hpp"
 
@@ -58,6 +59,9 @@ private:
     QMediaPlayer* player;
     QAudioOutput* audio;
     Game& statistics;
+    QSoundEffect* helpOpen;
+    QSoundEffect* setOpen;
+    QSoundEffect* buttoms;
 };
 
 #endif // MENUWINDOW_H

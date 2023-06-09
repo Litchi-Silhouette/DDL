@@ -1,7 +1,7 @@
 #include "pause_start_end.h"
 
-PauseDialog::PauseDialog(QWidget* parent)
-    :MyDialog(parent)
+PauseDialog::PauseDialog(Game& game, QWidget* parent)
+    :MyDialog(parent),statistics(game)
 {
     setAttribute(Qt::WA_TranslucentBackground, true);
     backBtn = new QPushButton(this);
@@ -28,6 +28,9 @@ PauseDialog::PauseDialog(QWidget* parent)
     continueBtn->setFixedSize(80,80);
     connect(continueBtn, &QPushButton::clicked, this, &PauseDialog::conti);
 
+    buttom = new QSoundEffect(this);
+    buttom->setSource(QUrl("qrc:/effects/sounds/buttom2.wav"));
+
     main_lay = new QHBoxLayout(this);
     main_lay->setSpacing(20);
     main_lay->addStretch();
@@ -44,6 +47,7 @@ PauseDialog::~PauseDialog(){
     delete backBtn;
     delete continueBtn;
     delete main_lay;
+    delete buttom;
 }
 
 int PauseDialog::getChoice()const{
@@ -51,16 +55,25 @@ int PauseDialog::getChoice()const{
 }
 
 void PauseDialog::restart(){
+    buttom->play();
+    buttom->setMuted(!statistics.audioMode);
+    buttom->setVolume((double)statistics.effect/10);
     choice = 2;
     close();
 }
 
 void PauseDialog::back(){
+    buttom->play();
+    buttom->setMuted(!statistics.audioMode);
+    buttom->setVolume((double)statistics.effect/10);
     choice = 1;
     close();
 }
 
 void PauseDialog::conti(){
+    buttom->play();
+    buttom->setMuted(!statistics.audioMode);
+    buttom->setVolume((double)statistics.effect/10);
     choice = 3;
     close();
 }

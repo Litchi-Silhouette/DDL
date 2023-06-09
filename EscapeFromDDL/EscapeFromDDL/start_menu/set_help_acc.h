@@ -1,6 +1,7 @@
 #include "../Game.hpp"
 #include <QPushButton>
 #include <QLabel>
+#include <QSoundEffect>
 
 #ifndef HELPDIALOG_H
 #define HELPDIALOG_H
@@ -12,17 +13,20 @@ class HelpDialog : public MyDialog
 {
     Q_OBJECT
 public:
-    explicit HelpDialog(QWidget *parent = nullptr);
+    explicit HelpDialog(Game& game, QWidget *parent = nullptr);
     ~HelpDialog();
     void resetFont(const QFont&);
     void addContent(const QString&);
 signals:
+    void end();
 private:
     QWidget* content;
     QLabel* title;
     QPushButton* back;
     QScrollArea* center;
     QVBoxLayout* subLay;
+    QSoundEffect* helpClose;
+    Game& statistics;
 };
 
 #endif // HELPDIALOG_H
@@ -67,6 +71,7 @@ private:
     QPushButton* reset;
     QPushButton* back;
     QAudioOutput* audioInherit;
+    QSoundEffect* setClose;
     Game& statistics;
 };
 
@@ -81,7 +86,7 @@ class AccDialog : public MyDialog
 {
     Q_OBJECT
 public:
-    explicit AccDialog(int index, QWidget *parent = nullptr);
+    explicit AccDialog(Game& game, int index, QWidget *parent = nullptr);
     ~AccDialog();
     void setIndex(int);     //1-4:for accomplish index
 protected:
@@ -95,6 +100,8 @@ private:
     QString picPath;
     QString iconPath;
     QString acc;
+    QSoundEffect* buttom;
+    Game& statistics;
 };
 
 #endif // ACCDIALOG_H

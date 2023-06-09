@@ -9,7 +9,7 @@ StartWindow::StartWindow(Game& game, QWidget *parent)
     , statistics(game)
 {
     ui->setupUi(this);
-
+    curMask = new CoverMask;
     p = new QTimer(this);
     connect(p, &QTimer::timeout, this, &StartWindow::blink);
     connect(ui->pushButton, &QPushButton::clicked, this, &StartWindow::startBlink);
@@ -20,12 +20,18 @@ StartWindow::StartWindow(Game& game, QWidget *parent)
     audio = new QAudioOutput(this);
     player->setAudioOutput(audio);
     player->setSource(QUrl("qrc:/bkmusic/BKMusic/start.mp3"));
-
+    player->setLoops(QMediaPlayer::Infinite);
+    enter = new QSoundEffect(this);
+    enter->setSource(QUrl("qrc:/effects/sounds/entering.wav"));
 }
 
 StartWindow::~StartWindow()
 {
     delete ui;
+    delete player;
+    delete audio;
+    delete enter;
+    delete curMask;
 }
 
 void StartWindow::paintEvent(QPaintEvent*){
@@ -40,10 +46,13 @@ void StartWindow::paintEvent(QPaintEvent*){
 }
 
 void StartWindow::startBlink(){
-    blink();
+    player->stop();
+    enter->play();
+    enter->setMuted(!statistics.audioMode);
+    enter->setVolume((double)statistics.effect/10);
     ui->tip->hide();
     p->start(interval);
-    QTimer::singleShot(1000, this, &StartWindow::stayRed);
+    QTimer::singleShot(2500, this, &StartWindow::stayRed);
 }
 
 void StartWindow::blink(){
@@ -53,21 +62,22 @@ void StartWindow::blink(){
 
 void StartWindow::showEvent(QShowEvent* event){
     windowBase::showEvent(event);
+    curMask->show();
+    curMask->setGeometry(rect());
     player->play();
     audio->setMuted(!statistics.audioMode);
     audio->setVolume((double)statistics.music/10);
+    QTimer::singleShot(1000, curMask, &CoverMask::close);
 }
 
 void StartWindow::hideEvent(QHideEvent* event){
     QMainWindow::hideEvent(event);
-    p->stop();
-    player->stop();
     emit changeWindow(2);
 }
 
 void StartWindow::stayRed(){
-    p->stop();
     index = 1;
+    p->stop();
     update();
-    QTimer::singleShot(1000, this, &StartWindow::close);
+    QTimer::singleShot(3000, this, &StartWindow::close);
 }

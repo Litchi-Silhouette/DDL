@@ -6,13 +6,13 @@
         false
     ],
     "audio": true,
-    "effect": 2,
+    "effect": 10,
     "ending": [
         false,
-        false,
+        true,
         true,
         false,
-        false
+        true
     ],
     "level": [
         false,

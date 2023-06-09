@@ -1,0 +1,24 @@
+{
+    "act": [
+        true,
+        false,
+        false,
+        false
+    ],
+    "audio": true,
+    "effect": 5,
+    "ending": [
+        false,
+        false,
+        false,
+        false,
+        false
+    ],
+    "level": [
+        false,
+        false,
+        false,
+        false
+    ],
+    "music": 5
+}

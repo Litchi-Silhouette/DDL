@@ -1,7 +1,7 @@
 #include "set_help_acc.h"
 
-HelpDialog::HelpDialog(QWidget* parent)
-    :MyDialog(parent)
+HelpDialog::HelpDialog(Game& game, QWidget* parent)
+    :MyDialog(parent), statistics(game)
 {
     content = new QWidget(this);
     subLay = new QVBoxLayout;
@@ -20,7 +20,16 @@ HelpDialog::HelpDialog(QWidget* parent)
                   "QPushButton:pressed{border-image:url(:/pic/image/go.png);}"
                   );
     back->setFixedSize(80,80);
-    connect(back, &QPushButton::clicked, this, &HelpDialog::close);
+    connect(back, &QPushButton::clicked, this, [=](){
+        helpClose->play();
+        helpClose->setMuted(!statistics.audioMode);
+        helpClose->setVolume((double)statistics.effect/10);
+        emit end();
+        close();
+    });
+
+    helpClose = new QSoundEffect(this);
+    helpClose->setSource(QUrl("qrc:/effects/sounds/help_close.wav"));
 
     center = new QScrollArea(this);
     //center->setBackgroundRole(QPalette::Dark);
@@ -49,6 +58,7 @@ HelpDialog::~HelpDialog()
     delete center;
     delete back;
     delete title;
+    delete helpClose;
 }
 
 void HelpDialog::resetFont(const QFont& cur){
@@ -118,7 +128,15 @@ SetDialog::SetDialog(Game& game, QAudioOutput* _audio,QWidget* parent)
                   "QPushButton:pressed{border-image:url(:/pic/image/go.png);}"
                   );
     back->setFixedSize(80,80);
-    connect(back, &QPushButton::clicked, this, &SetDialog::close);
+    connect(back, &QPushButton::clicked, this, [=](){
+        setClose->play();
+        setClose->setMuted(!statistics.audioMode);
+        setClose->setVolume((double)statistics.effect/10);
+        close();
+    });
+
+    setClose = new QSoundEffect(this);
+    setClose->setSource(QUrl("qrc:/effects/sounds/set_close.wav"));
 
     reset = new QPushButton("",content);
     reset->setStyleSheet("QPushButton{border:0px;"
@@ -163,6 +181,7 @@ SetDialog::~SetDialog()
     delete audio;
     delete reset;
     delete back;
+    delete setClose;
 }
 
 void SetDialog::setIni(){
@@ -217,8 +236,8 @@ void SetDialog::showEvent(QShowEvent* event){
     setPattern(statistics.audioMode);
 }
 
-AccDialog::AccDialog(int index, QWidget* parent)
-    :MyDialog(parent)
+AccDialog::AccDialog(Game& game,int index, QWidget* parent)
+    :MyDialog(parent), statistics(game)
 {
     btn = new QPushButton("",this);
     btn->setStyleSheet("QPushButton{border-image:url(:/pic/image/accomplish.png);"
@@ -227,9 +246,15 @@ AccDialog::AccDialog(int index, QWidget* parent)
     btn->setFixedSize(350,80);
     btn->setVisible(false);
     connect(btn, &QPushButton::clicked, this, [=](){
+        buttom->play();
+        buttom->setMuted(!statistics.audioMode);
+        buttom->setVolume((double)statistics.effect/10);
         emit end();
         close();
     });
+    buttom = new QSoundEffect(this);
+    buttom->setSource(QUrl("qrc:/effects/sounds/buttom3.wav"));
+
     info = new QLabel("   ",this);
     info->setFont(QFont("STKaiti", 19, QFont::Bold));
     info->setAlignment(Qt::AlignCenter);
@@ -262,6 +287,7 @@ AccDialog::~AccDialog()
     delete btn;
     delete info;
     delete pic;
+    delete buttom;
 }
 
 void AccDialog::setIndex(int index)
@@ -304,6 +330,11 @@ void AccDialog::setIndex(int index)
 
 void AccDialog::showEvent(QShowEvent* event)
 {
-    QTimer::singleShot(1000,btn, &QPushButton::show);
+    QTimer::singleShot(1000,this, [=](){
+        buttom->play();
+        buttom->setMuted(!statistics.audioMode);
+        buttom->setVolume((double)statistics.effect/10);
+        btn->show();
+    });
     MyDialog::showEvent(event);
 }

@@ -62,6 +62,7 @@ pause_block::~pause_block()
     delete time_t;
     delete level_l;
     delete level_t;
+    delete timer;
 }
 
 void pause_block::start_time(){

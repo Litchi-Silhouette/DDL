@@ -140,8 +140,8 @@ public:
         closeAnimation->setEndValue(1.0);
         closeAnimation->setStartValue(0.0);
 
-        connect(showAnimation, &QPropertyAnimation::finished, this, [=](){  close(); emit showEnd(); });
-        connect(closeAnimation, &QPropertyAnimation::finished, this, [=](){  close(); emit closeEnd(); });
+        connect(showAnimation, &QPropertyAnimation::finished, this, [=](){ close(); emit showEnd(); });
+        connect(closeAnimation, &QPropertyAnimation::finished, this, [=](){ emit closeEnd(); });
     }
     void startShow(){
         show();

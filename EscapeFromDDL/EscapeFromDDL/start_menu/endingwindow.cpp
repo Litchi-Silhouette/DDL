@@ -3,10 +3,11 @@
 #include <QTimer>
 #include <QMouseEvent>
 
-EndingWindow::EndingWindow(int index, QWidget *parent) :
+EndingWindow::EndingWindow(Game& game, int index, QWidget *parent) :
     windowBase(parent),
     ui(new Ui::EndingWindow),
-    accDlg(new AccDialog(index, this))
+    accDlg(new AccDialog(game, index, this)),
+    statistics(game)
 {
     ui->setupUi(this);
     path = QString(":/literature/ending/ending%1.json").arg(index);
@@ -15,6 +16,9 @@ EndingWindow::EndingWindow(int index, QWidget *parent) :
         exit(0);
     }
     ui->stackedWidget->setCurrentIndex(0);
+    buttom = new QSoundEffect(this);
+    buttom->setSource(QUrl("qrc:/effects/sounds/buttom2.wav"));
+
     connect(ui->blank1, &QPushButton::clicked, this, &EndingWindow::change);
     connect(ui->blank2, &QPushButton::clicked, this, &EndingWindow::change);
     connect(ui->blankS1, &QPushButton::clicked, this, &EndingWindow::change);
@@ -27,6 +31,8 @@ EndingWindow::EndingWindow(int index, QWidget *parent) :
 EndingWindow::~EndingWindow()
 {
     delete ui;
+    delete accDlg;
+    delete buttom;
 }
 
 void EndingWindow::nextText()
@@ -112,6 +118,9 @@ void EndingWindow::showEvent(QShowEvent* event){
 }
 
 void EndingWindow::change(){
+    buttom->play();
+    buttom->setMuted(!statistics.audioMode);
+    buttom->setVolume((double)statistics.effect/10);
     if(ui->stackedWidget->currentIndex())
         accDlg->open();
     else

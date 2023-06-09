@@ -6,6 +6,7 @@
 #include <QTimer>
 #include <QMediaPlayer>
 #include <QAudioOutput>
+#include <QSoundEffect>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class StartWindow; }
@@ -36,5 +37,7 @@ private:
     QMediaPlayer* player;
     QAudioOutput* audio;
     Game& statistics;
+    CoverMask* curMask;
+    QSoundEffect* enter;
 };
 #endif // STARTWINDOW_H

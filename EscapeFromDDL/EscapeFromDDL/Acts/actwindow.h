@@ -33,5 +33,6 @@ private:
     QPushButton* p;
     int pageindex;
     Game& statistics;
+    QSoundEffect* buttom;
 };
 #endif // ACTWINDOW_H

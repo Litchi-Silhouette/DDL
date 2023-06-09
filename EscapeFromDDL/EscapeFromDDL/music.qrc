@@ -4,4 +4,16 @@
         <file>BKMusic/menu.mp3</file>
         <file>BKMusic/start.mp3</file>
     </qresource>
+    <qresource prefix="/effects">
+        <file>sounds/buttom1.wav</file>
+        <file>sounds/buttom2.wav</file>
+        <file>sounds/buttom3.wav</file>
+        <file>sounds/entering.wav</file>
+        <file>sounds/help_close.wav</file>
+        <file>sounds/help_open.wav</file>
+        <file>sounds/set_close.wav</file>
+        <file>sounds/set_open.wav</file>
+        <file>sounds/start1.wav</file>
+        <file>sounds/start2.wav</file>
+    </qresource>
 </RCC>

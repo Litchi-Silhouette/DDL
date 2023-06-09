@@ -74,13 +74,13 @@ void ControlWindow::toWindow(int index)
             tmpWindow = new MainWindowThree(statistics);
             break;
         case 31:
-            tmpWindow = new EndingWindow(1);
+            tmpWindow = new EndingWindow(statistics, 1);
             break;
         case 32:
-            tmpWindow = new EndingWindow(2);
+            tmpWindow = new EndingWindow(statistics, 2);
             break;
         case 33:
-            tmpWindow = new EndingWindow(3);
+            tmpWindow = new EndingWindow(statistics, 3);
             break;
         default:
             qDebug()<<"unavailable index"<<index;

@@ -7,6 +7,7 @@
 #include <QLayout>
 #include <QMediaPlayer>
 #include <QAudioOutput>
+#include <QSoundEffect>
 #include "pause_button.h"
 #include "live_bar.h"
 #include "warning_icon.h"
@@ -159,6 +160,9 @@ private:
     CoverMask* curMask;
     QMediaPlayer* player;
     QAudioOutput* audio;
+    QSoundEffect* start1;
+    QSoundEffect* start2;
+    QSoundEffect* buttom;
 };
 #endif // LEVELWINDOW_H
 

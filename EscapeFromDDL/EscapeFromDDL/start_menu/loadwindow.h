@@ -24,7 +24,7 @@ private:
     int updateTimer;
     StartDialog* center;
     CoverMask* curMask;
-
+    bool first;
 };
 
 #endif // LOADWINDOW_H

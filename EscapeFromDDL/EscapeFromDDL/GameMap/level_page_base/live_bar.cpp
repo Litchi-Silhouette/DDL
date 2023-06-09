@@ -210,7 +210,7 @@ void DoubleLive::set_live(const int x, bool isLion)
 
 void DoubleLive::changeLive()
 {
-    if(lionLiveAim >= lionLiveCur && bossLiveAim >= bossLiveCur)
+    if(lionLiveAim != lionLiveCur && bossLiveAim != bossLiveCur)
         t->stop();
     if(lionLiveAim < lionLiveCur)
     {
@@ -227,9 +227,42 @@ void DoubleLive::changeLive()
         lionBar->setStyleSheet(cur.mid(0,s) + tempcolor + ";}");
         lionBar->setValue(lionLiveCur);
     }
+    if(lionLiveAim > lionLiveCur)
+    {
+        lionLiveCur += singleStep;
+        auto cur = lionBar->styleSheet();
+        int s = cur.indexOf("#");
+        QString tempcolor;
+        if(lionLiveCur>60)
+            tempcolor = "#FFD700";
+        else if(lionLiveCur>30)
+            tempcolor = "#FFB90F";
+        else
+            tempcolor = "#FF0000";
+        lionBar->setStyleSheet(cur.mid(0,s) + tempcolor + ";}");
+        lionBar->setValue(lionLiveCur);
+    }
     if(bossLiveAim < bossLiveCur)
     {
         bossLiveCur -= singleStep;
+        /*
+        auto cur = bossBar->styleSheet();
+        int s = cur.indexOf("#");
+        int p = cur.indexOf(";width");
+        QString tempcolor;
+        if(bossLiveCur>60)
+            tempcolor = "#FFD700";
+        else if(bossLiveCur>30)
+            tempcolor = "#FFB90F";
+        else
+            tempcolor = "#FF0000";
+        bossBar->setStyleSheet(cur.mid(0,s) + tempcolor + cur.mid(p));
+        */
+        bossBar->setValue(bossLiveCur);
+    }
+    if(bossLiveAim > bossLiveCur)
+    {
+        bossLiveCur += singleStep;
         /*
         auto cur = bossBar->styleSheet();
         int s = cur.indexOf("#");
