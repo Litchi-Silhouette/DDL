@@ -30,6 +30,7 @@ signals:
     void gameProgress(int);
 protected slots:
     void showEvent(QShowEvent*);
+    void resizeEvent(QResizeEvent*);
 private slots:
     void toWindow(int index);
     //0:load 1:start 2:menu 3:extra
@@ -46,6 +47,8 @@ private:
     windowBase* tmpWindow = nullptr;
     Game statistics;
     QString path = ".//statistics.json";
+    int width_ratio = 16;
+    int height_ratio = 9;
 };
 
 #endif // CONTROLWINDOW_H

@@ -18,9 +18,7 @@ ControlWindow::ControlWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->verticalLayout->setContentsMargins(0,0,0,0);
-    ui->verticalLayout->setSpacing(0);
-    ui->verticalLayout->addWidget(mainWidget);
+    mainWidget->setFocusPolicy(Qt::StrongFocus);
     mainWidget->addWidget(load);
     mainWidget->addWidget(start);
     mainWidget->addWidget(menu);
@@ -37,6 +35,22 @@ ControlWindow::~ControlWindow()
 {
     delete ui;
     delete mainWidget;
+}
+
+void ControlWindow::resizeEvent(QResizeEvent* event){
+    windowBase::resizeEvent(event);
+    QSize tmpsize = event->size();
+    QSize new_size = event->size();
+    if(width_ratio && height_ratio)
+    {
+        if(new_size.width()<width_ratio*new_size.height()/height_ratio)
+            new_size.setHeight(height_ratio*new_size.width()/width_ratio);
+        if(new_size.width()>width_ratio*new_size.height()/height_ratio)
+            new_size.setWidth(width_ratio*new_size.height()/height_ratio);
+    }
+    mainWidget->setGeometry((tmpsize.width() - new_size.width())/2,
+                            (tmpsize.height() - new_size.height())/2,
+                            new_size.width(),new_size.height());
 }
 
 void ControlWindow::toWindow(int index)

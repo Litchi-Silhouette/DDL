@@ -10,9 +10,10 @@
     <height>675</height>
    </rect>
   </property>
-  <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout"/>
-  </widget>
+  <property name="styleSheet">
+   <string notr="true">QMainWindow{background: rgb(23,23,23);}</string>
+  </property>
+  <widget class="QWidget" name="centralwidget"/>
  </widget>
  <resources/>
  <connections/>

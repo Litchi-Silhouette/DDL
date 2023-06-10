@@ -6,8 +6,8 @@
 LevelWindow::LevelWindow(Game& game, QWidget *parent, const int cur_level)
     : windowBase(parent)
     , level(cur_level)
-    , ui(new Ui::LevelWindow)
     , statistics(game)
+    , ui(new Ui::LevelWindow)
 {
     ui->setupUi(this);
 
