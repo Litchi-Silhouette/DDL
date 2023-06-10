@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/images">
-        <file>images/background1.png</file>
         <file>images/boss1.png</file>
         <file>images/boss2.png</file>
         <file>images/boss3.png</file>
@@ -23,5 +22,18 @@
         <file>images/obstacle4.png</file>
         <file>images/player_lion_fixed.png</file>
         <file>images/player_lion_red.png</file>
+        <file>images/AIbasic.png</file>
+        <file>images/task2.png</file>
+        <file>images/task3.png</file>
+        <file>images/task4.png</file>
+        <file>images/task5.png</file>
+        <file>images/run.png</file>
+        <file>images/bomb3.png</file>
+        <file>images/85km.png</file>
+        <file>images/coffee.png</file>
+        <file>images/gpt.png</file>
+        <file>images/qt.png</file>
+        <file>images/obstacle5.png</file>
     </qresource>
+    <qresource prefix="/"/>
 </RCC>

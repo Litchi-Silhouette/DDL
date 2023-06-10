@@ -40,6 +40,8 @@ public:
     int live;
     int boss_live;
     int level;
+    int slide_window_left_barrier;//仅限第一关
+    QLabel * pending;
 
     explicit GameMap(MainWindow *parent = nullptr, int _level = 0);
     virtual ~GameMap();
@@ -71,7 +73,7 @@ public:
     virtual void create_all_obstacle(){return;};
 
     virtual void missed_task_drop_live(TaskBuff *,const int & drop_live = 1){return;};
-    virtual void slide_window_event(int left_or_right){return;};//仅限第一关
+    virtual void slide_window_event(int){return;};//仅限第一关
     virtual void update_window_warning(const double &){return;};
 
 
@@ -80,36 +82,5 @@ public:
 
 };
 
-/*
-class GameMapOne : public GameMap
-{
-    Q_OBJECT
-
-public:
-
-    DDL_Line * pline;
-    Obstacle *** obstacles;
-    int slide_window_left_barrier;
-    explicit GameMapOne(MainWindow  *parent = nullptr);
-    virtual ~GameMapOne();
-    virtual bool check_no_obstacle(const QPoint & pos);
-    void set_obstacle_rect(int xLow,int xHigh,int yLow,int yHigh);
-    virtual void set_taskbuff(TaskBuff * ptb);
-    virtual void remove_taskbuff(TaskBuff * ptb);
-    virtual void time_event();
-    virtual void start_game();
-    virtual void create_all_taskbuff();
-    void create_all_obstacle();
-    virtual void end_game(){return;};
-    virtual void slide_window_event(int left_or_right); // left -1 right 0
-
-    void time_event_tbprocessor();
-    void time_event_player_hit_taskbuff();
-    void time_event_move_ddlline();
-    int time_event_judge_end_game(); // 0 not end 1 win 2 lose
-};
-
-
-*/
 
 #endif // GAMEMAP_H

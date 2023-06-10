@@ -15,7 +15,7 @@ public:
     }
 
 
-    void embed_image(QString path = ":/images/images/obstacle4.png"){
+    void embed_image(QString path = ":/images/images/obstacle2.png"){
         QIcon icon(path);
         setPixmap(icon.pixmap(size()));
     }
@@ -33,7 +33,7 @@ public:
         setPixmap(icon.pixmap(size()));
     }
 
-    void set_state(const int & new_state, const int & x_id){
+    void set_state(const int & new_state, const int & x_id = 1){
         state = new_state;
         if(state == 1)
             embed_image(x_id);

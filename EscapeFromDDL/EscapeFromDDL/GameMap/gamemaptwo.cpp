@@ -194,8 +194,11 @@ void GameMapTwo::time_event_player_hit_taskbuff(){
             ptb->effect();
             ptb->activated = false;
             if(ptb->type == "Task" || ptb->type == "task"){
+                parent_window->play_sound_effect(0);
                 TaskBuff::finished_task ++;
                 update_window_ddl_list();
+            }else{
+                parent_window->play_sound_effect(1);
             }
             remove_taskbuff(ptb);
             break; //一次只会吃一个
@@ -213,10 +216,12 @@ double GameMapTwo::time_event_boss_hit_player(){
     static UtilsFigureTwinkle * ufst = nullptr;
     if(pboss->fixed)return 1e10;
 
+
     double dis = calculate_distance(pboss,pfigure);
-    if(dis > 0.8 * pfigure->size().width())
+    if(dis > 0.8 * pfigure->size().width() or pboss->fixed)
         return dis;
 
+    parent_window->play_sound_effect(2);
     if(bossstop != nullptr)delete bossstop;
     bossstop = new AutoBossStop(this, 2000);
 
@@ -229,21 +234,59 @@ double GameMapTwo::time_event_boss_hit_player(){
 
 void GameMapTwo::create_all_taskbuff(){
     qDebug()<<"All taskbuff created";
-    TaskBuff * hw1 = new TaskHomework(this,7,7,"概统",20000,30000);
-    set_taskbuff(hw1);
 
-    TaskBuff * hw2 = new TaskHomework(this,17,2,"高数",-1,12000);
+    TaskBuff * hw1 = new TaskHomework(this,17,2,"高数",-1,12000);
+    set_taskbuff(hw1);hw1->embed_image(":/images/images/task2.png");
+
+    TaskBuff * hw2 = new TaskHomework(this,0.2,Y_GRID_NUM - 2.5,"微电子",2200,-1);
     set_taskbuff(hw2);
 
-    TaskBuff * sleep = new BuffSleep(this,20,5,1000,-1,10000);
+    TaskBuff * sleep = new BuffSleep(this,20,5.5,1200,5700,17100);
     sleep->set_explanation("原地停留1秒");
     set_taskbuff(sleep);
 
-    TaskBuff * timemanager = new BuffTimeManager(this,18,7.5,8000,15000,8000);
+    TaskBuff * pre1 = new TaskAny(this,1,1.5,"膝盖pre","台上10分钟，台下人要疯",":/images/images/task1.png",17000);
+    set_taskbuff(pre1);
+
+    TaskBuff * hw3 = new TaskHomework(this,MainWindow::WIDTH / MainWindow::CELL_SIZE - 3,7,"概统",12500,24500);
+    set_taskbuff(hw3);hw3->embed_image(":/images/images/task5.png");
+
+    TaskBuff * pre2 = new TaskAny(this,MainWindow::WIDTH / MainWindow::CELL_SIZE * 0.5,0.4,"史纲pre","怎么做pre的又是我呜呜呜，以后不能再当大腿了",":/images/images/task1.png",15400,-1);
+    set_taskbuff(pre2);pre2->embed_image(":/images/images/task2.png");
+
+    TaskBuff * report = new TaskAny(this,3,Y_GRID_NUM - 4,"讲座感想","无所谓，我做了个好梦",":/images/images/task4.png",17800,-1);
+    set_taskbuff(report);
+
+    TaskBuff * timemanager = new BuffTimeManager(this,18,2.5,-1,20500,37100);
     set_taskbuff(timemanager);
 
-    TaskBuff * pre1 = new TaskAny(this,1,1.5,"膝盖pre","台上10分钟，台下1分钟",":/images/images/task1.png",15000);
-    set_taskbuff(pre1);
+    TaskBuff * hw4 = new TaskHomework(this,MainWindow::WIDTH / MainWindow::CELL_SIZE - 5,Y_GRID_NUM - 1.5,"线代",21300,-1);
+    set_taskbuff(hw4);
+
+    TaskBuff * sleep2 = new BuffSleep(this,MainWindow::WIDTH / MainWindow::CELL_SIZE / 2,Y_GRID_NUM / 1.8,1700,23000,-1);
+    sleep2->set_name("玩原神");
+    sleep2->set_explanation("三天没玩了，领个奖励总行吧(原地停留2秒)");
+    sleep2->embed_image(":/images/images/special1.png");
+    set_taskbuff(sleep2);
+
+    TaskBuff * cure = new BuffCure(this,MainWindow::WIDTH / MainWindow::CELL_SIZE - 5,1.5,25000,43900);
+    set_taskbuff(cure);
+
+    TaskBuff * pe = new TaskAny(this,16,10,"体测","信科宅男的噩梦来喽，人家是从不锻炼的小狮狮呢",":/images/images/run.png",25000,32800);
+    set_taskbuff(pe);
+
+    TaskBuff * hw5 = new TaskHomework(this,Y_GRID_NUM / 2,Y_GRID_NUM / 2 ,"AI基础",28200,44600);
+    hw5->set_explanation("选课不选AI基础...诶我好像说过一百遍了");
+    hw5->embed_image(":/images/images/AIbasic.png");
+    set_taskbuff(hw5);
+
+    TaskBuff * hw6 = new TaskHomework(this,4.5,0.3,"还是线代",31300,46000);
+    hw6->set_explanation("张量是什么？我只知道麻辣烫");
+    set_taskbuff(hw6);hw6->embed_image(":/images/images/task2.png");
+
+    TaskBuff * hw7 = new TaskHomework(this,MainWindow::WIDTH / MainWindow::CELL_SIZE - 8.2,Y_GRID_NUM - 3,"还是高数",33000,-1);
+    hw7->set_explanation("总是学不会，只是觉得爱太美");
+    set_taskbuff(hw7);hw7->embed_image(":/images/images/task4.png");
 
 }
 
@@ -295,6 +338,7 @@ void GameMapTwo::set_v_boss(const double & x_relative,const double & y_relative)
 
 void GameMapTwo::missed_task_drop_live(TaskBuff * ptb,const int & drop_live)
 {
+    parent_window->play_sound_effect(3);
     ptb->missed_effect();
     live -= drop_live;
     if(live < 0)live = 0;

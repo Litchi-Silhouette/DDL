@@ -15,5 +15,8 @@
         <file>sounds/set_open.wav</file>
         <file>sounds/start1.wav</file>
         <file>sounds/start2.wav</file>
+        <file>sounds/accomplish.wav</file>
+        <file>sounds/failed.wav</file>
+        <file>sounds/winning.wav</file>
     </qresource>
 </RCC>

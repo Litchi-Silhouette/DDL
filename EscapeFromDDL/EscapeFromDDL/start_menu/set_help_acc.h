@@ -101,6 +101,7 @@ private:
     QString iconPath;
     QString acc;
     QSoundEffect* buttom;
+    QSoundEffect* start;
     Game& statistics;
 };
 

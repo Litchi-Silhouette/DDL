@@ -128,6 +128,7 @@ protected:
     int interval = 30;
     QTimer* timer_update;
     QVBoxLayout* main_lay;
+    Game& statistics;
 protected slots:
     void pause();
     void showEvent(QShowEvent* event);
@@ -135,12 +136,11 @@ protected slots:
     virtual void startCount();
     virtual void restart();
     virtual void changeGameProcess(bool topause);
-
+    void end();
 private slots:
     void startText1();
     void startText2();
     void startText3();
-    void end();
 private:
     void setBlur(int extent);
 
@@ -156,7 +156,6 @@ private:
 
     Ui::LevelWindow *ui;
     QGraphicsBlurEffect* blureffect;
-    Game& statistics;
     CoverMask* curMask;
     QMediaPlayer* player;
     QAudioOutput* audio;

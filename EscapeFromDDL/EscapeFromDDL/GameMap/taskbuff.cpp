@@ -29,6 +29,7 @@ TaskBuff::TaskBuff(GameMap *parent, double _x_id, double _y_id, int _appear_time
     twinkling = false;
     appear_time = _appear_time;
     disappear_time = _disappear_time;
+    attack_to_boss = 5;
     switch(parent_gamemap->level)
     {
     case 1:

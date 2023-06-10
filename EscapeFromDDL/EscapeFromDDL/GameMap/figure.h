@@ -48,6 +48,7 @@ public:
     static double BULLET_V_BUFF;
     static double MISSLE_ACCELERATION;
     static int total_bullet;
+    static bool omitted;
     static std::random_device rd;
     static std::mt19937 gen;
     static std::uniform_real_distribution<double> distribution1;

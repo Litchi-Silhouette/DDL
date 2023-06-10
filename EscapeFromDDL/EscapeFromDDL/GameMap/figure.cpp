@@ -20,7 +20,7 @@ Figure::Figure(GameMap *parent) :
     case 2:
         resize(MainWindow::CELL_SIZE * 1.3,MainWindow::CELL_SIZE * 1.3);break;
     case 3:
-        resize(MainWindow::CELL_SIZE * 1.3,MainWindow::CELL_SIZE * 1.3);break;
+        resize(MainWindow::CELL_SIZE * 1.4,MainWindow::CELL_SIZE * 1.4);break;
     }
 
     path1 = path2 = ":/images/images/player_lion.png";
@@ -82,12 +82,13 @@ Boss::Boss(GameMap *parent): Figure(parent)
 }
 
 double Bullet::BULLET_V_BUFF = 1.0;
-double Bullet::MISSLE_ACCELERATION = 1.4; // bigger than 1
+double Bullet::MISSLE_ACCELERATION = 1.5; // bigger than 1
 int Bullet::total_bullet = 0;
+bool Bullet::omitted = false;
 
 std::random_device Bullet::rd;
 std::mt19937 Bullet::gen(rd());
-std::uniform_real_distribution<double> Bullet::distribution1(0.5, 2.0);
+std::uniform_real_distribution<double> Bullet::distribution1(0.5, 1.5);
 std::uniform_real_distribution<double> Bullet::distribution2(-1.0, 1.0);
 
 Bullet::Bullet(GameMap *parent, QString _type, Boss * _pboss, int _appear_time, int _disappear_time):
@@ -161,7 +162,7 @@ void Bullet::bullet_adjust_v()
         vy = vy / len * base_len;
 
     }else if(type == "Trace"){
-        attack = 20;
+        attack = 15;
         if(x < 0){
             vx = - vx * 0.4;
             vy *= 0.4;
@@ -192,7 +193,7 @@ void Bullet::bullet_adjust_v()
         vy += dy * TRACE_BULLET_ACCELERATION * base_len / MainWindow::CELL_SIZE;
 
     }else if(type == "Missle"){
-        attack = 30;
+        attack = 40;
         vx = vx * MISSLE_ACCELERATION;
     }
 
@@ -208,6 +209,7 @@ void Bullet::init_v_pos_img(){
         path1 = QString(":/images/images/bullet1.png");
         resize(MainWindow::CELL_SIZE,MainWindow::CELL_SIZE);
 
+        v_buff = pow(2.0,distribution1(gen));
         vx = - distribution1(gen);
         vy = distribution2(gen);
         double len = GameMap::calculate_distance(vx,vy);
@@ -231,7 +233,7 @@ void Bullet::init_v_pos_img(){
         path1 = QString(":/images/images/missle1.png");
         resize(MainWindow::CELL_SIZE * 3,MainWindow::CELL_SIZE * 1.5);
 
-        v_buff = 0.4;
+        v_buff = 0.3;
         y = parent_gamemap->pfigure->y();
         vx = - BULLET_BASE_V_ * BULLET_V_BUFF * v_buff;
         vy = 0.0;
@@ -241,7 +243,10 @@ void Bullet::init_v_pos_img(){
 
 
 void Bullet::bullet_move(){
-    if(not activated)return;
+    if(not activated){
+        y = parent_gamemap->pfigure->y();
+        return;
+    }
     x += vx;
     y += vy;
     move(x,y);

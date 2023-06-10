@@ -29,12 +29,15 @@ GameMap::GameMap(MainWindow  *parent, int _level) :
     paused = true;
     state = 0;
     live = 5;
+    slide_window_left_barrier = 0;
+    pending = new QLabel(this);
 }
 
 GameMap::~GameMap(){
     delete pfigure;
     delete ptimer;
     delete pboss;
+    delete pending;
 }
 
 void GameMap::update_window_ddl_list(){parent_window->update_ddl_list();}
@@ -63,6 +66,29 @@ void GameMap::start_game(){
 }
 
 void GameMap::end_game(bool win){
-    state = win ? 4 : 3;
-    parent_window->endGame();
+    parent_window->changeGameProcess(true);
+    pending->setGeometry(slide_window_left_barrier + MainWindow::WIDTH / 2 - MainWindow::CELL_SIZE * 7, MainWindow::MAP_HEIGHT / 3, MainWindow::CELL_SIZE * 14, MainWindow::CELL_SIZE * 4);
+    QPalette pa;
+    pa.setColor(QPalette::WindowText,Qt::red);setPalette(pa);
+    QFont ft;
+    ft.setPointSize(100.0 / 50.0 * MainWindow::CELL_SIZE);
+    pending->setPalette(pa);
+    pending->setFont(ft);
+    pending->setContentsMargins(30.0 / 50.0 * MainWindow::CELL_SIZE,0,0,0);
+    pending->setAlignment(Qt::AlignHCenter);
+    pending->setAlignment(Qt::AlignVCenter);
+
+    if(win){
+        state = 4;
+        parent_window->play_sound_effect(5);
+        pending->setText("YOU WIN");
+    }else{
+        state = 3;
+        parent_window->play_sound_effect(4);
+        pending->setText("YOU LOSE");
+    }
+    pending->raise();
+    pending->show();
+    qDebug()<<"End Game called"<<(win ? "win":"lose");
+    QTimer::singleShot(5000, parent_window, &MainWindow::endGame);
 }

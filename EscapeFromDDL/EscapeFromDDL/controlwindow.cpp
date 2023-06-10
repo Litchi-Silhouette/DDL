@@ -53,16 +53,16 @@ void ControlWindow::toWindow(int index)
             tmpWindow = new ActWindow(statistics,4,this);
             break;
         case 10:
-            tmpWindow = new ActWindow(statistics,0,this);
+            tmpWindow = new ActWindow(statistics,0);
             break;
         case 11:
-            tmpWindow = new ActWindow(statistics,1,this);
+            tmpWindow = new ActWindow(statistics,1);
             break;
         case 12:
-            tmpWindow = new ActWindow(statistics,2,this);
+            tmpWindow = new ActWindow(statistics,2);
             break;
         case 13:
-            tmpWindow = new ActWindow(statistics,3,this);
+            tmpWindow = new ActWindow(statistics,3);
             break;
         case 21:
             tmpWindow = new MainWindowOne(statistics);

@@ -27,6 +27,7 @@ public:
     static double PLAYER_V_BUFF;
     static double GRAVITY;
     static int X_RIGHT_BARRIER;
+    static int X_ID_WARNING_LINE;
 
     double vx_player, vy_player;
     double vy_boss;
@@ -34,6 +35,7 @@ public:
     double x_boss, y_boss;
 
     QLabel * pwarningline;
+    QLabel * pwhitecover;
 
     //QTimer * pmove_timer;
 

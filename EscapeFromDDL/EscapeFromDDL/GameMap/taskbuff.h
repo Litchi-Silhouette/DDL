@@ -22,6 +22,7 @@ public:
     double x_id,y_id;//在第几格，仅限第一关；后续代码一样，x_id表示格子数，x表示坐标
     bool movable;//仅限第三关
     double vx,vy;//仅限第三关
+    int attack_to_boss;//仅限第三关
     bool activated;//是否被触发（是否显示，玩家是否吃到）
     bool missed;//是否被错过了（被ddl吃掉，也算作完成，但是显示有所不同并且要扣血）
     bool twinkling;

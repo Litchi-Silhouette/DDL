@@ -15,7 +15,56 @@ int MainWindow::MAP_HEIGHT = 0;
 MainWindow::MainWindow(Game & game,QWidget *parent, int level)
     : LevelWindow(game,parent,level)
 {
-    setMapVisible(false);
+    //setMapVisible(false);
+
+    // set sound effects
+    for(int i=0;i<6;i++){
+        psound[i] = new QSoundEffect;
+        psound[i]->setVolume(double(statistics.effect)/10.0);
+        psound[i]->setMuted(not statistics.audioMode);
+    }
+    psound[0]->setSource(QUrl::fromLocalFile(":/sounds/sounds/money1.wav"));
+    psound[1]->setSource(QUrl::fromLocalFile(":/sounds/sounds/money2.wav"));
+    psound[2]->setSource(QUrl::fromLocalFile(":/sounds/sounds/bullet1.wav"));
+    psound[3]->setSource(QUrl::fromLocalFile(":/sounds/sounds/fault1.wav"));
+    psound[4]->setSource(QUrl::fromLocalFile(":/sounds/sounds/lose1.wav"));
+    psound[5]->setSource(QUrl::fromLocalFile(":/sounds/sounds/victory1.wav"));
+
+    //get screen & map config
+    QScreen *screen = QGuiApplication::primaryScreen();
+    QSize screen_size = screen->size();
+    qDebug()<<"screen size "<<screen_size;
+    double screenRatio = static_cast<double>(screen_size.width()) / screen_size.height();
+    double targetRatio = 16.0/9.0;
+
+    QSize size = screen_size;
+
+    if (screenRatio > targetRatio)
+    {
+        // 高度撑满屏幕，宽度根据比例计算
+        int width = static_cast<int>(size.height() * targetRatio);
+        int x = (size.width() - width) / 2;
+        setGeometry(x, 0, width, size.height());
+        size.rwidth() = width;
+    }
+    else if(screenRatio < targetRatio)
+    {
+        // 宽度撑满屏幕，高度根据比例计算
+        int height = static_cast<int>(size.width() / targetRatio);
+        int y = (size.height() - height) / 2;
+        setGeometry(0, y, size.width(), height);
+        size.rheight() = height;
+    }
+
+    HEIGHT = size.height();
+    WIDTH = size.width();
+    MOVE_UNIT = size.height() / (Y_GRID_NUM + Y_TOOL_UNIT_NUM);
+    CELL_SIZE = MOVE_UNIT;
+    X_BARRIER = MOVE_UNIT;
+    Y_BARRIER = MOVE_UNIT;
+    Y_TOOL_HEIGHT = Y_TOOL_UNIT_NUM * Y_BARRIER;
+    MAP_HEIGHT = HEIGHT - Y_TOOL_HEIGHT;
+    qDebug()<<"CELL_SIZE = "<<CELL_SIZE;
 }
 
 MainWindow::~MainWindow(){delete pgamemap;}
@@ -35,52 +84,12 @@ void MainWindow::showEvent(QShowEvent *event){
         pgamemap = new GameMap(this);break;
     }
 
-    //setStyleSheet("MainWindow{background-color: rgb(255, 255, 255);}");//设白色背景
+    setStyleSheet("MainWindow{background-color: rgb(255, 255, 255);}");//设白色背景
     pgamemap->show();
+    //setWindowFlags(windowFlags() | Qt::MSWindowsFixedSizeDialogHint);
 }
 
-void MainWindow::resizeEvent(QResizeEvent *event)
-{
 
-    qDebug()<<"Resize event called";
-    //QSize size = event->size();
-    QScreen *screen = QGuiApplication::primaryScreen();
-    QSize screen_size = screen->size();
-    QSize size = event->size();
-    qDebug()<<"event size"<<size<<" screen size "<<screen_size;
-    double targetRatio = static_cast<double>(size.width()) / size.height();
-    double screenRatio = static_cast<double>(screen_size.width()) / screen_size.height();
-
-    if (screenRatio > targetRatio)
-    {
-        // 高度撑满屏幕，宽度根据比例计算
-        int width = static_cast<int>(size.height() * targetRatio);
-        int x = (size.width() - width) / 2;
-        setGeometry(x, 0, width, size.height());
-        size.rwidth() = width;
-    }
-    else
-    {
-        // 宽度撑满屏幕，高度根据比例计算
-        int height = static_cast<int>(size.width() / targetRatio);
-        int y = (size.height() - height) / 2;
-        setGeometry(0, y, size.width(), height);
-        size.rheight() = height;
-    }
-
-    // 调整物品的大小
-    HEIGHT = size.height();
-    WIDTH = size.width();
-    MOVE_UNIT = size.height() / (Y_GRID_NUM + Y_TOOL_UNIT_NUM);
-    CELL_SIZE = MOVE_UNIT;
-    X_BARRIER = MOVE_UNIT;
-    Y_BARRIER = MOVE_UNIT;
-    Y_TOOL_HEIGHT = Y_TOOL_UNIT_NUM * Y_BARRIER;
-    MAP_HEIGHT = HEIGHT - Y_TOOL_HEIGHT;
-    qDebug()<<"CELL_SIZE = "<<CELL_SIZE;
-    setWindowFlags(windowFlags() | Qt::MSWindowsFixedSizeDialogHint);
-
-}
 
 void MainWindow::add_taskbuff(TaskBuff * ptb){
 
@@ -151,6 +160,25 @@ void MainWindow::update_warning(const double & distance){ // range[0,1]
     }
 }
 
+void MainWindow::update_all_live(){
+    live = pgamemap->live;
+    liveBoss = pgamemap->boss_live;
+    LevelWindow::update_live(true);
+    LevelWindow::update_live(false);
+}
+
+void MainWindow::play_sound_effect(const int & id){
+    static qint64 last_called_time = -1;
+    qint64 current_time = QDateTime::currentMSecsSinceEpoch();
+    if(current_time - last_called_time < 1300 and id < 4)return;
+
+    qDebug()<<"Sound effect "<<id<<" called";
+    psound[id]->play();
+    psound[id]->setVolume(double(statistics.effect)/10.0);
+    psound[id]->setMuted(not statistics.audioMode);
+    last_called_time = current_time;
+}
+
 void MainWindow::startCount(){
     LevelWindow::startCount();
     state = 1;
@@ -159,6 +187,6 @@ void MainWindow::startCount(){
 
 void MainWindow::endGame(){
     state = pgamemap->state;
-    LevelWindow::endGame();
+    LevelWindow::end();
 }
 

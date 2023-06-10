@@ -20,6 +20,7 @@ TaskAny::TaskAny(GameMap *parent, double _x_id, double _y_id, QString _name, QSt
     TaskBuff(parent, _x_id, _y_id, _appear_time, _disappear_time)
 {
     type = "Task";total_task ++;
+    attack_to_boss = 10;
     set_name(_name);set_explanation(_explanation);
     embed_image(_path);
 }
@@ -53,17 +54,15 @@ BuffSleep::BuffSleep(GameMap *parent, double _x_id, double _y_id, int _sleep_tim
     TaskBuff(parent, _x_id, _y_id, _appear_time, _disappear_time)
 {
     type = "Buff"; total_buff ++; sleep_time = _sleep_time;
-    set_name("昏昏欲睡");set_explanation("原地停留4秒");
+    set_name("睡懒觉");set_explanation("早八就是用来翘的嘛（原地停留4秒）");
     embed_image(":/images/images/buff1.png");
 }
-
 void BuffSleep::effect(){
     parent_gamemap->pfigure->fixed = true;
     add_processor(sleep_time,0);
     parent_gamemap->parent_window->add_taskbuff(this);
     parent_gamemap->parent_window->show_taskbuff(this);
     qDebug()<<"Sleep effect called";
-
 }
 void BuffSleep::end_effect(){
     parent_gamemap->pfigure->fixed = false;
@@ -71,16 +70,132 @@ void BuffSleep::end_effect(){
     qDebug()<<"Sleep end effect called";
 }
 
+BuffTired::BuffTired(GameMap *parent, double _x_id, double _y_id, int _tired_time, int _appear_time, int _disappear_time):
+    TaskBuff(parent, _x_id, _y_id, _appear_time, _disappear_time)
+{
+    type = "Buff"; total_buff ++; tired_time = _tired_time;
+    set_name("疲惫");set_explanation("好累呀，想摆烂...我走慢一点");
+    embed_image(":/images/images/special1.png");
+}
+void BuffTired::effect(){
+    GameMapOne::MIN_KEYEVENT_INTERVAL = 500;
+    add_processor(tired_time,0);
+    parent_gamemap->parent_window->add_taskbuff(this);
+    parent_gamemap->parent_window->show_taskbuff(this);
+    qDebug()<<"Tired effect called";
+}
+void BuffTired::end_effect(){
+    GameMapOne::MIN_KEYEVENT_INTERVAL = 120;
+    parent_gamemap->parent_window->remove_taskbuff(this);
+    qDebug()<<"Tired end effect called";
+}
+
+BuffSurprise::BuffSurprise(GameMap *parent, double _x_id, double _y_id,int _appear_time, int _disappear_time):
+    TaskBuff(parent, _x_id, _y_id, _appear_time, _disappear_time)
+{
+    type = "Buff"; total_buff ++;
+    set_name("意外之喜");set_explanation("喜报！喜报！DDL延期了！！！（DDL减速）");
+    embed_image(":/images/images/special1.png");
+};
+void BuffSurprise::effect(){
+    GameMapOne::DDL_LINE_V_BUFF = 0.6;
+    parent_gamemap->parent_window->add_taskbuff(this);
+    parent_gamemap->parent_window->show_taskbuff(this);
+    qDebug()<<"Surprise effect called";
+}
+
+BuffCure::BuffCure(GameMap *parent, double _x_id, double _y_id,int _appear_time, int _disappear_time):
+    TaskBuff(parent, _x_id, _y_id, _appear_time, _disappear_time)
+{
+    type = "Buff"; total_buff ++;
+    if(parent_gamemap->level == 2){
+        set_name("爸妈的投喂");set_explanation("送来一大箱水果呢（回复40血量）");
+    }else{
+        set_name("卷王护体！");set_explanation("伟大的卷王保佑我！！(回复40血量)");
+    }
+
+    embed_image(":/images/images/buff2.png");
+};
+void BuffCure::effect(){
+    add_processor(5000,0);
+    if(parent_gamemap->level == 2){
+        parent_gamemap->live += 2;
+        if(parent_gamemap->live > 5)parent_gamemap->live = 5;
+    }else{
+        parent_gamemap->live += 40;
+        if(parent_gamemap->live > 100)parent_gamemap->live = 100;
+    }
+    parent_gamemap->parent_window->update_all_live();
+    parent_gamemap->parent_window->add_taskbuff(this);
+    parent_gamemap->parent_window->show_taskbuff(this);
+    qDebug()<<"Cure effect called";
+}
+void BuffCure::end_effect(){
+    parent_gamemap->parent_window->remove_taskbuff(this);
+}
+
+BuffGPT::BuffGPT(GameMap *parent, double _x_id, double _y_id,int _duration, int _appear_time, int _disappear_time):
+    TaskBuff(parent, _x_id, _y_id, _appear_time, _disappear_time)
+{
+    type = "Buff"; total_buff ++;
+    duration = _duration;
+    set_name("ChatGPT");set_explanation("GPT祝我一臂之力！是时候展现真正的技术了！（免疫所有子弹）");
+    embed_image(":/images/images/gpt.png");
+};
+void BuffGPT::effect(){
+    add_processor(duration,0);
+    Bullet::omitted = true;
+    parent_gamemap->parent_window->add_taskbuff(this);
+    parent_gamemap->parent_window->show_taskbuff(this);
+    qDebug()<<"GPT effect called";
+}
+void BuffGPT::end_effect(){
+    Bullet::omitted = false;
+    parent_gamemap->parent_window->remove_taskbuff(this);
+    qDebug()<<"GPT end_effect called";
+}
+
+BuffStayLate::BuffStayLate(GameMap *parent, double _x_id, double _y_id,int _appear_time, int _disappear_time):
+    TaskBuff(parent, _x_id, _y_id, _appear_time, _disappear_time)
+{
+    type = "Buff"; total_buff ++;
+    set_name("熬夜");set_explanation("熬夜伤身体（你和DDL各扣10血量）");
+    embed_image(":/images/images/special2.png");
+};
+void BuffStayLate::effect(){
+    add_processor(5000,0);
+    parent_gamemap->live -= 10;
+    parent_gamemap->boss_live -= 10;
+    if(parent_gamemap->live <= 0)parent_gamemap->live = 0;
+    if(parent_gamemap->boss_live <= 0)parent_gamemap->boss_live = 0;
+    parent_gamemap->parent_window->update_all_live();
+    parent_gamemap->parent_window->add_taskbuff(this);
+    parent_gamemap->parent_window->show_taskbuff(this);
+}
+void BuffStayLate::end_effect(){
+    parent_gamemap->parent_window->remove_taskbuff(this);
+}
+
+
+
 BuffTimeManager::BuffTimeManager(GameMap *parent, double _x_id, double _y_id, int _duration, int _appear_time, int _disappear_time):
     TaskBuff(parent, _x_id, _y_id, _appear_time, _disappear_time)
 {
     type = "Buff"; total_buff ++; duration = _duration;
-    set_name("时间管理大师");set_explanation("获得学长的时间管理秘笈，移动速度增加");
-    embed_image(":/images/images/special1.png");
+    if(parent_gamemap->level == 2){
+        set_name("时间管理大师");set_explanation("获得学长的时间管理秘笈，移动速度增加");
+        embed_image(":/images/images/special1.png");
+    }else{
+        set_name("咖啡");set_explanation("续命神器，你值得拥有（提升速度和加速度）");
+        embed_image(":/images/images/coffee.png");
+    }
+
 }
 
 void BuffTimeManager::effect(){
     GameMapTwo::PLAYER_V_BUFF = 1.3;
+    GameMapThree::PLAYER_V_BUFF = 1.3;
+    GameMapThree::GRAVITY = 2.5;
     if(duration > 0)add_processor(duration,0);
     parent_gamemap->parent_window->add_taskbuff(this);
     parent_gamemap->parent_window->show_taskbuff(this);
@@ -88,6 +203,8 @@ void BuffTimeManager::effect(){
 }
 void BuffTimeManager::end_effect(){
     GameMapTwo::PLAYER_V_BUFF = 1.0;
+    GameMapThree::PLAYER_V_BUFF = 1.0;
+    GameMapThree::GRAVITY = 1.3;
     parent_gamemap->parent_window->remove_taskbuff(this);
     qDebug()<<"TimeManage end effect called";
 }

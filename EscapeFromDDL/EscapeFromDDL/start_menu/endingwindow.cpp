@@ -39,7 +39,7 @@ void EndingWindow::nextText()
 {
     ++pos;
     if(ui->stackedWidget->currentIndex()){
-        if(pos == page2Len)
+        if(pos >= page2Len)
             return;
         auto& tmp = literatrue[1][pos];
         auto cur = new QPushButton(tmp,this);
@@ -50,7 +50,7 @@ void EndingWindow::nextText()
         ui->main2->addWidget(cur, 0, Qt::AlignCenter);
         ui->main2->addWidget(ui->blankS2);
     }else{
-        if(pos == page1Len)
+        if(pos >= page1Len)
             return;
         auto& tmp = literatrue[0][pos];
         auto cur = new QPushButton(tmp,this);

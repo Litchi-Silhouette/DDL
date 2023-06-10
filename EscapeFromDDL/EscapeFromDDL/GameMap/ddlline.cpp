@@ -22,11 +22,11 @@ public:
         pa.setColor(QPalette::WindowText,Qt::white);setPalette(pa);
         QFont ft;
         ft.setPointSize(20.0 / 58.0 * MainWindow::CELL_SIZE);
-        setContentsMargins(30.0 / 58.0 * MainWindow::CELL_SIZE,0,0,0);
         ft.setItalic(true);
+        setFont(ft);
+        setContentsMargins(30.0 / 58.0 * MainWindow::CELL_SIZE,0,0,0);
         setAlignment(Qt::AlignRight);
         setAlignment(Qt::AlignVCenter);
-        setFont(ft);
         setStyleSheet("QLabel{background-color:rgb(0,0,0);}");
 
         qDebug()<<"ddlline constructor called geo "<<geometry();

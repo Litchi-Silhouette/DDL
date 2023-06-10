@@ -254,6 +254,8 @@ AccDialog::AccDialog(Game& game,int index, QWidget* parent)
     });
     buttom = new QSoundEffect(this);
     buttom->setSource(QUrl("qrc:/effects/sounds/buttom3.wav"));
+    start = new QSoundEffect(this);
+    start->setSource(QUrl("qrc:/effects/sounds/accomplish.wav"));
 
     info = new QLabel("   ",this);
     info->setFont(QFont("STKaiti", 19, QFont::Bold));
@@ -330,6 +332,9 @@ void AccDialog::setIndex(int index)
 
 void AccDialog::showEvent(QShowEvent* event)
 {
+    start->play();
+    start->setMuted(!statistics.audioMode);
+    start->setVolume((double)statistics.effect/10);
     QTimer::singleShot(1000,this, [=](){
         buttom->play();
         buttom->setMuted(!statistics.audioMode);

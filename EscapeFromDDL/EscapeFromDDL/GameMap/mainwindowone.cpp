@@ -3,7 +3,9 @@
 
 MainWindowOne::MainWindowOne(Game & game,QWidget *parent) :
     MainWindow(game,parent,1)
-{}
+{
+    setMapVisible(false);
+}
 
 MainWindowOne::~MainWindowOne()
 {}
@@ -31,7 +33,7 @@ void MainWindowOne::keyPressEvent(QKeyEvent* event)
         return;
     }
 
-    if(currentTime - lastKeyPressTime < MIN_KEYEVENT_INTERVAL) return;
+    if(currentTime - lastKeyPressTime < GameMapOne::MIN_KEYEVENT_INTERVAL) return;
     pgamemap->pfigure->move_in_grid(cur);
     lastKeyPressTime = currentTime;
 }

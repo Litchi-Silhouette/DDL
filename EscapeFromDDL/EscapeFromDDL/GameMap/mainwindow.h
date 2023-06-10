@@ -5,6 +5,7 @@
 #include <QString>
 #include <QTimer>
 #include <QDateTime>
+#include <QSoundEffect>
 #include "gamemap.h"
 #include "config.h"
 
@@ -29,6 +30,8 @@ public:
     static int MAP_HEIGHT;
 
     GameMap * pgamemap;
+    QSoundEffect * psound[6];
+
     MainWindow(Game & game, QWidget *parent = nullptr, int level = 0);
     ~MainWindow();
     void add_taskbuff(TaskBuff * ptb);
@@ -41,14 +44,18 @@ public:
     virtual void startCount() override;
     void endGame();
     void update_warning(const double &);
+    void update_all_live();
     virtual void finish_task_hurt_boss(const int & drop_live = 10){return;};
+    void play_sound_effect(const int & id);
+    // 0 task 1 buff 2 bullet 3 fault 4 lose 5 win
+    void changeGameProcess(bool pause_or_continue); // true pause false continue
 
 
 protected:
     void keyPressEvent(QKeyEvent*) override{};//需继承wzl的levelwindow并重载
-    void resizeEvent(QResizeEvent *) override;//
+    //void resizeEvent(QResizeEvent *) override;//
     void showEvent(QShowEvent *event) override;
-    virtual void changeGameProcess(bool pause_or_continue); // true pause false continue
+
 
 };
 

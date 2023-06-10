@@ -31,15 +31,17 @@ class GameMapOne : public GameMap
 
 public:
     static double DDL_LINE_V_BUFF;
+    static int MIN_KEYEVENT_INTERVAL;  // 最短间隔为?毫秒
 
     DDL_Line * pline;
     Obstacle *** obstacles;
-    int slide_window_left_barrier;
+
 
     explicit GameMapOne(MainWindow  *parent = nullptr);
     virtual ~GameMapOne();
     virtual bool check_no_obstacle(const QPoint &)override;
     void set_obstacle_rect(int xLow,int xHigh,int yLow,int yHigh);
+    void set_obstacle_diag(int xStart, int yStart, int len, int xStride = 1, int yStride = 1);
     virtual void set_taskbuff(TaskBuff *) override;
     virtual void remove_taskbuff(TaskBuff *)override;
 

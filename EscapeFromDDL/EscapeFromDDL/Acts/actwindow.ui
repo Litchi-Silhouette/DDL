@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="styleSheet">
-   <string notr="true">QPushButton{border:0px; background: black; color: white; font: 600 italic 20pt &quot;Montserrat SemiBold&quot;; }</string>
+   <string notr="true">QPushButton{border:0px; background: black; color: white; font: 600 italic 20pt &quot;Montserrat SemiBold&quot;; } background: rgb(23,23,23); </string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">

@@ -43,6 +43,7 @@
 #include <random>
 #include <cmath>
 #include <QPropertyAnimation>
+#include <QSoundEffect>
 
 
 

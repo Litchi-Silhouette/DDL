@@ -27,6 +27,15 @@ public:
     virtual void end_effect();
 };
 
+class BuffTired:public TaskBuff{
+public:
+    qint64 tired_time;
+    BuffTired(GameMap *parent, double _x_id, double _y_id, int _tired_time = 10000, int _appear_time = -1, int _disappear_time = -1);
+    virtual void effect();
+    virtual void end_effect();
+};
+
+
 class BuffTimeManager:public TaskBuff{
 public:
     qint64 duration;
@@ -35,15 +44,34 @@ public:
     virtual void end_effect();
 };
 
-class BuffMidTerm:public TaskBuff{
+class BuffSurprise:public TaskBuff{
 public:
-    qint64 duration;
-    BuffMidTerm(GameMap *parent, double _x_id, double _y_id, int _appear_time = 10, int _disappear_time = -1);
+    BuffSurprise(GameMap *parent, double _x_id, double _y_id,int _appear_time = -1, int _disappear_time = -1);
+    virtual void effect();
+};
+
+class BuffCure:public TaskBuff{
+public:
+    BuffCure(GameMap *parent, double _x_id, double _y_id,int _appear_time = -1, int _disappear_time = -1);
     virtual void effect();
     virtual void end_effect();
 };
 
+class BuffStayLate:public TaskBuff{
+public:
+    qint64 duration;
+    BuffStayLate(GameMap *parent, double _x_id, double _y_id,int _appear_time = -1, int _disappear_time = -1);
+    virtual void effect();
+    virtual void end_effect();
+};
 
+class BuffGPT:public TaskBuff{
+public:
+    qint64 duration;
+    BuffGPT(GameMap *parent, double _x_id, double _y_id,int _duration,int _appear_time = -1, int _disappear_time = -1);
+    virtual void effect();
+    virtual void end_effect();
+};
 
 class AutoBossStop:public TaskBuff{
 public:

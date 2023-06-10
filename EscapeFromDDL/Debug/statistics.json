@@ -3,15 +3,15 @@
         true,
         true,
         true,
-        false
+        true
     ],
     "audio": true,
-    "effect": 10,
+    "effect": 7,
     "ending": [
         false,
         true,
         true,
-        false,
+        true,
         true
     ],
     "level": [
@@ -20,5 +20,5 @@
         true,
         true
     ],
-    "music": 4
+    "music": 5
 }
