@@ -34,5 +34,6 @@ private:
     int pageindex;
     Game& statistics;
     QSoundEffect* buttom;
+    CoverMask* curMask;
 };
 #endif // ACTWINDOW_H

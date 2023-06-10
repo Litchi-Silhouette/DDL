@@ -62,8 +62,9 @@ void StartWindow::blink(){
 
 void StartWindow::showEvent(QShowEvent* event){
     windowBase::showEvent(event);
+    curMask->setGeometry(geometry());
+    curMask->move(mapToGlobal(QPoint(0, 0)));
     curMask->show();
-    curMask->setGeometry(rect());
     player->play();
     audio->setMuted(!statistics.audioMode);
     audio->setVolume((double)statistics.music/10);

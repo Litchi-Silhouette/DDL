@@ -53,8 +53,13 @@ ActWindow::ActWindow(Game& game, int index, QWidget *parent)
                 emit changeWindow(2);
             });
             acc->exec();
-        }else if(!is)
-            ui->stackedWidget->setCurrentIndex(1);
+        }else if(!is){
+            curMask->show();
+            QTimer::singleShot(100, this, [=](){
+                ui->stackedWidget->setCurrentIndex(1);
+                QTimer::singleShot(400, curMask, &CoverMask::close);
+            });
+        }
     });
     connect(p, &QPushButton::clicked, this, [=](){
         buttom->play();
@@ -94,6 +99,9 @@ ActWindow::~ActWindow()
 
 void ActWindow::showEvent(QShowEvent* event){
     windowBase::showEvent(event);
+    curMask = new CoverMask;
+    curMask->setGeometry(geometry());
+    curMask->move(mapToGlobal(QPoint(0, 0)));
     player->play();
     audio->setMuted(!statistics.audioMode);
     audio->setVolume((double)statistics.music/10);

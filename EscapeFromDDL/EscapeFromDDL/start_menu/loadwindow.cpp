@@ -38,7 +38,8 @@ LoadWindow::~LoadWindow(){
 
 void LoadWindow::showEvent(QShowEvent* event){
     QMainWindow::showEvent(event);
-    curMask->setGeometry(rect());
+    curMask->setGeometry(geometry());
+    curMask->move(mapToGlobal(QPoint(0, 0)));
     curMask->show();
     center->setStartText("3W    出品", 60);
     QTimer::singleShot(100,center, &StartDialog::show);
@@ -50,5 +51,5 @@ void LoadWindow::hideEvent(QHideEvent* event){
     QMainWindow::hideEvent(event);
     center->close();
     emit changeWindow(1);
-    curMask->close();
+    QTimer::singleShot(1000, curMask, &CoverMask::close);
 }

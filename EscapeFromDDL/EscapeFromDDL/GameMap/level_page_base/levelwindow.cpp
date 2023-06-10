@@ -235,7 +235,8 @@ void LevelWindow::end(){
 
 void LevelWindow::showEvent(QShowEvent* event){
     QMainWindow::showEvent(event);
-    curMask->setGeometry(rect());
+    curMask->setGeometry(geometry());
+    curMask->move(mapToGlobal(QPoint(0, 0)));
     curMask->startShow();
     if(state == 0)
     {

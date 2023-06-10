@@ -11,14 +11,13 @@
 ControlWindow::ControlWindow(QWidget *parent) :
     windowBase(parent),
     ui(new Ui::ControlWindow),
-    mainWidget(new QStackedWidget(this)),
     load(new LoadWindow),
     start(new StartWindow(statistics)),
     menu(new MenuWindow(statistics))
 {
     ui->setupUi(this);
 
-    mainWidget->setFocusPolicy(Qt::StrongFocus);
+    mainWidget = new QStackedWidget(ui->centralwidget);
     mainWidget->addWidget(load);
     mainWidget->addWidget(start);
     mainWidget->addWidget(menu);

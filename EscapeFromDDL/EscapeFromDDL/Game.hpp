@@ -67,8 +67,10 @@ public:
 protected:
     void showEvent(QShowEvent* event){
         QDialog::showEvent(event);
-        if(parentWidget())
-            setGeometry(parentWidget()->rect());
+        if(parentWidget()){
+            setGeometry(parentWidget()->geometry());
+            move(parentWidget()->mapToGlobal(QPoint(0, 0)));
+        }
     }
 };
 
@@ -130,6 +132,7 @@ public:
     {
         setiniP();
         setWindowFlags(Qt::Widget | Qt::FramelessWindowHint | Qt::WindowSystemMenuHint | Qt::WindowStaysOnTopHint);
+        setAttribute(Qt::WA_TransparentForMouseEvents,true);
         showAnimation = new QPropertyAnimation(this, "windowOpacity");
         showAnimation->setDuration(1000);
         showAnimation->setStartValue(1.0);

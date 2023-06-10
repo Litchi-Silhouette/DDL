@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="styleSheet">
-   <string notr="true">QMainWindow{background: rgb(23,23,23);}</string>
+   <string notr="true">QMainWindow{background: black;}</string>
   </property>
   <widget class="QWidget" name="centralwidget"/>
  </widget>
