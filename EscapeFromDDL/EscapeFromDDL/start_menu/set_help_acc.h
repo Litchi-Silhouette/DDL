@@ -17,8 +17,11 @@ public:
     ~HelpDialog();
     void resetFont(const QFont&);
     void addContent(const QString&);
+    void setContent();
 signals:
     void end();
+protected:
+    void showEvent(QShowEvent*);
 private:
     QWidget* content;
     QLabel* title;

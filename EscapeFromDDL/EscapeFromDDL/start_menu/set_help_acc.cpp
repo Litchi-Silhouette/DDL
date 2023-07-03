@@ -1,13 +1,9 @@
 #include "set_help_acc.h"
 
 HelpDialog::HelpDialog(Game& game, QWidget* parent)
-    :MyDialog(parent), statistics(game)
+    :MyDialog(parent), subLay(nullptr), statistics(game)
 {
     content = new QWidget(this);
-    subLay = new QVBoxLayout;
-    subLay->setContentsMargins(3,3,3,3);
-    subLay->addStretch();
-    content->setLayout(subLay);
 
     title = new QLabel("游戏规则", this);
     title->setFont(QFont("STKaiti", 32, QFont::Bold));
@@ -33,6 +29,7 @@ HelpDialog::HelpDialog(Game& game, QWidget* parent)
 
     center = new QScrollArea(this);
     //center->setBackgroundRole(QPalette::Dark);
+    center->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     center->setFixedSize(800,450);
     center->setAlignment(Qt::AlignHCenter|Qt::AlignTop);
     center->setFrameStyle(QFrame::Box);
@@ -51,6 +48,7 @@ HelpDialog::HelpDialog(Game& game, QWidget* parent)
 
     setLayout(mainLay);
     setStyleSheet("QDialog{background: rgba(248, 248, 255, 150);}");
+    setContent();
 }
 
 HelpDialog::~HelpDialog()
@@ -70,6 +68,39 @@ void HelpDialog::addContent(const QString& text){
     p->setFont(QFont("STKaiti", 16, QFont::Bold));
     p->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Fixed);
     subLay->insertWidget(subLay->count() - 1, p);
+}
+
+void HelpDialog::setContent(){
+    if(subLay!=nullptr)
+        delete subLay;
+    subLay = new QVBoxLayout;
+    subLay->setContentsMargins(5,10,5,10);
+    subLay->setSpacing(10);
+    subLay->addStretch();
+    content->setLayout(subLay);
+
+    addContent("  欢迎各位来到P大！");
+    addContent("  你将在这里扮演一名攻城狮，沉浸式体验P大大一信科的真实生活。\n  在日常的学习生活中，总有DDL怪兽拦住你的去路，现在到你大展身手的时间了！\n  在接下来的三个关卡中尽力击败它，博取光明的未来吧！");
+    if(statistics.getLevels[1])
+    {
+        addContent("  第一关");
+        addContent("  用键盘WASD键控制攻城狮的移动\n  地图上出现任务时，及时使攻城狮移动到任务所在位置\n  完成或失败的任务达上限即可通过关卡\n  任务被Deadline追上，扣除一定生命值\n  攻城狮被Deadline追上或生命值归零，本关失败");
+    }
+    if(statistics.getLevels[2])
+    {
+        addContent("  第二关");
+        addContent("  按住鼠标左键并拖动，用鼠标拖拽的方式给予攻城狮一个初速度\n  地图上出现任务时，及时使攻城狮移动到任务所在位置\n  所有任务都出现后通过关卡\n  攻城狮被DDL怪兽追上一次或未完成任务，扣除一定生命值\n  生命值归零，本关失败");
+    }
+    if(statistics.getLevels[3])
+    {
+        addContent("  第三关");
+        addContent("  用鼠标位置牵引的方式给予攻城狮一个加速度，使攻城狮向鼠标位置加速移动\n  地图上出现任务时，及时使攻城狮移动到任务所在位置\n  完成任务击败DDL即可通过关卡\n  DDL怪兽会向攻城狮发射子弹，攻城狮被子弹击中一次，扣除一定生命值\n  生命值归零，本关失败");
+    }
+}
+
+void HelpDialog::showEvent(QShowEvent* event){
+    MyDialog::showEvent(event);
+    setContent();
 }
 
 SetDialog::SetDialog(Game& game, QAudioOutput* _audio,QWidget* parent)
