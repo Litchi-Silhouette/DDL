@@ -14,6 +14,12 @@ GameMapTwo::GameMapTwo(MainWindow *parent) :
     pboss = new Boss(this);
     pboss->show();
 
+    last_set_v_time = QDateTime::currentMSecsSinceEpoch();
+    last_set_vx_player = 0.0;
+    last_set_vy_player = 0.0;
+    PLAYER_V_BUFF = 1.0;
+    BOSS_V_BUFF = 1.0;
+
     x_player = (MainWindow::WIDTH - pfigure->width()) * 0.5;
     y_player = (MainWindow::MAP_HEIGHT - pfigure->height()) * 0.5;
     x_boss = y_boss = 10.0;
@@ -222,10 +228,10 @@ double GameMapTwo::time_event_boss_hit_player(){
         return dis;
 
     parent_window->play_sound_effect(2);
-    if(bossstop != nullptr)delete bossstop;
+    //if(bossstop != nullptr)delete bossstop;
     bossstop = new AutoBossStop(this, 2000);
 
-    if(ufst != nullptr)delete ufst;
+    //if(ufst != nullptr)delete ufst;
     ufst = new UtilsFigureTwinkle(this);
     return dis;
 }
