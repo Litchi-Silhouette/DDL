@@ -10,6 +10,10 @@ int GameMapThree::X_ID_WARNING_LINE = 0;
 GameMapThree::GameMapThree(MainWindow *parent) :
     GameMap(parent,3)
 {
+    PLAYER_V_BUFF = 1.0;
+    GRAVITY = 1.7;
+    X_RIGHT_BARRIER = 0.0;
+    X_ID_WARNING_LINE = 0;
 
     pboss = new Boss(this);
     pboss->show();
@@ -331,7 +335,7 @@ void GameMapThree::create_all_taskbuff(){
     sleep1->set_v(-1.0,2.0,1.6);
     hw1->set_v(4.0,1.0,1.9);
     qt->set_v(-10.0,13.0,5.0);
-    run->set_v(-1.0,-0.7);
+    run->set_v(1.0,-0.7);
     gpt->set_v(-0.3,1.0,0.6);
     essay3->set_v(0.7,1.8,2.7);
     hw2->set_v(0,1.0,3.0);
