@@ -1,8 +1,10 @@
 <RCC>
     <qresource prefix="/bkmusic">
-        <file>BKMusic/level.mp3</file>
         <file>BKMusic/menu.mp3</file>
         <file>BKMusic/start.mp3</file>
+        <file>BKMusic/level1.mp3</file>
+        <file>BKMusic/level2.mp3</file>
+        <file>BKMusic/level3.mp3</file>
     </qresource>
     <qresource prefix="/effects">
         <file>sounds/buttom1.wav</file>

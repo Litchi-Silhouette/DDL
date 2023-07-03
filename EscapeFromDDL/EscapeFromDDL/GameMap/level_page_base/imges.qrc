@@ -16,5 +16,6 @@
         <file>level_image/continue.png</file>
         <file>level_image/bossIcon.png</file>
         <file>level_image/lionIcon.png</file>
+        <file>level_image/tips.png</file>
     </qresource>
 </RCC>

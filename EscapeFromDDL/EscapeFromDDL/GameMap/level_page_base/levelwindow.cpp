@@ -83,13 +83,12 @@ LevelWindow::LevelWindow(Game& game, QWidget *parent, const int cur_level)
     blureffect->setEnabled(false);
 
     curMask = new CoverMask;
-    connect(curMask, &CoverMask::showEnd, this, &LevelWindow::startText1);
     connect(curMask, &CoverMask::closeEnd, this, &LevelWindow::end);
 
     player = new QMediaPlayer(this);
     audio = new QAudioOutput(this);
     player->setAudioOutput(audio);
-    player->setSource(QUrl("qrc:/bkmusic/BKMusic/level.mp3"));
+    player->setSource(QUrl(QString("qrc:/bkmusic/BKMusic/level%1.mp3").arg(level)));
     player->setLoops(QMediaPlayer::Infinite);
 
     start1 = new QSoundEffect(this);
@@ -155,7 +154,6 @@ void LevelWindow::setBlur(int extent){
 }
 
 void LevelWindow::startText1(){
-    setBlur(10);
     start1->play();
     start1->setMuted(!statistics.audioMode);
     start1->setVolume((double)statistics.effect/10);
@@ -249,6 +247,14 @@ void LevelWindow::showEvent(QShowEvent* event){
         exit(0);
     }
     list->fixSize();
+    tipDlg = new TipDialog(level, this);
+    connect(curMask, &CoverMask::showEnd, this, [=](){
+        setBlur(10);
+        tipDlg->open();
+    });
+    connect(tipDlg, &TipDialog::closeEnd, this, [=](){
+        QTimer::singleShot(100, this, &LevelWindow::startText1);
+    });
 }
 
 void LevelWindow::changeGameProcess(bool pause){

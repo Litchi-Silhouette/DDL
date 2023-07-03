@@ -9,16 +9,19 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    GameMap/level_page_base/tipdialog.cpp \
     controlwindow.cpp \
     windowbase.cpp \
     main.cpp
 
 HEADERS += \
     Game.hpp\
+    GameMap/level_page_base/tipdialog.h \
     controlwindow.h \
     windowbase.h
 
 FORMS += \
+    GameMap/level_page_base/tipdialog.ui \
     controlwindow.ui \
     windowbase.ui
 

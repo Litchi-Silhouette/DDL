@@ -13,6 +13,7 @@
 #include "warning_icon.h"
 #include "ddl_list.h"
 #include "pause_start_end.h"
+#include "tipdialog.h"
 #include "../../Game.hpp"
 #include "../../windowbase.h"
 
@@ -153,6 +154,7 @@ private:
     PauseDialog* pauseDlg;
     StartDialog* startDlg;
     EndDialog* endDlg;
+    TipDialog* tipDlg;
 
     Ui::LevelWindow *ui;
     QGraphicsBlurEffect* blureffect;
