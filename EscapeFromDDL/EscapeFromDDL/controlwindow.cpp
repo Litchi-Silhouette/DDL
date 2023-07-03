@@ -52,12 +52,16 @@ void ControlWindow::resizeEvent(QResizeEvent* event){
                             new_size.width(),new_size.height());
 }
 
+void ControlWindow::closeEvent(QCloseEvent* event){
+    windowBase::closeEvent(event);
+    dumpStatics();
+}
+
 void ControlWindow::toWindow(int index)
 {
     if(0<=index && index<3)
         mainWidget->setCurrentIndex(index);
     else if(index == -1){
-        dumpStatics();
         close();
     }else
     {

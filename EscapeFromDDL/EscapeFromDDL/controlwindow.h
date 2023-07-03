@@ -30,6 +30,7 @@ signals:
     void gameProgress(int);
 protected slots:
     void showEvent(QShowEvent*);
+    void closeEvent(QCloseEvent*);
     void resizeEvent(QResizeEvent*);
 private slots:
     void toWindow(int index);
