@@ -22,7 +22,8 @@
   </property>
   <property name="styleSheet">
    <string notr="true">QMainWindow{background: url(:/pic/image/background.png);}
-QPushButton{border-radius: 5px;}</string>
+QPushButton{border-radius: 5px;}
+</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="styleSheet">
@@ -180,10 +181,12 @@ border-width: 0px; border-style: solid;border-color: rgb(200, 200, 200);</string
            <property name="styleSheet">
             <string notr="true">QPushButton{background: transparent;border-width:0px; border-image:url(:/pic/image/help_gray.png);}
 QPushButton:hover{border-image:url(:/pic/image/help.png);}
-QPushButton:pressed{border-image:url(:/pic/image/help.png);}</string>
+QPushButton:pressed{border-image:url(:/pic/image/help.png);}
+QPushButton:focus { outline: 1px solid white; outline-radius: 5px;}
+</string>
            </property>
-           <property name="text">
-            <string/>
+           <property name="shortcut">
+            <string>H</string>
            </property>
           </widget>
          </item>
@@ -210,10 +213,11 @@ QPushButton:pressed{border-image:url(:/pic/image/help.png);}</string>
            <property name="styleSheet">
             <string notr="true">QPushButton{background: transparent;border-width:0px; border-image:url(:/pic/image/set_gray.png);}
 QPushButton:hover{border-image:url(:/pic/image/set.png);}
-QPushButton:pressed{border-image:url(:/pic/image/set.png);}</string>
+QPushButton:pressed{border-image:url(:/pic/image/set.png);}
+QPushButton:focus { outline: 1px solid white; outline-radius: 5px;}</string>
            </property>
-           <property name="text">
-            <string/>
+           <property name="shortcut">
+            <string>S</string>
            </property>
           </widget>
          </item>
@@ -240,10 +244,11 @@ QPushButton:pressed{border-image:url(:/pic/image/set.png);}</string>
            <property name="styleSheet">
             <string notr="true">QPushButton{background: transparent; border-width:0px; border-radius: 0px;border-image:url(:/pic/image/exit_gray.png);}
 QPushButton:hover{border-image:url(:/pic/image/exit.png);}
-QPushButton:pressed{border-image:url(:/pic/image/exit.png);}</string>
+QPushButton:pressed{border-image:url(:/pic/image/exit.png);}
+QPushButton:focus { outline: 1px solid white; outline-radius: 5px;}</string>
            </property>
-           <property name="text">
-            <string/>
+           <property name="shortcut">
+            <string>Esc</string>
            </property>
           </widget>
          </item>
@@ -284,7 +289,8 @@ text-align: left;
 border-bottom-right-radius: 30px;
 border-bottom: 3px solid black;
 background: rgba(255,250,240,1);
-}</string>
+}
+QPushButton:focus {border: 3px solid black; outline: none}</string>
         </property>
         <property name="text">
          <string>  Prologue</string>
@@ -401,10 +407,14 @@ border-bottom-right-radius: 30px;
 border-bottom-left-radius: 30px;
 border-bottom: 3px solid black;
 background: rgba(255,250,240,1);
-}</string>
+}
+QPushButton:focus {border: 3px solid black; outline: none}</string>
         </property>
         <property name="text">
          <string>  Level 1</string>
+        </property>
+        <property name="shortcut">
+         <string>2</string>
         </property>
        </widget>
       </item>
@@ -485,10 +495,14 @@ text-align: left;
 border-bottom-left-radius: 30px;
 border-bottom: 3px solid black;
 background: rgba(255,250,240,1);
-}</string>
+}
+QPushButton:focus {border: 3px solid black; outline: none}</string>
         </property>
         <property name="text">
          <string>    Ending</string>
+        </property>
+        <property name="shortcut">
+         <string>7</string>
         </property>
        </widget>
       </item>
@@ -526,10 +540,14 @@ text-align: left;
 border-bottom-right-radius: 30px;
 border-bottom: 3px solid black;
 background: rgba(255,250,240,1);
-}</string>
+}
+QPushButton:focus {border: 3px solid black; outline: none}</string>
         </property>
         <property name="text">
          <string>  Act 1</string>
+        </property>
+        <property name="shortcut">
+         <string>3</string>
         </property>
        </widget>
       </item>
@@ -623,10 +641,14 @@ border-bottom-right-radius: 30px;
 border-bottom-left-radius: 30px;
 border-bottom: 3px solid black;
 background: rgba(255,250,240,1);
-}</string>
+}
+QPushButton:focus {border: 3px solid black; outline: none}</string>
         </property>
         <property name="text">
          <string>  Level 2</string>
+        </property>
+        <property name="shortcut">
+         <string>4</string>
         </property>
        </widget>
       </item>
@@ -695,10 +717,14 @@ text-align: left;
 border-bottom-left-radius: 30px;
 border-bottom: 3px solid black;
 background: rgba(255,250,240,1);
-}</string>
+}
+QPushButton:focus {border: 3px solid black; outline: none}</string>
         </property>
         <property name="text">
          <string>    Ending</string>
+        </property>
+        <property name="shortcut">
+         <string>8</string>
         </property>
        </widget>
       </item>
@@ -736,10 +762,14 @@ text-align: left;
 border-bottom-right-radius: 30px;
 border-bottom: 3px solid black;
 background: rgba(255,250,240,1);
-}</string>
+}
+QPushButton:focus {border: 3px solid black; outline: none}</string>
         </property>
         <property name="text">
          <string>  Act 2</string>
+        </property>
+        <property name="shortcut">
+         <string>5</string>
         </property>
        </widget>
       </item>
@@ -833,10 +863,14 @@ border-bottom-right-radius: 30px;
 border-bottom-left-radius: 30px;
 border-bottom: 3px solid black;
 background: rgba(255,250,240,1);
-}</string>
+}
+QPushButton:focus {border: 3px solid black; outline: none}</string>
         </property>
         <property name="text">
          <string>  Level 3</string>
+        </property>
+        <property name="shortcut">
+         <string>6</string>
         </property>
        </widget>
       </item>
@@ -905,10 +939,14 @@ text-align: left;
 border-bottom-left-radius: 30px;
 border-bottom: 3px solid black;
 background: rgba(255,250,240,1);
-}</string>
+}
+QPushButton:focus {border: 3px solid black; outline: none}</string>
         </property>
         <property name="text">
          <string>    Ending</string>
+        </property>
+        <property name="shortcut">
+         <string>9</string>
         </property>
        </widget>
       </item>
@@ -949,10 +987,14 @@ text-align: left;
 border-bottom-right-radius: 30px;
 border-bottom: 3px solid black;
 background: rgba(255,250,240,1);
-}</string>
+}
+QPushButton:focus {border: 3px solid black; outline: none}</string>
         </property>
         <property name="text">
          <string>  Ending</string>
+        </property>
+        <property name="shortcut">
+         <string>0</string>
         </property>
        </widget>
       </item>
@@ -1042,10 +1084,14 @@ text-align: left;
 border-bottom-left-radius: 30px;
 border-bottom: 3px solid black;
 background: rgba(255,250,240,1);
-}</string>
+}
+QPushButton:focus {border: 3px solid black; outline: none}</string>
         </property>
         <property name="text">
          <string>  Extra Chapter    </string>
+        </property>
+        <property name="shortcut">
+         <string>Ctrl+Return</string>
         </property>
        </widget>
       </item>

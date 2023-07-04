@@ -8,9 +8,9 @@ TipDialog::TipDialog(int level, QWidget *parent)
     ui->setupUi(this);
     Qt::WindowFlags flags = Qt::Dialog;
     flags |= Qt::FramelessWindowHint;
-    flags |= Qt::Tool;                 //程序不在任务栏显示
     flags |= Qt::WindowStaysOnTopHint; //置顶显示
     setWindowFlags(flags);
+
     setAttribute(Qt::WA_DeleteOnClose);
     showAnimation = new QPropertyAnimation(this, "tmpHeight");
     showAnimation->setDuration(300);

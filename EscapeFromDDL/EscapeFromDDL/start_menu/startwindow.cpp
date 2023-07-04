@@ -15,6 +15,8 @@ StartWindow::StartWindow(Game& game, QWidget *parent)
     connect(ui->pushButton, &QPushButton::clicked, this, &StartWindow::startBlink);
     connect(ui->tip, &QPushButton::clicked, this, &StartWindow::startBlink);
     connect(ui->back, &QPushButton::clicked, this, &StartWindow::startBlink);
+    ui->tip->setFocus();
+    ui->tip->setDefault(true);
 
     player = new QMediaPlayer(this);
     audio = new QAudioOutput(this);
@@ -50,6 +52,9 @@ void StartWindow::startBlink(){
     enter->play();
     enter->setMuted(!statistics.audioMode);
     enter->setVolume((double)statistics.effect/10);
+    ui->tip->setDisabled(true);
+    ui->pushButton->setDisabled(true);
+    ui->back->setDisabled(true);
     ui->tip->hide();
     p->start(interval);
     QTimer::singleShot(2500, this, &StartWindow::stayRed);

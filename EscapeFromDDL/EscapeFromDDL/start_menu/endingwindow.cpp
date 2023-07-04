@@ -19,11 +19,15 @@ EndingWindow::EndingWindow(Game& game, int index, QWidget *parent) :
     buttom = new QSoundEffect(this);
     buttom->setSource(QUrl("qrc:/effects/sounds/buttom2.wav"));
 
+    ui->blank1->setFocus();
+    ui->blank1->setDefault(true);
     connect(ui->blank1, &QPushButton::clicked, this, &EndingWindow::change);
     connect(ui->blank2, &QPushButton::clicked, this, &EndingWindow::change);
     connect(ui->blankS1, &QPushButton::clicked, this, &EndingWindow::change);
     connect(ui->blankS2, &QPushButton::clicked, this, &EndingWindow::change);
     connect(accDlg, &AccDialog::end, this, [=](){
+        curMask->show();
+        QTimer::singleShot(300, curMask, &CoverMask::close);
         emit changeWindow(2);
     });
 }
@@ -114,6 +118,9 @@ bool EndingWindow::load()
 
 void EndingWindow::showEvent(QShowEvent* event){
     windowBase::showEvent(event);
+    curMask = new CoverMask;
+    curMask->setGeometry(geometry());
+    curMask->move(mapToGlobal(QPoint(0, 0)));
     QTimer::singleShot(1000, this, &EndingWindow::nextText);
 }
 
@@ -126,6 +133,8 @@ void EndingWindow::change(){
     else
     {
         ui->stackedWidget->setCurrentIndex(1);
+        ui->blank2->setFocus();
+        ui->blank2->setDefault(true);
         pos = 0;
         QTimer::singleShot(1000, this, &EndingWindow::nextText);
     }

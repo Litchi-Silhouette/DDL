@@ -14,8 +14,13 @@ HelpDialog::HelpDialog(Game& game, QWidget* parent)
                   "border-image:url(:/pic/image/go_nor_gray.png);}"
                   "QPushButton:hover{border-image:url(:/pic/image/go_gray.png);}"
                   "QPushButton:pressed{border-image:url(:/pic/image/go.png);}"
+                  "QPushButton:focus{outline: none;}"
                   );
     back->setFixedSize(80,80);
+    back->setFocus();
+    back->setDefault(true);
+    back->setFocusPolicy(Qt::StrongFocus);
+    back->setShortcut(QKeySequence(Qt::Key_B));
     connect(back, &QPushButton::clicked, this, [=](){
         helpClose->play();
         helpClose->setMuted(!statistics.audioMode);
@@ -71,8 +76,16 @@ void HelpDialog::addContent(const QString& text){
 }
 
 void HelpDialog::setContent(){
-    if(subLay!=nullptr)
-        delete subLay;
+    if(content->layout()!=nullptr)
+    {
+        while (QLayoutItem* item = content->layout()->takeAt(0))
+        {
+            if (QWidget* widget = item->widget())
+                widget->deleteLater();
+            delete item;
+        }
+        delete content->layout();
+    }
     subLay = new QVBoxLayout;
     subLay->setContentsMargins(5,10,5,10);
     subLay->setSpacing(10);
@@ -96,11 +109,14 @@ void HelpDialog::setContent(){
         addContent("  第三关");
         addContent("  用鼠标位置牵引的方式给予攻城狮一个加速度，使攻城狮向鼠标位置加速移动\n  地图上出现任务时，及时使攻城狮移动到任务所在位置\n  完成任务击败DDL即可通过关卡\n  DDL怪兽会向攻城狮发射子弹，攻城狮被子弹击中一次，扣除一定生命值\n  生命值归零，本关失败");
     }
+    addContent("  快捷键");
+    addContent("  开始界面：按E进入。\n  菜单界面：帮助：H，设置：S，退出：esc，返回：B，静音：M，重置：R\n                      关卡剧情部分由数字构成\n  剧情&结局：N下翻\n  关卡：P暂停，B返回主菜单，R重新开始，C继续游戏\n  提示：N关闭");
 }
 
 void HelpDialog::showEvent(QShowEvent* event){
     MyDialog::showEvent(event);
     setContent();
+    back->setFocus(Qt::ActiveWindowFocusReason);
 }
 
 SetDialog::SetDialog(Game& game, QAudioOutput* _audio,QWidget* parent)
@@ -151,14 +167,19 @@ SetDialog::SetDialog(Game& game, QAudioOutput* _audio,QWidget* parent)
     audio = new QPushButton("",content);
     audio->setFixedSize(80,80);
     connect(audio, &QPushButton::clicked, this, &SetDialog::changeMode);
+    audio->setShortcut(QKeySequence(Qt::Key_M));
 
     back = new QPushButton("",content);
     back->setStyleSheet("QPushButton{border:0px;"
                   "border-image:url(:/pic/image/go_nor_gray.png);}"
                   "QPushButton:hover{border-image:url(:/pic/image/go_gray.png);}"
                   "QPushButton:pressed{border-image:url(:/pic/image/go.png);}"
+                  "QPushButton:focus{outline: none;}"
                   );
     back->setFixedSize(80,80);
+    back->setDefault(true);
+    back->setFocusPolicy(Qt::StrongFocus);
+    back->setShortcut(QKeySequence(Qt::Key_B));
     connect(back, &QPushButton::clicked, this, [=](){
         setClose->play();
         setClose->setMuted(!statistics.audioMode);
@@ -173,8 +194,10 @@ SetDialog::SetDialog(Game& game, QAudioOutput* _audio,QWidget* parent)
     reset->setStyleSheet("QPushButton{border:0px;"
                   "border-image:url(:/pic/image/restart_gray.png);}"
                   "QPushButton:hover{border-image:url(:/pic/image/restart.png);}"
+                  "QPushButton:focus {outline: 1px solid black; outline-radius: 5px;}"
                   );
     reset->setFixedSize(80,80);
+    reset->setShortcut(QKeySequence(Qt::Key_R));
     connect(reset, &QPushButton::clicked, this, &SetDialog::resetGame);
 
     auto mainLay = new QGridLayout;
@@ -226,11 +249,13 @@ void SetDialog::setPattern(bool on)
         audio->setStyleSheet("QPushButton{border:0px;"
                       "border-image:url(:/pic/image/voice_on_gray.png);}"
                       "QPushButton:hover{border-image:url(:/pic/image/voice_on.png);}"
+                      "QPushButton:focus {outline: 1px solid black; outline-radius: 5px;}"
                       );
     else
         audio->setStyleSheet("QPushButton{border:0px;"
                       "border-image:url(:/pic/image/voice_off_gray.png);}"
                       "QPushButton:hover{border-image:url(:/pic/image/voice_off.png);}"
+                      "QPushButton:focus {outline: 1px solid black; outline-radius: 5px;}"
                       );
 }
 
@@ -264,6 +289,7 @@ void SetDialog::changeEffect(int cur){
 void SetDialog::showEvent(QShowEvent* event){
     MyDialog::showEvent(event);
     setIni();
+    back->setFocus(Qt::ActiveWindowFocusReason);
     setPattern(statistics.audioMode);
 }
 
@@ -273,7 +299,11 @@ AccDialog::AccDialog(Game& game,int index, QWidget* parent)
     btn = new QPushButton("",this);
     btn->setStyleSheet("QPushButton{border-image:url(:/pic/image/accomplish.png);"
                         "text-align: left; padding-left: 50px; color: black;"
-                       "font : bold 14pt \"STKaiti\"; background: transparent;}");
+                       "font : bold 14pt \"STKaiti\"; background: transparent;}"
+                       "QPushButton:focus{outline: none;}"
+                       );
+    btn->setShortcut(QKeySequence(Qt::Key_B));
+    btn->setDefault(true);
     btn->setFixedSize(350,80);
     btn->setVisible(false);
     connect(btn, &QPushButton::clicked, this, [=](){

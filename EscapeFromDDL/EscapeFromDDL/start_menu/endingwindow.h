@@ -41,6 +41,7 @@ private:
     int interval = 2000;
     Game& statistics;
     QSoundEffect* buttom;
+    CoverMask* curMask;
 };
 
 #endif // ENDINGWINDOW_H

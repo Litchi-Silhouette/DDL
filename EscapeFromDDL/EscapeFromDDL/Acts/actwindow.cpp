@@ -11,6 +11,10 @@ ActWindow::ActWindow(Game& game, int index, QWidget *parent)
     ui->setupUi(this);
     p = new QPushButton("Click to continue···");
     p->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+    p->setFocus();
+    p->setDefault(true);
+    p->setFocusPolicy(Qt::StrongFocus);
+    p->setShortcut(QKeySequence(Qt::Key_N));
     ui->pageLay2->addWidget(p);
     switch (index) {
     case 0:

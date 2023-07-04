@@ -9,24 +9,30 @@ PauseDialog::PauseDialog(Game& game, QWidget* parent)
                   "border-image:url(:/page/level_image/back_nor_gray.png);}"
                   "QPushButton:hover{border-image:url(:/page/level_image/back_on_gray.png);}"
                   "QPushButton:pressed{border-image:url(:/page/level_image/back.png);}"
+                  "QPushButton:focus{outline: none;}"
                   );
     backBtn->setFixedSize(80,80);
     connect(backBtn, &QPushButton::clicked, this, &PauseDialog::back);
+    backBtn->setShortcut(QKeySequence(Qt::Key_B));
     restartBtn = new QPushButton(this);
     restartBtn->setStyleSheet("QPushButton{border-width:0px;"
                   "border-image:url(:/page/level_image/restart_gray.png);}"
                   "QPushButton:hover{border-image:url(:/page/level_image/restart.png);}"
+                  "QPushButton:focus{outline: none;}"
                   );
     restartBtn->setFixedSize(80,80);
     connect(restartBtn,&QPushButton::clicked, this, &PauseDialog::restart);
+    restartBtn->setShortcut(QKeySequence(Qt::Key_R));
     continueBtn = new QPushButton(this);
     continueBtn->setStyleSheet("QPushButton{border:0px;"
                   "border-image:url(:/page/level_image/continue_nor_gray.png);}"
                   "QPushButton:hover{border-image:url(:/page/level_image/continue_on_gray.png);}"
                   "QPushButton:pressed{border-image:url(:/page/level_image/continue.png);}"
+                  "QPushButton:focus{outline: none;}"
                   );
     continueBtn->setFixedSize(80,80);
     connect(continueBtn, &QPushButton::clicked, this, &PauseDialog::conti);
+    continueBtn->setShortcut(QKeySequence(Qt::Key_C));
 
     buttom = new QSoundEffect(this);
     buttom->setSource(QUrl("qrc:/effects/sounds/buttom2.wav"));

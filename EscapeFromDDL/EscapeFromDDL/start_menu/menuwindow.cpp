@@ -48,7 +48,8 @@ void MenuWindow::on_helpBtn_clicked()
     helpOpen->play();
     helpOpen->setMuted(!statistics.audioMode);
     helpOpen->setVolume((double)statistics.effect/10);
-    helpDlg->exec();
+    ui->titleIcon->setFocus();
+    helpDlg->show();
 }
 
 
@@ -57,7 +58,8 @@ void MenuWindow::on_setBtn_clicked()
     setOpen->play();
     setOpen->setMuted(!statistics.audioMode);
     setOpen->setVolume((double)statistics.effect/10);
-    setDlg->exec();
+    ui->titleIcon->setFocus();
+    setDlg->show();
 }
 
 
@@ -106,6 +108,7 @@ void MenuWindow::on_level1Btn_clicked()
 void MenuWindow::showEvent(QShowEvent* event)
 {
     QMainWindow::showEvent(event);
+    ui->titleIcon->setFocus();
     updateBtn();
     player->play();
     audio->setMuted(!statistics.audioMode);

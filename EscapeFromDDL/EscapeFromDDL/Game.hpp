@@ -60,7 +60,6 @@ public:
         setMouseTracking(true);
         Qt::WindowFlags flags = Qt::Dialog;
         flags |= Qt::FramelessWindowHint;
-        flags |= Qt::Tool;                 //程序不在任务栏显示
         flags |= Qt::WindowStaysOnTopHint; //置顶显示
         setWindowFlags(flags);
     }
@@ -88,6 +87,9 @@ public:
     explicit StartDialog(QWidget *parent = nullptr)
         :MyDialog(parent)
     {
+        Qt::WindowFlags flags = windowFlags();
+        flags |= Qt::Tool;      //不会获取焦点
+        setWindowFlags(flags);
         setAttribute(Qt::WA_TranslucentBackground, true);
         literature = new QLabel(this);
         literature->setFont(QFont("方正趣黑简体", 20, QFont::Bold));

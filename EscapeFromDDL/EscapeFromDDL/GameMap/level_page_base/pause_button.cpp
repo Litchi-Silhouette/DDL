@@ -12,8 +12,10 @@ pause_block::pause_block(const int cur_level, QWidget* parent, int startTime)
                   "border-image:url(:/page/level_image/stop_nor_gray.png);}"
                   "QPushButton:hover{border-image:url(:/page/level_image/stop_on_gray.png);}"
                   "QPushButton:pressed{border-image:url(:/page/level_image/stop_on.png);}"
+                  "QPushButton:focus{outline: none;}"
                   );
     btn->setFixedSize(50,50);
+    btn->setShortcut(QKeySequence(Qt::Key_P));
 
     time_l = new MyLabel(this, "00:00:00");
     time_t = new MyLabel(this, "游戏时间");
