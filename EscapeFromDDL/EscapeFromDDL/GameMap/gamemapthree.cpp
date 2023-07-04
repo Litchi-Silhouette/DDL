@@ -102,6 +102,8 @@ void GameMapThree::move_event(){
     if(not pfigure->fixed){
         x_player += vx_player;
         y_player += vy_player;
+    }else{
+        vx_player = vy_player = 0;
     }
 
     if(x_player < 0){
@@ -467,7 +469,7 @@ void GameMapThree::hit_bullet_drop_life(Bullet * pblt){
     live -= pblt->attack;
     if(live < 0)live = 0;
     if(current_time - last_called_time > 1200){
-        if(ufst != nullptr)delete ufst;
+        //if(ufst != nullptr)delete ufst;
         ufst = new UtilsFigureTwinkle(this);
     }
     parent_window->hit_bullet_drop_life(pblt,pblt->attack);

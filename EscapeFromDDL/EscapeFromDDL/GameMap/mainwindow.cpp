@@ -133,14 +133,14 @@ void MainWindow::changeGameProcess(bool pause_or_continue)
 void MainWindow::missed_task_drop_live(TaskBuff * ptb, const int & drop_live)
 {
     live -= drop_live; if(live < 0)live = 0;
-    LevelWindow::update_live();
+    update_all_live();
     if(ptb->type == "Task" || ptb->type == "task")
         LevelWindow::update_List();
 }
 
 void MainWindow::hit_bullet_drop_life(Bullet * ptb,const int & drop_live){
     live -= drop_live; if(live < 0)live = 0;
-    LevelWindow::update_live();
+    update_all_live();
 }
 
 void MainWindow::reset(){

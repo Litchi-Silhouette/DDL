@@ -65,6 +65,7 @@ void ControlWindow::toWindow(int index)
         close();
     }else
     {
+        dumpStatics();
         switch(index){
         case 3:
             tmpWindow = new ActWindow(statistics,4,this);
