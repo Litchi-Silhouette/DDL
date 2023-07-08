@@ -7,4 +7,4 @@
 ### 标签：角色扮演，休闲闯关
 ***
 ### Attention
-This project is only for educational use. Under no circumstances should anyone use it for commercial use. If you want to play this game yourself, download file "release.zip" which contains the executable program for windows as well as all necessary dynamic link libraries.
+This project is only for educational use. Under no circumstances should anyone use it for commercial use. If you want to play this game yourself, download file "EscapeFromDDL.zip" in release section which contains the executable program for windows as well as all necessary dynamic link libraries.
